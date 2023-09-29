@@ -1,4 +1,6 @@
 ---
 title: {{ title }}
-tags:
+date: {{ date }}
+categories: TypeScript
+tags: [前端, TypeScript]
 ---
