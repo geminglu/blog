@@ -3,7 +3,7 @@ layout: _drafts
 title: 什么是vue3
 date: 2023-09-29 11:57:22
 categories: vue3
-tags: [vue3 vue 前端]
+tags: [vue3, vue, 前端]
 ---
 
 ## 1.Vue3 简介

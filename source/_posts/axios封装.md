@@ -2,7 +2,7 @@
 title: axios封装
 date: 2023-09-29 11:07:38
 categories: javascipt
-tags: [js库 前端]
+tags: [js库, 前端]
 ---
 ```javascript
 import axios from 'axios';

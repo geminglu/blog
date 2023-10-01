@@ -3,7 +3,7 @@ layout: 直接的区别
 title: globalThis,window,self,frames 直接的区别
 date: 2023-09-29 11:51:22
 categories: javascipt
-tags: [js 前端]
+tags: [js, 前端]
 ---
 在以前，从不同的 JavaScript 环境中获取全局对象需要不同的语句。在 Web 中，可以通过 window、self 或者 frames 取到全局对象，但是在 Web Workers 中，只有 self 可以。在 Node.js 中，它们都无法获取，必须使用 global。
 

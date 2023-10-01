@@ -3,7 +3,7 @@ layout: _drafts
 title: 如何为Vue3组件标注TS类型
 date: 2023-09-29 11:57:22
 categories: vue3
-tags: [vue3 vue 前端]
+tags: [vue3, vue, 前端]
 ---
 要说今年最热门的前端技术，Vue3 和 TS 绝对榜上有名了。据了解，已经有很多公司在使用 Vue3 + TS + Vite 开发新项目了。那么我们也不能落后，今天就给大家分享一下如何在 Vue3 组件中结合 Composition-Api 使用 TS 类型。如果有不会或者不熟的小伙伴，一起学起来吧！
 ## 为 props 标注类型

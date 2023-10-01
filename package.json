@@ -1,6 +1,6 @@
 {
   "name": "hexo-site",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "build": "hexo generate",
@@ -9,10 +9,10 @@
     "server": "hexo server"
   },
   "hexo": {
-    "version": "6.3.0"
+    "version": "7.0.0-rc2"
   },
   "dependencies": {
-    "hexo": "^6.3.0",
+    "hexo": "^7.0.0-rc2",
     "hexo-all-minifier": "^0.5.7",
     "hexo-filter-mathjax": "^0.9.0",
     "hexo-generator-archive": "^2.0.0",
