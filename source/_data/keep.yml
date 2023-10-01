@@ -328,6 +328,6 @@ inject:
   js:
     -
       # e.g.
-      # - /js/custom-1.js
+      - /js/tongji.js
       # - /js/custom-2.js
     # - ...
