@@ -1841,10 +1841,10 @@ hexo-server@^3.0.0:
     picocolors "^1.0.0"
     serve-static "^1.14.1"
 
-hexo-theme-keep@^3.8.1:
-  version "3.8.1"
-  resolved "https://registry.npmmirror.com/hexo-theme-keep/-/hexo-theme-keep-3.8.1.tgz#4748524c1080a079d0eb32ec872287a92f1da37b"
-  integrity sha512-U5ZwKczAtyDSHZ66R1ZLBFgKxDob0s+w6LyFTnE8S1FtOQ2RsOE/B5E7fl6Eha46Gmu9g1+EX9lefcHyLhAtFw==
+hexo-theme-keep@^4.0.6:
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/hexo-theme-keep/-/hexo-theme-keep-4.0.6.tgz#82f008c65ae5e6104f420fbffc80f4713c8af688"
+  integrity sha512-2mTNwzl1YPUsCYMbehhQd/U769WcBi/pd+Cf4+3vT7AHk7JjFujLmZXh9c15OboU7TCBgUioD4EzDAwiImTFcQ==
 
 hexo-theme-landscape@^1.0.0:
   version "1.0.0"
