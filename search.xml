@@ -34,11 +34,11 @@
     <url>/blog/2023/09/28/TypeScript/TypeScript%20%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E4%B9%8B%20Omit%20%E7%B1%BB%E5%9E%8B/</url>
     <content><![CDATA[<p>在本文中，我们将讨论 TypeScript 中使用<code>Omit&lt;&gt;</code>的对象类型转换。这是 TypeScript 实用工具类型系列的第二部分。<br>在上一篇文章（<a class="link"   href="https://www.yuque.com/geminglu/web/tub1ueqfotbudiub" >TypeScript 实用工具类型之 Pick 类型<i class="fas fa-external-link-alt"></i></a>）中，我们介绍了一个例子，在这个例子中，我们通过 <code>Pick&lt;&gt;</code>从基本类型<code>SuperbUser</code>中选择一些属性来派生一个<code>GuestUser</code>类型。之后暗示过，如果要选择的属性数量大于被丢弃的属性数量，那么选择就会变得不那么方便。在这种情况下，我们应该使用<code>Omit&lt;&gt;</code>。<br>在这篇文章中，我们将通过为<code>Subscriber</code>实体创建一个类型来考虑一个<code>Omit&lt;&gt;</code>的例子。</p>
 <h2 id="1-示例"><a href="#1-示例" class="headerlink" title="1.示例"></a>1.示例</h2><p>像<code>Pick&lt;&gt;</code>一样，<code>Omit&lt;&gt;</code>接受基类型作为第一个参数，接受要省略的键的联合类型作为第二个参数，并返回排除这些属性的派生类型。<br>回过头来看 ERD，<code>Subscriber</code>实体具有与<code>SuperbUser</code>相同的所有属性——除了 <code>roles</code>：<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="/blog/images/df060b0f2d93412b3f9fb9363b565243.png"
-                     
-                ><br>从<code>SuperbUser</code>派生<code>Subscriber</code>类型显然需要我们只忽略<code>roles</code>属性，而不是选择其他所有属性：</p>
+                       lazyload
+                       alt="image"
+                       data-src="/blog/images/df060b0f2d93412b3f9fb9363b565243.png"
+                       
+                 ><br>从<code>SuperbUser</code>派生<code>Subscriber</code>类型显然需要我们只忽略<code>roles</code>属性，而不是选择其他所有属性：</p>
 <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">SuperbUser</span> = &#123;</span><br><span class="line">  <span class="attr">userId</span>: <span class="built_in">number</span>,</span><br><span class="line">  <span class="attr">macAddress</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">username</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">email</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">password</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">firstName</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">lastName</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">roles</span>: (<span class="string">&#x27;Admin&#x27;</span> | <span class="string">&#x27;Editor&#x27;</span> | <span class="string">&#x27;Author&#x27;</span>)[]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Subscriber</span> = <span class="title class_">Omit</span>&lt;<span class="title class_">SuperbUser</span>, <span class="string">&#x27;roles&#x27;</span>&gt;;</span><br></pre></td></tr></table></figure>
 <p>因此，在本例中，TypeScript 的<code>Omit&lt;&gt;</code>比<code>Pick&lt;&gt;</code>更方便。我们现在可以创建一个<code>subscriber</code>对象，它的字段中删除了<code>roles</code>属性:</p>
 <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="attr">subscriber</span>: <span class="title class_">Subscriber</span> = &#123;</span><br><span class="line">  <span class="attr">userId</span>: <span class="number">4</span>,</span><br><span class="line">  <span class="attr">macAddress</span>: <span class="string">&#x27;132546&#x27;</span>,</span><br><span class="line">  <span class="attr">username</span>: <span class="string">&#x27;xiaan&#x27;</span>,</span><br><span class="line">  <span class="attr">email</span>: <span class="string">&#x27;xiaan@163.com&#x27;</span>,</span><br><span class="line">  <span class="attr">password</span>: <span class="string">&#x27;12345678&#x27;</span>,</span><br><span class="line">  <span class="attr">firstName</span>: <span class="string">&#x27;an&#x27;</span>,</span><br><span class="line">  <span class="attr">lastName</span>: <span class="string">&#x27;xia&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(subscriber);</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">  &quot;userId&quot;: 4,</span></span><br><span class="line"><span class="comment">  &quot;macAddress&quot;: &quot;132546&quot;,</span></span><br><span class="line"><span class="comment">  &quot;username&quot;: &quot;xiaan&quot;,</span></span><br><span class="line"><span class="comment">  &quot;email&quot;: &quot;xiaan@163.com&quot;,</span></span><br><span class="line"><span class="comment">  &quot;password&quot;: &quot;12345678&quot;,</span></span><br><span class="line"><span class="comment">  &quot;firstName&quot;: &quot;an&quot;,</span></span><br><span class="line"><span class="comment">  &quot;lastName&quot;: &quot;xia&quot;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(subscriber.<span class="property">roles</span>); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
@@ -103,11 +103,11 @@
     <url>/blog/2023/09/28/TypeScript/TypeScript%20%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E4%B9%8B%20Pick%20%E7%B1%BB%E5%9E%8B/</url>
     <content><![CDATA[<p>我们将在本系列的每一篇文章中分别深入研究常用工具类型的详细信息。在本部分中，我们将介绍如何使用 Pick&lt;Type, Keys&gt; 从基类型或接口中挑选一些属性，从而从现有类型生成新类型。</p>
 <h2 id="1-什么是对象类型转换？"><a href="#1-什么是对象类型转换？" class="headerlink" title="1.什么是对象类型转换？"></a>1.什么是对象类型转换？</h2><p>对象类型转换是指从表示对象的现有类型或接口生成修改的类型。这样的转换与一个或多个属性相关。<br>TypeScript 有各种实用工具，允许我们实现不同类型的对象类型转换，比如从已有的类型中选择或省略属性。<br>当我们需要一堆相似的对象类型时，对象类型转换变得非常方便，否则必须单独定义它们。我们不需要单独定义每个类型，而是可以利用 TypeScript 的转换实用工具，通过要求进行小的调整，从现有类型生成新类型。通过这种方式，我们能够使我们的类型可重用，并在模块系统的任何地方随时生成它们。<br>对象类型转换不同于使用<code>extends</code>关键字的对象接口继承，特别是因为继承只能在对象接口上使用，而不能用于类型。尽管转换也可以使用相同的实用工具应用于对象接口，但它们通常用于创建新的对象类型。<br>我们将基于下面的场景构建本系列中的示例，该场景涉及几种不同类型的用户。虽然重点将放在对象类型上，但我们也将把接口纳入讨论。<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="/blog/images/fbb07fa6ee1d71247edd65a7dfdb344a.png"
-                     
-                ><br>假设我们有一堆用户实体，它们与博客的交互方式各不相同。基本上，不管他们是访客用户、订阅者、编辑器还是管理员等等。上面的 ERD 显示了它们在后台的类型。<br>现在，如果我们想为前端 API 调用建模这些类型，我们可以为每个用户类型手动编写 TypeScript 类型——这显然违反了 DRY（不要写重复的代码）原则，因为我们为每个用户类型重复了几个公共属性。我们也可以使用接口继承，但这不在本系列的讨论范围之内。<br>所以，我们要做的是使用 TypeScript 的转换实用工具从基类型中生成我们需要的类型。为了进行正确的转换，我们需要方便地设置正确的基类型，然后将其与生成目标类型的实用工具配对。<br>例如，在本文中，我们将考虑<code>Pick&lt;Type, Keys&gt;</code>的用例。</p>
+                       lazyload
+                       alt="image"
+                       data-src="/blog/images/fbb07fa6ee1d71247edd65a7dfdb344a.png"
+                       
+                 ><br>假设我们有一堆用户实体，它们与博客的交互方式各不相同。基本上，不管他们是访客用户、订阅者、编辑器还是管理员等等。上面的 ERD 显示了它们在后台的类型。<br>现在，如果我们想为前端 API 调用建模这些类型，我们可以为每个用户类型手动编写 TypeScript 类型——这显然违反了 DRY（不要写重复的代码）原则，因为我们为每个用户类型重复了几个公共属性。我们也可以使用接口继承，但这不在本系列的讨论范围之内。<br>所以，我们要做的是使用 TypeScript 的转换实用工具从基类型中生成我们需要的类型。为了进行正确的转换，我们需要方便地设置正确的基类型，然后将其与生成目标类型的实用工具配对。<br>例如，在本文中，我们将考虑<code>Pick&lt;Type, Keys&gt;</code>的用例。</p>
 <h2 id="2-什么是-TypeScript-Pick？"><a href="#2-什么是-TypeScript-Pick？" class="headerlink" title="2.什么是 TypeScript Pick？"></a>2.什么是 TypeScript Pick？</h2><h3 id="2-1-用-Pick-选择项"><a href="#2-1-用-Pick-选择项" class="headerlink" title="2.1 用 Pick&lt;Type, Keys&gt; 选择项"></a>2.1 用 Pick&lt;Type, Keys&gt; 选择项</h3><p>对于图中的上述实体，将<code>SuperbUser</code>作为基类型是有意义的，因为它包含了存在于所有其他用户类型上的所有属性。<br>我们将首先定义 SuperbUser 的接口：</p>
 <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">SuperbUser</span> &#123;</span><br><span class="line">  <span class="attr">userId</span>: <span class="built_in">number</span>;</span><br><span class="line">  <span class="attr">macAddress</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">username</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">email</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">password</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">firstName</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">lastName</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">roles</span>: (<span class="string">&#x27;Admin&#x27;</span> | <span class="string">&#x27;Editor&#x27;</span> | <span class="string">&#x27;Author&#x27;</span>)[]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>现在，如果我们想从<code>SuperbUser</code>生成一个<code>GuestUser</code>类型，我们只需要选择<code>userId</code>,<code>macAddress</code>和 <code>username</code>属性：</p>
@@ -353,7 +353,7 @@
 </tr>
 <tr>
 <td>设置邮箱</td>
-<td>git config –global user.email “<a class="link"   href="mailto:&#x31;&#x38;&#x34;&#x35;&#x31;&#52;&#56;&#x37;&#x36;&#x37;&#x32;&#x40;&#x71;&#x71;&#x2e;&#99;&#111;&#109;" >&#x31;&#x38;&#x34;&#x35;&#x31;&#52;&#56;&#x37;&#x36;&#x37;&#x32;&#x40;&#x71;&#x71;&#x2e;&#99;&#111;&#109;<i class="fas fa-external-link-alt"></i></a>“</td>
+<td>git config –global user.email “<a class="link"   href="mailto:&#49;&#56;&#x34;&#x35;&#x31;&#x34;&#x38;&#x37;&#x36;&#x37;&#50;&#64;&#113;&#x71;&#x2e;&#99;&#x6f;&#x6d;" >&#49;&#56;&#x34;&#x35;&#x31;&#x34;&#x38;&#x37;&#x36;&#x37;&#50;&#64;&#113;&#x71;&#x2e;&#99;&#x6f;&#x6d;<i class="fas fa-external-link-alt"></i></a>“</td>
 </tr>
 <tr>
 <td>创建项目</td>
@@ -414,11 +414,11 @@
 <p>git config –globalcore.autocrlf false</p>
 <p>来自 &lt;<a class="link"   href="https://www.jianshu.com/p/60aefab47a36" >https://www.jianshu.com/p/60aefab47a36<i class="fas fa-external-link-alt"></i></a>&gt; </p>
 <p><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.nlark.com/yuque/0/2022/png/25669443/1648730713030-7bc43fc2-ab75-4a04-a4a8-24cd95e9de17.png#averageHue=%231e3236&clientId=u631ea93a-f0b4-4&from=paste&id=uddb36b25&originHeight=1466&originWidth=2076&originalType=url&ratio=1&rotation=0&showTitle=false&size=601206&status=done&style=none&taskId=u8fe00cea-e32c-4bb9-be69-cfc3be347fd&title="
-                      alt="image.png"
-                ></p>
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.nlark.com/yuque/0/2022/png/25669443/1648730713030-7bc43fc2-ab75-4a04-a4a8-24cd95e9de17.png#averageHue=%231e3236&clientId=u631ea93a-f0b4-4&from=paste&id=uddb36b25&originHeight=1466&originWidth=2076&originalType=url&ratio=1&rotation=0&showTitle=false&size=601206&status=done&style=none&taskId=u8fe00cea-e32c-4bb9-be69-cfc3be347fd&title="
+                        alt="image.png"
+                 ></p>
 <h2 id="提交前缀规范"><a href="#提交前缀规范" class="headerlink" title="提交前缀规范"></a>提交前缀规范</h2><p>feat：新增功能或页面；<br>delete：删除功能或文件；<br>fix： 修复问题&#x2F;BUG；<br>mod：不确定分类的修改；<br>docs：修改文档；<br>refactor：代码重构，未新增任何功能和修复任何bug；<br>build：改变构建流程，新增依赖库、工具等（例如webpack、gulp、npm修改）；<br>style：仅仅修改了空格、缩进、注释等，不改变代码逻辑的变动；<br>perf：改善性能和体现的修改；<br>chore：变更构建流程或辅助工具，非src和test的修改；<br>test：测试用例的新增、修改；<br>ci：自动化流程配置修改；<br>revert：回滚到上一个版本；</p>
 <h2 id="FQA"><a href="#FQA" class="headerlink" title="FQA"></a>FQA</h2><h5 id="vscode文件状态"><a href="#vscode文件状态" class="headerlink" title="vscode文件状态"></a>vscode文件状态</h5><table>
 <thead>
@@ -460,11 +460,11 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git stash </span><br><span class="line"># or</span><br><span class="line">git stash save &quot;measge&quot;</span><br></pre></td></tr></table></figure>
 <h6 id="查看储藏的列表"><a href="#查看储藏的列表" class="headerlink" title="查看储藏的列表"></a>查看储藏的列表</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git stash list</span><br></pre></td></tr></table></figure>
 <h6 id="弹出储藏"><a href="#弹出储藏" class="headerlink" title="弹出储藏"></a>弹出储藏</h6><p>将储藏列表中最新的内容弹出到当前分支上，并且删除储藏列表中的记录，<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.nlark.com/yuque/0/2022/png/25669443/1654655076261-ff6ba01e-40f3-4f21-a579-d8057df9f9e2.png#averageHue=%23f9f6f4&clientId=u89786573-24b5-4&from=paste&height=301&id=u0022dd6b&originHeight=452&originWidth=833&originalType=binary&ratio=1&rotation=0&showTitle=false&size=131003&status=done&style=none&taskId=ua97b2bad-9951-4b05-9a99-db6d142e3ab&title=&width=555.3333333333334"
-                      alt="image.png"
-                ><br>看pop后面有一行是Dropped，在储藏列表删除了这个缓存<br>如果pop出来的内容有冲突，git会中断此次pop并告知你需要进行冲突解决<br>也可以指定储藏中的记录通过在<code>git stash pop</code>后面加上<code>git stash list</code>中的名称</p>
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.nlark.com/yuque/0/2022/png/25669443/1654655076261-ff6ba01e-40f3-4f21-a579-d8057df9f9e2.png#averageHue=%23f9f6f4&clientId=u89786573-24b5-4&from=paste&height=301&id=u0022dd6b&originHeight=452&originWidth=833&originalType=binary&ratio=1&rotation=0&showTitle=false&size=131003&status=done&style=none&taskId=ua97b2bad-9951-4b05-9a99-db6d142e3ab&title=&width=555.3333333333334"
+                        alt="image.png"
+                 ><br>看pop后面有一行是Dropped，在储藏列表删除了这个缓存<br>如果pop出来的内容有冲突，git会中断此次pop并告知你需要进行冲突解决<br>也可以指定储藏中的记录通过在<code>git stash pop</code>后面加上<code>git stash list</code>中的名称</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 弹出最新储藏</span><br><span class="line">git stash pop</span><br><span class="line"></span><br><span class="line"># 弹出指定的储藏记录</span><br><span class="line">git stash pop stash@&#123;0&#125;</span><br></pre></td></tr></table></figure>
 <h6 id="应用储藏"><a href="#应用储藏" class="headerlink" title="应用储藏"></a>应用储藏</h6><p><code>git stash apply</code>与<code>pop</code>类似，但他不会删除储藏记录，也可以指定储藏记录。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 应用最新储藏</span><br><span class="line">git stash apply</span><br><span class="line"></span><br><span class="line"># 应用指定的储藏记录</span><br><span class="line">git stash apply stash@&#123;0&#125;</span><br></pre></td></tr></table></figure>
@@ -509,65 +509,65 @@
 <p>这可让您对提交运行任意<code>shell</code>命令。</p>
 <h2 id="更改提交顺序"><a href="#更改提交顺序" class="headerlink" title="更改提交顺序"></a>更改提交顺序</h2><p>pick只是意味着包括提交。重新进行命令时，重新安排pick&#96;命令的顺序会更改提交的顺序。如果选择不包括提交，则应删除整行。<br>我们先看一下当前提交的信息</p>
 <p><img  
-                     lazyload
-                     alt="image"
-                     data-src="/blog/images/23412.png.png"
-                      alt="image.png"
-                ></p>
+                       lazyload
+                       alt="image"
+                       data-src="/blog/images/23412.png.png"
+                        alt="image.png"
+                 ></p>
 <p>现在我们要改变一下<code>b</code>和<code>d</code>两次提交的顺序，<code>HRAD~2</code>表示选择离HEAD最近的3次提交。</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git rebase -i HEAD~3</span><br></pre></td></tr></table></figure>
 <p> 接着git会弹出一个文本，<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="/blog/images/23412.png"
-                      alt="image.png"
-                ><br>下面就是vim操作了，只要交换第一行和第三行的位置就行，把光标移动到第一行快速按两下d键第一行就被剪切到剪切板中了，再把光标移动到d提交那行按下p就把刚才剪切的内容粘贴过来了，像这样操作把<code>191bc18</code>那次提交移动到第一行就行了，按下<code>shift + :</code>输入<code>wq</code>保存退出。<br>输入<code>git log</code>查看提交信息顺序改变了。<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.nlark.com/yuque/0/2022/png/25669443/1662615374405-84daa4f5-ca28-4b4a-8091-063464f665c1.png#averageHue=%23fcfbfa&clientId=ue32db35e-e55b-4&from=paste&height=385&id=u26d7514c&originHeight=577&originWidth=1182&originalType=binary&ratio=1&rotation=0&showTitle=false&size=60888&status=done&style=none&taskId=u30308aca-dade-4034-9245-2de1112f19a&title=&width=788"
-                      alt="image.png"
-                ></p>
+                       lazyload
+                       alt="image"
+                       data-src="/blog/images/23412.png"
+                        alt="image.png"
+                 ><br>下面就是vim操作了，只要交换第一行和第三行的位置就行，把光标移动到第一行快速按两下d键第一行就被剪切到剪切板中了，再把光标移动到d提交那行按下p就把刚才剪切的内容粘贴过来了，像这样操作把<code>191bc18</code>那次提交移动到第一行就行了，按下<code>shift + :</code>输入<code>wq</code>保存退出。<br>输入<code>git log</code>查看提交信息顺序改变了。<br><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.nlark.com/yuque/0/2022/png/25669443/1662615374405-84daa4f5-ca28-4b4a-8091-063464f665c1.png#averageHue=%23fcfbfa&clientId=ue32db35e-e55b-4&from=paste&height=385&id=u26d7514c&originHeight=577&originWidth=1182&originalType=binary&ratio=1&rotation=0&showTitle=false&size=60888&status=done&style=none&taskId=u30308aca-dade-4034-9245-2de1112f19a&title=&width=788"
+                        alt="image.png"
+                 ></p>
 <h2 id="删除提交"><a href="#删除提交" class="headerlink" title="删除提交"></a>删除提交</h2><p>比如我们要删除提交信息为c的那次提交，先看一下当前<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.nlark.com/yuque/0/2022/png/25669443/1662684886830-a991a9b4-215c-4c6e-8517-6d9ed7ba73b5.png#averageHue=%23fcfbfa&clientId=u413c4319-4f0d-4&from=paste&height=402&id=u7a18d984&originHeight=603&originWidth=1178&originalType=binary&ratio=1&rotation=0&showTitle=false&size=73746&status=done&style=none&taskId=u20b22ffc-d517-4fb6-b6c0-514882ca6f2&title=&width=785.3333333333334"
-                      alt="image.png"
-                ><br>HEAD~2距离HEAD最近的两次提交</p>
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.nlark.com/yuque/0/2022/png/25669443/1662684886830-a991a9b4-215c-4c6e-8517-6d9ed7ba73b5.png#averageHue=%23fcfbfa&clientId=u413c4319-4f0d-4&from=paste&height=402&id=u7a18d984&originHeight=603&originWidth=1178&originalType=binary&ratio=1&rotation=0&showTitle=false&size=73746&status=done&style=none&taskId=u20b22ffc-d517-4fb6-b6c0-514882ca6f2&title=&width=785.3333333333334"
+                        alt="image.png"
+                 ><br>HEAD~2距离HEAD最近的两次提交</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git rebase -i HEAD~2</span><br></pre></td></tr></table></figure>
 <p>只要删除提交信息为<code>c</code>的那行就行了。<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.nlark.com/yuque/0/2022/png/25669443/1662685133209-c8a15c09-2b28-4af8-b2f2-bb612c682814.png#averageHue=%23f9f8f7&clientId=u413c4319-4f0d-4&from=paste&height=444&id=udce63aa5&originHeight=666&originWidth=1180&originalType=binary&ratio=1&rotation=0&showTitle=false&size=92591&status=done&style=none&taskId=udd42b336-a165-42fe-8815-ec7b56d62fd&title=&width=786.6666666666666"
-                      alt="image.png"
-                ><br>保存后输入<code>git log</code>查看结果<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.nlark.com/yuque/0/2022/png/25669443/1662685207320-04347028-0f62-4d2d-ba92-20e9e2fac0ac.png#averageHue=%23fbfbfa&clientId=u413c4319-4f0d-4&from=paste&height=305&id=u299d85bc&originHeight=457&originWidth=1180&originalType=binary&ratio=1&rotation=0&showTitle=false&size=53721&status=done&style=none&taskId=u3223d659-0951-474e-9079-723e4ca5c5d&title=&width=786.6666666666666"
-                      alt="image.png"
-                ></p>
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.nlark.com/yuque/0/2022/png/25669443/1662685133209-c8a15c09-2b28-4af8-b2f2-bb612c682814.png#averageHue=%23f9f8f7&clientId=u413c4319-4f0d-4&from=paste&height=444&id=udce63aa5&originHeight=666&originWidth=1180&originalType=binary&ratio=1&rotation=0&showTitle=false&size=92591&status=done&style=none&taskId=udd42b336-a165-42fe-8815-ec7b56d62fd&title=&width=786.6666666666666"
+                        alt="image.png"
+                 ><br>保存后输入<code>git log</code>查看结果<br><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.nlark.com/yuque/0/2022/png/25669443/1662685207320-04347028-0f62-4d2d-ba92-20e9e2fac0ac.png#averageHue=%23fbfbfa&clientId=u413c4319-4f0d-4&from=paste&height=305&id=u299d85bc&originHeight=457&originWidth=1180&originalType=binary&ratio=1&rotation=0&showTitle=false&size=53721&status=done&style=none&taskId=u3223d659-0951-474e-9079-723e4ca5c5d&title=&width=786.6666666666666"
+                        alt="image.png"
+                 ></p>
 <h2 id="record-修改提交消息-提交内容不变"><a href="#record-修改提交消息-提交内容不变" class="headerlink" title="record 修改提交消息(提交内容不变)"></a>record 修改提交消息(提交内容不变)</h2><p>如果我们要修改<code>b</code>的那次提交的commit信息，可以使用<code>record</code>来修改commit信息，输入<code>git log</code>先看一下现在的commit是什么。<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.nlark.com/yuque/0/2022/png/25669443/1662685614666-0757006d-8642-4d75-8fa3-a2c3de76ecff.png#averageHue=%23fbfbfa&clientId=u413c4319-4f0d-4&from=paste&height=307&id=u921f8f5e&originHeight=460&originWidth=1176&originalType=binary&ratio=1&rotation=0&showTitle=false&size=53729&status=done&style=none&taskId=u5dffea41-0771-4d5a-84d0-ed003aa2aff&title=&width=784"
-                      alt="image.png"
-                ><br><code>c37146f7</code>可以快速定位到<code>c37146f7</code> 后面提交的地方，但是列出的不包括指定的提交。</p>
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.nlark.com/yuque/0/2022/png/25669443/1662685614666-0757006d-8642-4d75-8fa3-a2c3de76ecff.png#averageHue=%23fbfbfa&clientId=u413c4319-4f0d-4&from=paste&height=307&id=u921f8f5e&originHeight=460&originWidth=1176&originalType=binary&ratio=1&rotation=0&showTitle=false&size=53729&status=done&style=none&taskId=u5dffea41-0771-4d5a-84d0-ed003aa2aff&title=&width=784"
+                        alt="image.png"
+                 ><br><code>c37146f7</code>可以快速定位到<code>c37146f7</code> 后面提交的地方，但是列出的不包括指定的提交。</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git rebase -i c37146f7</span><br></pre></td></tr></table></figure>
 <p>将<code>pack</code>定改为<code>r</code>,<code>r</code>是 record简写。<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.nlark.com/yuque/0/2022/png/25669443/1662688703343-ee80b1a2-4eeb-4c9d-97ca-39732c10b4d0.png#averageHue=%23f8f8f7&clientId=u413c4319-4f0d-4&from=paste&height=443&id=u709935db&originHeight=664&originWidth=1173&originalType=binary&ratio=1&rotation=0&showTitle=false&size=91899&status=done&style=none&taskId=u753ffffb-15f1-42b3-b89f-715fa92cdf0&title=&width=782"
-                      alt="image.png"
-                ><br>接着<code>Esc</code>,<code>shift + ;``wq</code> 保存退出，git会弹出一个文本编辑器在第一行修改文本描述。<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.nlark.com/yuque/0/2022/png/25669443/1662688993829-505f2126-b3da-4ad0-99a9-9516315fc4bc.png#averageHue=%23f6f5f5&clientId=u413c4319-4f0d-4&from=paste&height=303&id=u71a302b7&originHeight=455&originWidth=1183&originalType=binary&ratio=1&rotation=0&showTitle=false&size=54788&status=done&style=none&taskId=u6ffecc3e-6a61-401e-be13-d76aa7c1633&title=&width=788.6666666666666"
-                      alt="image.png"
-                ><br>修改完成后保存退出，输入<code>git log</code>查看commit信息。<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.nlark.com/yuque/0/2022/png/25669443/1662689153814-1b11f5f5-39dd-4f76-9c0d-df966477d668.png#averageHue=%23fbfbfa&clientId=u413c4319-4f0d-4&from=paste&height=313&id=u0dac04b7&originHeight=470&originWidth=1175&originalType=binary&ratio=1&rotation=0&showTitle=false&size=55716&status=done&style=none&taskId=u4b12125e-071a-45f0-8698-7e785bfa51b&title=&width=783.3333333333334"
-                      alt="image.png"
-                ></p>
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.nlark.com/yuque/0/2022/png/25669443/1662688703343-ee80b1a2-4eeb-4c9d-97ca-39732c10b4d0.png#averageHue=%23f8f8f7&clientId=u413c4319-4f0d-4&from=paste&height=443&id=u709935db&originHeight=664&originWidth=1173&originalType=binary&ratio=1&rotation=0&showTitle=false&size=91899&status=done&style=none&taskId=u753ffffb-15f1-42b3-b89f-715fa92cdf0&title=&width=782"
+                        alt="image.png"
+                 ><br>接着<code>Esc</code>,<code>shift + ;``wq</code> 保存退出，git会弹出一个文本编辑器在第一行修改文本描述。<br><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.nlark.com/yuque/0/2022/png/25669443/1662688993829-505f2126-b3da-4ad0-99a9-9516315fc4bc.png#averageHue=%23f6f5f5&clientId=u413c4319-4f0d-4&from=paste&height=303&id=u71a302b7&originHeight=455&originWidth=1183&originalType=binary&ratio=1&rotation=0&showTitle=false&size=54788&status=done&style=none&taskId=u6ffecc3e-6a61-401e-be13-d76aa7c1633&title=&width=788.6666666666666"
+                        alt="image.png"
+                 ><br>修改完成后保存退出，输入<code>git log</code>查看commit信息。<br><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.nlark.com/yuque/0/2022/png/25669443/1662689153814-1b11f5f5-39dd-4f76-9c0d-df966477d668.png#averageHue=%23fbfbfa&clientId=u413c4319-4f0d-4&from=paste&height=313&id=u0dac04b7&originHeight=470&originWidth=1175&originalType=binary&ratio=1&rotation=0&showTitle=false&size=55716&status=done&style=none&taskId=u4b12125e-071a-45f0-8698-7e785bfa51b&title=&width=783.3333333333334"
+                        alt="image.png"
+                 ></p>
 <h2 id="edit修改提交"><a href="#edit修改提交" class="headerlink" title="edit修改提交"></a>edit修改提交</h2><p>使用<code>edit</code>可以完全添加或更改提交。您还可以进行更多提交，然后再继续进行变基。这使您可以将大型提交拆分为较小的提交，或者删除在提交中所做的错误更改。<br>如果在<code>3d06118c</code>和<code>f18b62266</code>之间在添加一个提交要怎么做呢，<br>显示到<code>HEAD</code>最近到两次提交</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git rebase -i HEAD~2</span><br></pre></td></tr></table></figure>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pick c37146f d</span><br><span class="line">pick 3d06118 修改commit b</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Rebase f18b622..3d06118 onto f18b622 (2 commands)</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="comment"># Commands:</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">p, pick &lt;commit&gt; = use commit</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">r, reword &lt;commit&gt; = use commit, but edit the commit message</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">e, edit &lt;commit&gt; = use commit, but stop <span class="keyword">for</span> amending</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">s, squash &lt;commit&gt; = use commit, but meld into previous commit<span class="comment"># f, fixup &lt;commit&gt; = like &quot;squash&quot;, but discard this commit&#x27;s log message</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">x, <span class="built_in">exec</span> &lt;<span class="built_in">command</span>&gt; = run <span class="built_in">command</span> (the rest of the line) using shell</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">b, <span class="built_in">break</span> = stop here (<span class="built_in">continue</span> rebase later with <span class="string">&#x27;git rebase --continue&#x27;</span>)</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">d, drop &lt;commit&gt; = remove commit</span></span><br></pre></td></tr></table></figure>
@@ -605,6 +605,87 @@
       </categories>
       <tags>
         <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何为Vue3组件标注TS类型</title>
+    <url>/blog/2023/09/29/vue3/%E5%A6%82%E4%BD%95%E4%B8%BAVue3%E7%BB%84%E4%BB%B6%E6%A0%87%E6%B3%A8TS%E7%B1%BB%E5%9E%8B/</url>
+    <content><![CDATA[<p>要说今年最热门的前端技术，Vue3 和 TS 绝对榜上有名了。据了解，已经有很多公司在使用 Vue3 + TS + Vite 开发新项目了。那么我们也不能落后，今天就给大家分享一下如何在 Vue3 组件中结合 Composition-Api 使用 TS 类型。如果有不会或者不熟的小伙伴，一起学起来吧！</p>
+<h2 id="为-props-标注类型"><a href="#为-props-标注类型" class="headerlink" title="为 props 标注类型"></a>为 props 标注类型</h2><p>使用 <code>&lt;script setup&gt;</code><br>当使用 <code>&lt;script setup&gt;</code> 时，<code>defineProps()</code>宏函数支持从它的参数中推导类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  const props = defineProps(&#123;</span><br><span class="line">    foo: &#123; type: String, required: true &#125;,</span><br><span class="line">    bar: Number</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  props.foo // string</span><br><span class="line">  props.bar // number | undefined</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这被称为 运行时声明 ，因为传递给 defineProps() 的参数会作为运行时的 props 选项使用。<br>第二种方式，通过泛型参数来定义 props 的类型，这种方式更加直接：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  const props = defineProps&lt;&#123;</span><br><span class="line">    foo: string</span><br><span class="line">    bar?: number</span><br><span class="line">  &#125;&gt;()</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">// or</span><br><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  interface Props &#123;</span><br><span class="line">  foo: string</span><br><span class="line">  bar?: number</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const props = defineProps&lt;Props&gt;()</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这被称为 基于类型的声明 ，编译器会尽可能地尝试根据类型参数推导出等价的运行时选项。这种方式的不足之处在于，失去了定义 <code>props</code> 默认值的能力。为了解决这个问题，我们可以使用 withDefaults 编译器宏：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">interface Props &#123;</span><br><span class="line">  msg?: string</span><br><span class="line">    labels?: string[]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">  const props = withDefaults(defineProps&lt;Props&gt;(), &#123;</span><br><span class="line">    msg: &#x27;hello&#x27;,</span><br><span class="line">    labels: () =&gt; [&#x27;one&#x27;, &#x27;two&#x27;]</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>上面代码会被编译为等价的运行时<code>props</code>的<code>default</code>选项。<br>非 <code>&lt;script setup&gt;</code><br>如果没有使用 <code>&lt;script setup&gt;</code>，那么为了开启 props 的类型推导，必须使用<code>defineComponent()</code>。传入 <code>setup()</code> 的 <code>props</code>对象类型是从 props 选项中推导而来。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; defineComponent &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  export default defineComponent(&#123;</span><br><span class="line">    props: &#123;</span><br><span class="line">      message: String</span><br><span class="line">    &#125;,</span><br><span class="line">    setup(props) &#123;</span><br><span class="line">      props.message // &lt;-- 类型：string</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="为-emits-标注类型"><a href="#为-emits-标注类型" class="headerlink" title="为 emits 标注类型"></a>为 emits 标注类型</h2><p>使用 <code>&lt;script setup&gt;</code><br>在<code>&lt;script setup&gt;</code>中，emit 函数的类型标注也可以使用 运行时声明 或者 基于类型的声明 ：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  // 运行时</span><br><span class="line">  const emit = defineEmits([&#x27;change&#x27;, &#x27;update&#x27;])</span><br><span class="line"></span><br><span class="line">  // 基于类型</span><br><span class="line">  const emit = defineEmits&lt;&#123;</span><br><span class="line">    (e: &#x27;change&#x27;, id: number): void</span><br><span class="line">      (e: &#x27;update&#x27;, value: string): void</span><br><span class="line">  &#125;&gt;()</span><br><span class="line">    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以看到，基于类型的声明 可以使我们对所触发事件的类型进行更细粒度的控制。<br>非 <code>&lt;script setup&gt;</code><br>若没有使用<code>&lt;script setup&gt;</code>，<code>defineComponent()</code>也可以根据<code>emits</code>选项推导暴露在<code>setup</code>上下文中的<code>emit</code>函数的类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; defineComponent &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  export default defineComponent(&#123;</span><br><span class="line">    emits: [&#x27;change&#x27;],</span><br><span class="line">    setup(props, &#123; emit &#125;) &#123;</span><br><span class="line">      emit(&#x27;change&#x27;) // &lt;-- 类型检查 / 自动补全</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="为-ref-标注类型"><a href="#为-ref-标注类型" class="headerlink" title="为 ref() 标注类型"></a>为 ref() 标注类型</h2><p>默认推导类型<br>ref 会根据初始化时的值自动推导其类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  // 推导出的类型：Ref&lt;number&gt;</span><br><span class="line">  const year = ref(2020)</span><br><span class="line"></span><br><span class="line">  // =&gt; TS Error: Type &#x27;string&#x27; is not assignable to type &#x27;number&#x27;.</span><br><span class="line">  year.value = &#x27;2020&#x27;</span><br></pre></td></tr></table></figure>
+<p>通过接口指定类型<br>有时我们可能想为 ref 内的值指定一个更复杂的类型，可以通过使用 Ref 这个接口：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line">  import type &#123; Ref &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  const year: Ref&lt;string | number&gt; = ref(&#x27;2020&#x27;)</span><br><span class="line"></span><br><span class="line">  year.value = 2020 // 成功！</span><br></pre></td></tr></table></figure>
+
+<p>通过泛型指定类型<br>或者，在调用 ref() 时传入一个泛型参数，来覆盖默认的推导行为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 得到的类型：Ref&lt;string | number&gt;</span><br><span class="line">const year = ref&lt;string | number&gt;(&#x27;2020&#x27;)</span><br><span class="line">year.value = 2020 // 成功！</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>如果你指定了一个泛型参数但没有给出初始值，那么最后得到的就将是一个包含 undefined 的联合类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 推导得到的类型：Ref&lt;number | undefined&gt;</span><br><span class="line">const n = ref&lt;number&gt;()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="为-reactive-标注类型"><a href="#为-reactive-标注类型" class="headerlink" title="为 reactive() 标注类型"></a>为 reactive() 标注类型</h2><p>默认推导类型<br>reactive() 也会隐式地从它的参数中推导类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; reactive &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  // 推导得到的类型：&#123; title: string &#125;</span><br><span class="line">  const book = reactive(&#123; title: &#x27;Vue 3 指引&#x27; &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>通过接口指定类型<br>要显式地指定一个 reactive 变量的类型，我们可以使用接口：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; reactive &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">interface Book &#123;</span><br><span class="line">  title: string</span><br><span class="line">  year?: number</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const book: Book = reactive(&#123; title: &#x27;Vue 3 指引&#x27; &#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="为-computed-标注类型"><a href="#为-computed-标注类型" class="headerlink" title="为 computed() 标注类型"></a>为 computed() 标注类型</h2><p>默认推导类型<br>computed() 会自动从其计算函数的返回值上推导出类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; ref, computed &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">const count = ref(0)</span><br><span class="line"></span><br><span class="line">// 推导得到的类型：ComputedRef&lt;number&gt;</span><br><span class="line">const double = computed(() =&gt; count.value * 2)</span><br><span class="line"></span><br><span class="line">// =&gt; TS Error: Property &#x27;split&#x27; does not exist on type &#x27;number&#x27;</span><br><span class="line">const result = double.value.split(&#x27;&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>通过泛型指定类型<br>你还可以通过泛型参数显式指定类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const double = computed&lt;number&gt;(() =&gt; &#123;</span><br><span class="line">  // 若返回值不是 number 类型则会报错</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="为事件处理函数标注类型"><a href="#为事件处理函数标注类型" class="headerlink" title="为事件处理函数标注类型"></a>为事件处理函数标注类型</h2><p>在处理原生 DOM 事件时，应该给事件处理函数的参数正确地标注类型。让我们看一下这个例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  function handleChange(event) &#123;</span><br><span class="line">    // `event` 隐式地标注为 `any` 类型</span><br><span class="line">    console.log(event.target.value)</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;input type=&quot;text&quot; @change=&quot;handleChange&quot; /&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>没有类型标注时，这个 event 参数会隐式地标注为 any 类型。这也会在 tsconfig.json 中配置了 “strict”: true 或 “noImplicitAny”: true 时报出一个 TS 错误。因此，建议显式地为事件处理函数的参数标注类型。此外，你可能需要显式地强制转换 event 上的属性：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function handleChange(event: Event) &#123;</span><br><span class="line">  console.log((event.target as HTMLInputElement).value)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="为-provide-inject-标注类型"><a href="#为-provide-inject-标注类型" class="headerlink" title="为 provide &#x2F; inject 标注类型"></a>为 provide &#x2F; inject 标注类型</h2><p>provide 和 inject 通常会在不同的组件中运行。要正确地为注入的值标记类型，Vue 提供了一个 InjectionKey 接口，它是一个继承自 Symbol 的泛型类型，可以用来在提供者和消费者之间同步注入值的类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; provide, inject &#125; from &#x27;vue&#x27;</span><br><span class="line">import type &#123; InjectionKey &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">const key = Symbol() as InjectionKey&lt;string&gt;</span><br><span class="line"></span><br><span class="line">provide(key, &#x27;foo&#x27;) // 若提供的是非字符串值会导致错误</span><br><span class="line"></span><br><span class="line">const foo = inject(key) // foo 的类型：string | undefined</span><br></pre></td></tr></table></figure>
+
+<p>建议将注入 key 的类型放在一个单独的文件中，这样它就可以被多个组件导入。<br>当使用字符串注入 key 时，注入值的类型是 unknown，需要通过泛型参数显式声明：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const foo = inject&lt;string&gt;(&#x27;key&#x27;) // 类型：string | undefined</span><br></pre></td></tr></table></figure>
+
+<p>注意注入的值仍然可以是 undefined，因为无法保证提供者一定会在运行时 provide 这个值。当提供了一个默认值后，这个 undefined 类型就可以被移除：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const foo = inject&lt;string&gt;(&#x27;foo&#x27;, &#x27;bar&#x27;) // 类型：string</span><br></pre></td></tr></table></figure>
+
+<p>如果你确定该值将始终被提供，则还可以强制转换该值：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const foo = inject(&#x27;foo&#x27;) as string</span><br></pre></td></tr></table></figure>
+
+<h2 id="为-dom-模板引用标注类型"><a href="#为-dom-模板引用标注类型" class="headerlink" title="为 dom 模板引用标注类型"></a>为 dom 模板引用标注类型</h2><p>模板 ref 需要通过一个显式指定的泛型参数和一个初始值 null 来创建：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  import &#123; ref, onMounted &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  const el = ref&lt;HTMLInputElement | null&gt;(null)</span><br><span class="line"></span><br><span class="line">  onMounted(() =&gt; &#123;</span><br><span class="line">    el.value?.focus()</span><br><span class="line">  &#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;input ref=&quot;el&quot; /&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>注意为了严格的类型安全，有必要在访问 el.value 时使用可选链或类型守卫。这是因为直到组件被挂载前，这个 ref 的值都是初始的 null，并且 v-if 将引用的元素卸载时也会被设置为 null。</p>
+<h2 id="为组件模板引用标注类型"><a href="#为组件模板引用标注类型" class="headerlink" title="为组件模板引用标注类型"></a>为组件模板引用标注类型</h2><p>有时，我们需要为一个子组件添加一个模板 ref，以便调用它公开的方法。比如，我们有一个 MyModal 子组件，它有一个打开模态框的方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- MyModal.vue --&gt;</span><br><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  import &#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  const isContentShown = ref(false)</span><br><span class="line">  const open = () =&gt; (isContentShown.value = true)</span><br><span class="line"></span><br><span class="line">  defineExpose(&#123;</span><br><span class="line">    open</span><br><span class="line">  &#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>为了获取 MyModal 的类型，我们首先需要通过 typeof 得到其类型，再使用 TypeScript 内置的 InstanceType 工具类型来获取其实例类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- App.vue --&gt;</span><br><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  import MyModal from &#x27;./MyModal.vue&#x27;</span><br><span class="line"></span><br><span class="line">  const modal = ref&lt;InstanceType&lt;typeof MyModal&gt; | null&gt;(null)</span><br><span class="line"></span><br><span class="line">  const openModal = () =&gt; &#123;</span><br><span class="line">    modal.value?.open()</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Ok，以上就是在 Vue3 组件中使用 TS 类型的基本方法，也是我最近的 Vue3 学习笔记。欢迎在评论区交流讨论，一起学习成长！</p>
+]]></content>
+      <categories>
+        <category>vue3</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>vue3</tag>
+        <tag>vue</tag>
       </tags>
   </entry>
   <entry>
@@ -670,20 +751,20 @@
 <li>传统构建 与 vite 构建对比图</li>
 </ul>
 <p><img  
-                     lazyload
-                     alt="image"
-                     data-src="/blog/images/43483607-c6c7-4b93-8d38-09d8d0e7b135.png"
-                     
-                ></p>
+                       lazyload
+                       alt="image"
+                       data-src="/blog/images/43483607-c6c7-4b93-8d38-09d8d0e7b135.png"
+                       
+                 ></p>
 <p><img  
-                     lazyload
-                     alt="image"
-                     data-src="/blog/images/2b9a572c-a88a-4d60-a408-9410e06eb74d.png"
-                     
-                ></p>
+                       lazyload
+                       alt="image"
+                       data-src="/blog/images/2b9a572c-a88a-4d60-a408-9410e06eb74d.png"
+                       
+                 ></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">## 创建工程</span></span><br><span class="line">npm init vite-app &lt;project-name&gt;</span><br><span class="line"><span class="comment">## 进入工程目录</span></span><br><span class="line"><span class="built_in">cd</span> &lt;project-name&gt;</span><br><span class="line"><span class="comment">## 安装依赖</span></span><br><span class="line">npm install</span><br><span class="line"><span class="comment">## 运行</span></span><br><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;!-- vue3中模板中可以没有根标签 --&gt;</span><br><span class="line">  &lt;!-- &lt;img alt=&quot;Vue logo&quot; src=&quot;./assets/logo.png&quot; /&gt;</span><br><span class="line">  &lt;HelloWorld msg=&quot;Welcome to Your Vue.js App&quot; /&gt; --&gt;</span><br><span class="line">  &lt;div&gt;姓名：&#123;&#123; name &#125;&#125;&lt;/div&gt;</span><br><span class="line">  &lt;div&gt;年龄：&#123;&#123; age &#125;&#125;&lt;/div&gt;</span><br><span class="line">  &lt;div&gt;职业：&#123;&#123; job.type &#125;&#125;&lt;/div&gt;</span><br><span class="line">  &lt;div&gt;薪资：&#123;&#123; job.salary &#125;&#125;&lt;/div&gt;</span><br><span class="line">  &lt;div&gt;爱好：&#123;&#123; hobby &#125;&#125;&lt;/div&gt;</span><br><span class="line">  &lt;button @click=&quot;sayHello&quot;&gt;按钮&lt;/button&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">// import HelloWorld from &quot;./components/HelloWorld.vue&quot;;</span><br><span class="line">import &#123; ref, reactive &#125; from &quot;vue&quot;;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  name: &quot;App&quot;,</span><br><span class="line">  // components: &#123;</span><br><span class="line">  //   HelloWorld,</span><br><span class="line">  // &#125;,</span><br><span class="line">  setup() &#123;</span><br><span class="line">    let name = ref(&quot;张三&quot;);</span><br><span class="line">    let age = ref(18);</span><br><span class="line">    let job = reactive(&#123;</span><br><span class="line">      type: &quot;前端开发工程师&quot;,</span><br><span class="line">      salary: &quot;30K&quot;,</span><br><span class="line">    &#125;);</span><br><span class="line">    let hobby = reactive([&quot;抽烟&quot;, &quot;喝酒&quot;, &quot;烫头&quot;]);</span><br><span class="line">    function sayHello() &#123;</span><br><span class="line">      name.value = &quot;李四&quot;;</span><br><span class="line">      age.value = &quot;45&quot;;</span><br><span class="line">      job.type = &quot;UI设计师&quot;;</span><br><span class="line">      job.salary = &quot;10K&quot;;</span><br><span class="line">      hobby[0] = &quot;唱歌&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    return &#123;</span><br><span class="line">      name,</span><br><span class="line">      age,</span><br><span class="line">      job,</span><br><span class="line">      hobby,</span><br><span class="line">      sayHello,</span><br><span class="line">    &#125;;</span><br><span class="line">    // return (q) =&gt; &#123;</span><br><span class="line">    //   console.log(&quot;return&quot;, q, this);</span><br><span class="line">    //   return h(&quot;h1&quot;, &quot;dome&quot;);</span><br><span class="line">    // &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;!-- vue3中模板中可以没有根标签 --&gt;</span><br><span class="line">  &lt;!-- &lt;img  alt=&quot;Vue logo&quot;  src=&quot;/blog./assets/logo.png&quot;  &gt;</span><br><span class="line">  &lt;HelloWorld msg=&quot;Welcome to Your Vue.js App&quot; /&gt; --&gt;</span><br><span class="line">  &lt;div&gt;姓名：&#123;&#123; name &#125;&#125;&lt;/div&gt;</span><br><span class="line">  &lt;div&gt;年龄：&#123;&#123; age &#125;&#125;&lt;/div&gt;</span><br><span class="line">  &lt;div&gt;职业：&#123;&#123; job.type &#125;&#125;&lt;/div&gt;</span><br><span class="line">  &lt;div&gt;薪资：&#123;&#123; job.salary &#125;&#125;&lt;/div&gt;</span><br><span class="line">  &lt;div&gt;爱好：&#123;&#123; hobby &#125;&#125;&lt;/div&gt;</span><br><span class="line">  &lt;button @click=&quot;sayHello&quot;&gt;按钮&lt;/button&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">// import HelloWorld from &quot;./components/HelloWorld.vue&quot;;</span><br><span class="line">import &#123; ref, reactive &#125; from &quot;vue&quot;;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  name: &quot;App&quot;,</span><br><span class="line">  // components: &#123;</span><br><span class="line">  //   HelloWorld,</span><br><span class="line">  // &#125;,</span><br><span class="line">  setup() &#123;</span><br><span class="line">    let name = ref(&quot;张三&quot;);</span><br><span class="line">    let age = ref(18);</span><br><span class="line">    let job = reactive(&#123;</span><br><span class="line">      type: &quot;前端开发工程师&quot;,</span><br><span class="line">      salary: &quot;30K&quot;,</span><br><span class="line">    &#125;);</span><br><span class="line">    let hobby = reactive([&quot;抽烟&quot;, &quot;喝酒&quot;, &quot;烫头&quot;]);</span><br><span class="line">    function sayHello() &#123;</span><br><span class="line">      name.value = &quot;李四&quot;;</span><br><span class="line">      age.value = &quot;45&quot;;</span><br><span class="line">      job.type = &quot;UI设计师&quot;;</span><br><span class="line">      job.salary = &quot;10K&quot;;</span><br><span class="line">      hobby[0] = &quot;唱歌&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    return &#123;</span><br><span class="line">      name,</span><br><span class="line">      age,</span><br><span class="line">      job,</span><br><span class="line">      hobby,</span><br><span class="line">      sayHello,</span><br><span class="line">    &#125;;</span><br><span class="line">    // return (q) =&gt; &#123;</span><br><span class="line">    //   console.log(&quot;return&quot;, q, this);</span><br><span class="line">    //   return h(&quot;h1&quot;, &quot;dome&quot;);</span><br><span class="line">    // &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
 
 <h2 id="常用-CompositionAPI"><a href="#常用-CompositionAPI" class="headerlink" title="常用 CompositionAPI"></a>常用 CompositionAPI</h2><p>官方文档: <a class="link"   href="https://v3.cn.vuejs.org/guide/composition-api-introduction.html" >https://v3.cn.vuejs.org/guide/composition-api-introduction.html<i class="fas fa-external-link-alt"></i></a></p>
 <h3 id="1-拉开序幕的-setup"><a href="#1-拉开序幕的-setup" class="headerlink" title="1.拉开序幕的 setup"></a>1.拉开序幕的 setup</h3><ol>
@@ -832,11 +913,11 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;input type=&quot;text&quot; v-model=&quot;keyword&quot; /&gt;</span><br><span class="line">  &lt;h3&gt;&#123;&#123; keyword &#125;&#125;&lt;/h3&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import &#123; ref, customRef &#125; from &quot;vue&quot;;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &quot;Demo&quot;,</span><br><span class="line">  setup() &#123;</span><br><span class="line">    // let keyword = ref(&#x27;hello&#x27;) //使用Vue准备好的内置ref</span><br><span class="line">    //自定义一个myRef</span><br><span class="line">    function myRef(value, delay) &#123;</span><br><span class="line">      let timer;</span><br><span class="line">      //通过customRef去实现自定义</span><br><span class="line">      return customRef((track, trigger) =&gt; &#123;</span><br><span class="line">        return &#123;</span><br><span class="line">          get() &#123;</span><br><span class="line">            track(); //告诉Vue这个value值是需要被“追踪”的</span><br><span class="line">            return value;</span><br><span class="line">          &#125;,</span><br><span class="line">          set(newValue) &#123;</span><br><span class="line">            clearTimeout(timer);</span><br><span class="line">            timer = setTimeout(() =&gt; &#123;</span><br><span class="line">              value = newValue;</span><br><span class="line">              trigger(); //告诉Vue去更新界面</span><br><span class="line">            &#125;, delay);</span><br><span class="line">          &#125;,</span><br><span class="line">        &#125;;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    let keyword = myRef(&quot;hello&quot;, 500); //使用程序员自定义的ref</span><br><span class="line">    return &#123;</span><br><span class="line">      keyword,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
 
 <h3 id="provide-与-inject"><a href="#provide-与-inject" class="headerlink" title="provide 与 inject"></a>provide 与 inject</h3><p><img  
-                     lazyload
-                     alt="image"
-                     data-src="/blog/images/0ab2bf3c-6e52-44d4-b3ec-3367eb891a08.png"
-                     
-                ></p>
+                       lazyload
+                       alt="image"
+                       data-src="/blog/images/0ab2bf3c-6e52-44d4-b3ec-3367eb891a08.png"
+                       
+                 ></p>
 <ul>
 <li>作用：实现祖与后代组件间通信</li>
 <li>套路：父组件有一个 <code>provide</code> 选项来提供数据，后代组件有一个 <code>inject</code> 选项来开始使用这些数据</li>
@@ -865,39 +946,39 @@
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">MyComponent</span> = &#123;</span><br><span class="line">  <span class="title function_">setup</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> internalInstance = <span class="title function_">getCurrentInstance</span>(); <span class="comment">// 有效</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> id = <span class="title function_">useComponentId</span>(); <span class="comment">// 有效</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">handleClick</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">      <span class="title function_">getCurrentInstance</span>(); <span class="comment">// 无效</span></span><br><span class="line">      <span class="title function_">useComponentId</span>(); <span class="comment">// 无效</span></span><br><span class="line"></span><br><span class="line">      internalInstance; <span class="comment">// 有效</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">onMounted</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">getCurrentInstance</span>(); <span class="comment">// 有效</span></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span></span><br><span class="line">      <span class="title function_">h</span>(</span><br><span class="line">        <span class="string">&quot;button&quot;</span>,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">onClick</span>: handleClick,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">`uid: <span class="subst">$&#123;id&#125;</span>`</span></span><br><span class="line">      );</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在组合式函数中调用也可以正常执行</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">useComponentId</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">getCurrentInstance</span>().<span class="property">uid</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="Composition-API-的优势"><a href="#Composition-API-的优势" class="headerlink" title="Composition API 的优势"></a>Composition API 的优势</h3><h4 id="Options-API-存在的问题"><a href="#Options-API-存在的问题" class="headerlink" title="Options API 存在的问题"></a>Options API 存在的问题</h4><p>使用传统 OptionsAPI 中，新增或者修改一个需求，就需要分别在 data，methods，computed 里修改 。<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="/blog/images/f84e4e2c02424d9a99862ade0a2e4114~tplv-k3u1fbpfcp-watermark.gif"
-                     
-                ><img  
-                     lazyload
-                     alt="image"
-                     data-src="/blog/images/e5ac7e20d1784887a826f6360768a368~tplv-k3u1fbpfcp-watermark.gif"
-                     
-                ></p>
+                       lazyload
+                       alt="image"
+                       data-src="/blog/images/f84e4e2c02424d9a99862ade0a2e4114~tplv-k3u1fbpfcp-watermark.gif"
+                       
+                 ><img  
+                       lazyload
+                       alt="image"
+                       data-src="/blog/images/e5ac7e20d1784887a826f6360768a368~tplv-k3u1fbpfcp-watermark.gif"
+                       
+                 ></p>
 <h4 id="Composition-API-的优势-1"><a href="#Composition-API-的优势-1" class="headerlink" title="Composition API 的优势"></a>Composition API 的优势</h4><p>我们可以更加优雅的组织我们的代码，函数。让相关功能的代码更加有序的组织在一起。<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="/blog/images/6cc55165c0e34069a75fe36f8712eb80~tplv-k3u1fbpfcp-watermark.gif"
-                     
-                ><img  
-                     lazyload
-                     alt="image"
-                     data-src="/blog/images/6cc55165c0e34069a75fe36f8712eb80~tplv-rk.gif"
-                     
-                ></p>
+                       lazyload
+                       alt="image"
+                       data-src="/blog/images/6cc55165c0e34069a75fe36f8712eb80~tplv-k3u1fbpfcp-watermark.gif"
+                       
+                 ><img  
+                       lazyload
+                       alt="image"
+                       data-src="/blog/images/6cc55165c0e34069a75fe36f8712eb80~tplv-rk.gif"
+                       
+                 ></p>
 <h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p>vue2.x 的生命周期<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="/blog/images/1569655790584-a5e09649-ecbe-40eb-864c-fe110dd31efc.png"
-                      alt="vue2.x的生命周期图"
-                ></p>
+                       lazyload
+                       alt="image"
+                       data-src="/blog/images/1569655790584-a5e09649-ecbe-40eb-864c-fe110dd31efc.png"
+                        alt="vue2.x的生命周期图"
+                 ></p>
 <p>vue3.0 的生命周期<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="/blog/images/4c612100-eda5-4233-9e83-9367b4ade839.svg"
-                      alt="vue3.0的生命周期"
-                ></p>
+                       lazyload
+                       alt="image"
+                       data-src="/blog/images/4c612100-eda5-4233-9e83-9367b4ade839.svg"
+                        alt="vue3.0的生命周期"
+                 ></p>
 <ul>
 <li>Vue3.0 中可以继续使用 Vue2.x 中的生命周期钩子，但有有两个被更名：<ul>
 <li><code>beforeDestroy</code>改名为 <code>beforeUnmount</code></li>
@@ -918,21 +999,21 @@
 <li>如果在配置项和 Composition API 都使用了生命周期，那么 Composition API 优先被调用。</li>
 <li>如果有组件嵌套会先执行父级的钩子。如下图</li>
 <li><img  
-                     lazyload
-                     alt="image"
-                     data-src="/blog/images/23r23er2q3wrd.png"
-                      alt="image.png"
-                ><img  
-                     lazyload
-                     alt="image"
-                     data-src="/blog/images/qwe23r23.png"
-                      alt="image.png"
-                ><img  
-                     lazyload
-                     alt="image"
-                     data-src="/blog/images/2131e2.png"
-                      alt="image.png"
-                ></li>
+                       lazyload
+                       alt="image"
+                       data-src="/blog/images/23r23er2q3wrd.png"
+                        alt="image.png"
+                 ><img  
+                       lazyload
+                       alt="image"
+                       data-src="/blog/images/qwe23r23.png"
+                        alt="image.png"
+                 ><img  
+                       lazyload
+                       alt="image"
+                       data-src="/blog/images/2131e2.png"
+                        alt="image.png"
+                 ></li>
 </ul>
 <h2 id="toRef"><a href="#toRef" class="headerlink" title="toRef"></a>toRef</h2><ul>
 <li>作用：创建一个 ref 对象，其 value 值指向另一个对象中的某个属性。</li>
@@ -1038,87 +1119,6 @@
 <li>使用<code>Suspense</code>包裹组件，并配置好<code>default</code> 与 <code>fallback</code></li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;app&quot;&gt;</span><br><span class="line">    &lt;h3&gt;我是App组件&lt;/h3&gt;</span><br><span class="line">    &lt;Suspense&gt;</span><br><span class="line">      &lt;template v-slot:default&gt;</span><br><span class="line">        &lt;Child /&gt;</span><br><span class="line">      &lt;/template&gt;</span><br><span class="line">      &lt;template v-slot:fallback&gt;</span><br><span class="line">        &lt;h3&gt;加载中.....&lt;/h3&gt;</span><br><span class="line">      &lt;/template&gt;</span><br><span class="line">    &lt;/Suspense&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>vue3</category>
-      </categories>
-      <tags>
-        <tag>前端</tag>
-        <tag>vue3</tag>
-        <tag>vue</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何为Vue3组件标注TS类型</title>
-    <url>/blog/2023/09/29/vue3/%E5%A6%82%E4%BD%95%E4%B8%BAVue3%E7%BB%84%E4%BB%B6%E6%A0%87%E6%B3%A8TS%E7%B1%BB%E5%9E%8B/</url>
-    <content><![CDATA[<p>要说今年最热门的前端技术，Vue3 和 TS 绝对榜上有名了。据了解，已经有很多公司在使用 Vue3 + TS + Vite 开发新项目了。那么我们也不能落后，今天就给大家分享一下如何在 Vue3 组件中结合 Composition-Api 使用 TS 类型。如果有不会或者不熟的小伙伴，一起学起来吧！</p>
-<h2 id="为-props-标注类型"><a href="#为-props-标注类型" class="headerlink" title="为 props 标注类型"></a>为 props 标注类型</h2><p>使用 <code>&lt;script setup&gt;</code><br>当使用 <code>&lt;script setup&gt;</code> 时，<code>defineProps()</code>宏函数支持从它的参数中推导类型：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  const props = defineProps(&#123;</span><br><span class="line">    foo: &#123; type: String, required: true &#125;,</span><br><span class="line">    bar: Number</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  props.foo // string</span><br><span class="line">  props.bar // number | undefined</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>这被称为 运行时声明 ，因为传递给 defineProps() 的参数会作为运行时的 props 选项使用。<br>第二种方式，通过泛型参数来定义 props 的类型，这种方式更加直接：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  const props = defineProps&lt;&#123;</span><br><span class="line">    foo: string</span><br><span class="line">    bar?: number</span><br><span class="line">  &#125;&gt;()</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">// or</span><br><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  interface Props &#123;</span><br><span class="line">  foo: string</span><br><span class="line">  bar?: number</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const props = defineProps&lt;Props&gt;()</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>这被称为 基于类型的声明 ，编译器会尽可能地尝试根据类型参数推导出等价的运行时选项。这种方式的不足之处在于，失去了定义 <code>props</code> 默认值的能力。为了解决这个问题，我们可以使用 withDefaults 编译器宏：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">interface Props &#123;</span><br><span class="line">  msg?: string</span><br><span class="line">    labels?: string[]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">  const props = withDefaults(defineProps&lt;Props&gt;(), &#123;</span><br><span class="line">    msg: &#x27;hello&#x27;,</span><br><span class="line">    labels: () =&gt; [&#x27;one&#x27;, &#x27;two&#x27;]</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
-
-<p>上面代码会被编译为等价的运行时<code>props</code>的<code>default</code>选项。<br>非 <code>&lt;script setup&gt;</code><br>如果没有使用 <code>&lt;script setup&gt;</code>，那么为了开启 props 的类型推导，必须使用<code>defineComponent()</code>。传入 <code>setup()</code> 的 <code>props</code>对象类型是从 props 选项中推导而来。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; defineComponent &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  export default defineComponent(&#123;</span><br><span class="line">    props: &#123;</span><br><span class="line">      message: String</span><br><span class="line">    &#125;,</span><br><span class="line">    setup(props) &#123;</span><br><span class="line">      props.message // &lt;-- 类型：string</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
-
-<h2 id="为-emits-标注类型"><a href="#为-emits-标注类型" class="headerlink" title="为 emits 标注类型"></a>为 emits 标注类型</h2><p>使用 <code>&lt;script setup&gt;</code><br>在<code>&lt;script setup&gt;</code>中，emit 函数的类型标注也可以使用 运行时声明 或者 基于类型的声明 ：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  // 运行时</span><br><span class="line">  const emit = defineEmits([&#x27;change&#x27;, &#x27;update&#x27;])</span><br><span class="line"></span><br><span class="line">  // 基于类型</span><br><span class="line">  const emit = defineEmits&lt;&#123;</span><br><span class="line">    (e: &#x27;change&#x27;, id: number): void</span><br><span class="line">      (e: &#x27;update&#x27;, value: string): void</span><br><span class="line">  &#125;&gt;()</span><br><span class="line">    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>我们可以看到，基于类型的声明 可以使我们对所触发事件的类型进行更细粒度的控制。<br>非 <code>&lt;script setup&gt;</code><br>若没有使用<code>&lt;script setup&gt;</code>，<code>defineComponent()</code>也可以根据<code>emits</code>选项推导暴露在<code>setup</code>上下文中的<code>emit</code>函数的类型：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; defineComponent &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  export default defineComponent(&#123;</span><br><span class="line">    emits: [&#x27;change&#x27;],</span><br><span class="line">    setup(props, &#123; emit &#125;) &#123;</span><br><span class="line">      emit(&#x27;change&#x27;) // &lt;-- 类型检查 / 自动补全</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
-
-<h2 id="为-ref-标注类型"><a href="#为-ref-标注类型" class="headerlink" title="为 ref() 标注类型"></a>为 ref() 标注类型</h2><p>默认推导类型<br>ref 会根据初始化时的值自动推导其类型：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  // 推导出的类型：Ref&lt;number&gt;</span><br><span class="line">  const year = ref(2020)</span><br><span class="line"></span><br><span class="line">  // =&gt; TS Error: Type &#x27;string&#x27; is not assignable to type &#x27;number&#x27;.</span><br><span class="line">  year.value = &#x27;2020&#x27;</span><br></pre></td></tr></table></figure>
-<p>通过接口指定类型<br>有时我们可能想为 ref 内的值指定一个更复杂的类型，可以通过使用 Ref 这个接口：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line">  import type &#123; Ref &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  const year: Ref&lt;string | number&gt; = ref(&#x27;2020&#x27;)</span><br><span class="line"></span><br><span class="line">  year.value = 2020 // 成功！</span><br></pre></td></tr></table></figure>
-
-<p>通过泛型指定类型<br>或者，在调用 ref() 时传入一个泛型参数，来覆盖默认的推导行为：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 得到的类型：Ref&lt;string | number&gt;</span><br><span class="line">const year = ref&lt;string | number&gt;(&#x27;2020&#x27;)</span><br><span class="line">year.value = 2020 // 成功！</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>如果你指定了一个泛型参数但没有给出初始值，那么最后得到的就将是一个包含 undefined 的联合类型：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 推导得到的类型：Ref&lt;number | undefined&gt;</span><br><span class="line">const n = ref&lt;number&gt;()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="为-reactive-标注类型"><a href="#为-reactive-标注类型" class="headerlink" title="为 reactive() 标注类型"></a>为 reactive() 标注类型</h2><p>默认推导类型<br>reactive() 也会隐式地从它的参数中推导类型：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; reactive &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  // 推导得到的类型：&#123; title: string &#125;</span><br><span class="line">  const book = reactive(&#123; title: &#x27;Vue 3 指引&#x27; &#125;)</span><br></pre></td></tr></table></figure>
-
-<p>通过接口指定类型<br>要显式地指定一个 reactive 变量的类型，我们可以使用接口：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; reactive &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">interface Book &#123;</span><br><span class="line">  title: string</span><br><span class="line">  year?: number</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const book: Book = reactive(&#123; title: &#x27;Vue 3 指引&#x27; &#125;)</span><br></pre></td></tr></table></figure>
-
-<h2 id="为-computed-标注类型"><a href="#为-computed-标注类型" class="headerlink" title="为 computed() 标注类型"></a>为 computed() 标注类型</h2><p>默认推导类型<br>computed() 会自动从其计算函数的返回值上推导出类型：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; ref, computed &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">const count = ref(0)</span><br><span class="line"></span><br><span class="line">// 推导得到的类型：ComputedRef&lt;number&gt;</span><br><span class="line">const double = computed(() =&gt; count.value * 2)</span><br><span class="line"></span><br><span class="line">// =&gt; TS Error: Property &#x27;split&#x27; does not exist on type &#x27;number&#x27;</span><br><span class="line">const result = double.value.split(&#x27;&#x27;)</span><br></pre></td></tr></table></figure>
-
-<p>通过泛型指定类型<br>你还可以通过泛型参数显式指定类型：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const double = computed&lt;number&gt;(() =&gt; &#123;</span><br><span class="line">  // 若返回值不是 number 类型则会报错</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h2 id="为事件处理函数标注类型"><a href="#为事件处理函数标注类型" class="headerlink" title="为事件处理函数标注类型"></a>为事件处理函数标注类型</h2><p>在处理原生 DOM 事件时，应该给事件处理函数的参数正确地标注类型。让我们看一下这个例子：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  function handleChange(event) &#123;</span><br><span class="line">    // `event` 隐式地标注为 `any` 类型</span><br><span class="line">    console.log(event.target.value)</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;input type=&quot;text&quot; @change=&quot;handleChange&quot; /&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
-
-<p>没有类型标注时，这个 event 参数会隐式地标注为 any 类型。这也会在 tsconfig.json 中配置了 “strict”: true 或 “noImplicitAny”: true 时报出一个 TS 错误。因此，建议显式地为事件处理函数的参数标注类型。此外，你可能需要显式地强制转换 event 上的属性：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function handleChange(event: Event) &#123;</span><br><span class="line">  console.log((event.target as HTMLInputElement).value)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="为-provide-inject-标注类型"><a href="#为-provide-inject-标注类型" class="headerlink" title="为 provide &#x2F; inject 标注类型"></a>为 provide &#x2F; inject 标注类型</h2><p>provide 和 inject 通常会在不同的组件中运行。要正确地为注入的值标记类型，Vue 提供了一个 InjectionKey 接口，它是一个继承自 Symbol 的泛型类型，可以用来在提供者和消费者之间同步注入值的类型：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; provide, inject &#125; from &#x27;vue&#x27;</span><br><span class="line">import type &#123; InjectionKey &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">const key = Symbol() as InjectionKey&lt;string&gt;</span><br><span class="line"></span><br><span class="line">provide(key, &#x27;foo&#x27;) // 若提供的是非字符串值会导致错误</span><br><span class="line"></span><br><span class="line">const foo = inject(key) // foo 的类型：string | undefined</span><br></pre></td></tr></table></figure>
-
-<p>建议将注入 key 的类型放在一个单独的文件中，这样它就可以被多个组件导入。<br>当使用字符串注入 key 时，注入值的类型是 unknown，需要通过泛型参数显式声明：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const foo = inject&lt;string&gt;(&#x27;key&#x27;) // 类型：string | undefined</span><br></pre></td></tr></table></figure>
-
-<p>注意注入的值仍然可以是 undefined，因为无法保证提供者一定会在运行时 provide 这个值。当提供了一个默认值后，这个 undefined 类型就可以被移除：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const foo = inject&lt;string&gt;(&#x27;foo&#x27;, &#x27;bar&#x27;) // 类型：string</span><br></pre></td></tr></table></figure>
-
-<p>如果你确定该值将始终被提供，则还可以强制转换该值：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const foo = inject(&#x27;foo&#x27;) as string</span><br></pre></td></tr></table></figure>
-
-<h2 id="为-dom-模板引用标注类型"><a href="#为-dom-模板引用标注类型" class="headerlink" title="为 dom 模板引用标注类型"></a>为 dom 模板引用标注类型</h2><p>模板 ref 需要通过一个显式指定的泛型参数和一个初始值 null 来创建：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  import &#123; ref, onMounted &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  const el = ref&lt;HTMLInputElement | null&gt;(null)</span><br><span class="line"></span><br><span class="line">  onMounted(() =&gt; &#123;</span><br><span class="line">    el.value?.focus()</span><br><span class="line">  &#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;input ref=&quot;el&quot; /&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
-
-<p>注意为了严格的类型安全，有必要在访问 el.value 时使用可选链或类型守卫。这是因为直到组件被挂载前，这个 ref 的值都是初始的 null，并且 v-if 将引用的元素卸载时也会被设置为 null。</p>
-<h2 id="为组件模板引用标注类型"><a href="#为组件模板引用标注类型" class="headerlink" title="为组件模板引用标注类型"></a>为组件模板引用标注类型</h2><p>有时，我们需要为一个子组件添加一个模板 ref，以便调用它公开的方法。比如，我们有一个 MyModal 子组件，它有一个打开模态框的方法：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- MyModal.vue --&gt;</span><br><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  import &#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  const isContentShown = ref(false)</span><br><span class="line">  const open = () =&gt; (isContentShown.value = true)</span><br><span class="line"></span><br><span class="line">  defineExpose(&#123;</span><br><span class="line">    open</span><br><span class="line">  &#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>为了获取 MyModal 的类型，我们首先需要通过 typeof 得到其类型，再使用 TypeScript 内置的 InstanceType 工具类型来获取其实例类型：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- App.vue --&gt;</span><br><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  import MyModal from &#x27;./MyModal.vue&#x27;</span><br><span class="line"></span><br><span class="line">  const modal = ref&lt;InstanceType&lt;typeof MyModal&gt; | null&gt;(null)</span><br><span class="line"></span><br><span class="line">  const openModal = () =&gt; &#123;</span><br><span class="line">    modal.value?.open()</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>Ok，以上就是在 Vue3 组件中使用 TS 类型的基本方法，也是我最近的 Vue3 学习笔记。欢迎在评论区交流讨论，一起学习成长！</p>
 ]]></content>
       <categories>
         <category>vue3</category>
