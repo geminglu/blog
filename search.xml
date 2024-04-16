@@ -30,6 +30,32 @@
       </tags>
   </entry>
   <entry>
+    <title>禁用浏览器的缩放功能</title>
+    <url>/blog/2024/04/16/%E7%A6%81%E7%94%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E7%BC%A9%E6%94%BE%E5%8A%9F%E8%83%BD/</url>
+    <content><![CDATA[<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>在<code>html</code> 文件中的<code>head</code> 里面加上<code>meta</code> 标签</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width,initial-scale=1.0 user-scalable=no;&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>width&#x3D;device-width：页面的宽度适配设备的宽度</p>
+<p>initial-scale&#x3D;1.0：设置默认缩放比例</p>
+<p>maximum-scale&#x3D;1.0：最大缩放比例</p>
+<p>user-scalable：禁用缩放</p>
+<p>在iOS 10以前和Android都可以通过一行meta标签来禁止页面缩放，但是在IOS10开始meta设置在Safari内无效了</p>
+<p>IOS10之后就要使用下面的方法</p>
+<p>给<code>body</code> 标签设置一下css属性</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">	touch-action: pan-y pan-x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="相关连接"><a href="#相关连接" class="headerlink" title="相关连接"></a>相关连接</h2><p><a class="link"   href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/touch-action" >https://developer.mozilla.org/zh-CN/docs/Web/CSS/touch-action<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Viewport_meta_tag" >https://developer.mozilla.org/zh-CN/docs/Web/HTML/Viewport_meta_tag<i class="fas fa-external-link-alt"></i></a></p>
+]]></content>
+      <categories>
+        <category>javascipt</category>
+      </categories>
+      <tags>
+        <tag>js库</tag>
+        <tag>前端</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>TypeScript 实用工具类型之 Omit 类型</title>
     <url>/blog/2023/09/28/TypeScript/TypeScript%20%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E4%B9%8B%20Omit%20%E7%B1%BB%E5%9E%8B/</url>
     <content><![CDATA[<p>在本文中，我们将讨论 TypeScript 中使用<code>Omit&lt;&gt;</code>的对象类型转换。这是 TypeScript 实用工具类型系列的第二部分。<br>在上一篇文章（<a class="link"   href="https://www.yuque.com/geminglu/web/tub1ueqfotbudiub" >TypeScript 实用工具类型之 Pick 类型<i class="fas fa-external-link-alt"></i></a>）中，我们介绍了一个例子，在这个例子中，我们通过 <code>Pick&lt;&gt;</code>从基本类型<code>SuperbUser</code>中选择一些属性来派生一个<code>GuestUser</code>类型。之后暗示过，如果要选择的属性数量大于被丢弃的属性数量，那么选择就会变得不那么方便。在这种情况下，我们应该使用<code>Omit&lt;&gt;</code>。<br>在这篇文章中，我们将通过为<code>Subscriber</code>实体创建一个类型来考虑一个<code>Omit&lt;&gt;</code>的例子。</p>
@@ -353,7 +379,7 @@
 </tr>
 <tr>
 <td>设置邮箱</td>
-<td>git config –global user.email “<a class="link"   href="mailto:&#49;&#56;&#x34;&#x35;&#x31;&#x34;&#x38;&#x37;&#x36;&#x37;&#50;&#64;&#113;&#x71;&#x2e;&#99;&#x6f;&#x6d;" >&#49;&#56;&#x34;&#x35;&#x31;&#x34;&#x38;&#x37;&#x36;&#x37;&#50;&#64;&#113;&#x71;&#x2e;&#99;&#x6f;&#x6d;<i class="fas fa-external-link-alt"></i></a>“</td>
+<td>git config –global user.email “<a class="link"   href="mailto:&#x31;&#56;&#x34;&#53;&#x31;&#52;&#x38;&#55;&#x36;&#x37;&#50;&#x40;&#x71;&#113;&#x2e;&#99;&#x6f;&#109;" >&#x31;&#56;&#x34;&#53;&#x31;&#52;&#x38;&#55;&#x36;&#x37;&#50;&#x40;&#x71;&#113;&#x2e;&#99;&#x6f;&#109;<i class="fas fa-external-link-alt"></i></a>“</td>
 </tr>
 <tr>
 <td>创建项目</td>
@@ -605,87 +631,6 @@
       </categories>
       <tags>
         <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何为Vue3组件标注TS类型</title>
-    <url>/blog/2023/09/29/vue3/%E5%A6%82%E4%BD%95%E4%B8%BAVue3%E7%BB%84%E4%BB%B6%E6%A0%87%E6%B3%A8TS%E7%B1%BB%E5%9E%8B/</url>
-    <content><![CDATA[<p>要说今年最热门的前端技术，Vue3 和 TS 绝对榜上有名了。据了解，已经有很多公司在使用 Vue3 + TS + Vite 开发新项目了。那么我们也不能落后，今天就给大家分享一下如何在 Vue3 组件中结合 Composition-Api 使用 TS 类型。如果有不会或者不熟的小伙伴，一起学起来吧！</p>
-<h2 id="为-props-标注类型"><a href="#为-props-标注类型" class="headerlink" title="为 props 标注类型"></a>为 props 标注类型</h2><p>使用 <code>&lt;script setup&gt;</code><br>当使用 <code>&lt;script setup&gt;</code> 时，<code>defineProps()</code>宏函数支持从它的参数中推导类型：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  const props = defineProps(&#123;</span><br><span class="line">    foo: &#123; type: String, required: true &#125;,</span><br><span class="line">    bar: Number</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  props.foo // string</span><br><span class="line">  props.bar // number | undefined</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>这被称为 运行时声明 ，因为传递给 defineProps() 的参数会作为运行时的 props 选项使用。<br>第二种方式，通过泛型参数来定义 props 的类型，这种方式更加直接：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  const props = defineProps&lt;&#123;</span><br><span class="line">    foo: string</span><br><span class="line">    bar?: number</span><br><span class="line">  &#125;&gt;()</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">// or</span><br><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  interface Props &#123;</span><br><span class="line">  foo: string</span><br><span class="line">  bar?: number</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const props = defineProps&lt;Props&gt;()</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>这被称为 基于类型的声明 ，编译器会尽可能地尝试根据类型参数推导出等价的运行时选项。这种方式的不足之处在于，失去了定义 <code>props</code> 默认值的能力。为了解决这个问题，我们可以使用 withDefaults 编译器宏：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">interface Props &#123;</span><br><span class="line">  msg?: string</span><br><span class="line">    labels?: string[]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">  const props = withDefaults(defineProps&lt;Props&gt;(), &#123;</span><br><span class="line">    msg: &#x27;hello&#x27;,</span><br><span class="line">    labels: () =&gt; [&#x27;one&#x27;, &#x27;two&#x27;]</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
-
-<p>上面代码会被编译为等价的运行时<code>props</code>的<code>default</code>选项。<br>非 <code>&lt;script setup&gt;</code><br>如果没有使用 <code>&lt;script setup&gt;</code>，那么为了开启 props 的类型推导，必须使用<code>defineComponent()</code>。传入 <code>setup()</code> 的 <code>props</code>对象类型是从 props 选项中推导而来。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; defineComponent &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  export default defineComponent(&#123;</span><br><span class="line">    props: &#123;</span><br><span class="line">      message: String</span><br><span class="line">    &#125;,</span><br><span class="line">    setup(props) &#123;</span><br><span class="line">      props.message // &lt;-- 类型：string</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
-
-<h2 id="为-emits-标注类型"><a href="#为-emits-标注类型" class="headerlink" title="为 emits 标注类型"></a>为 emits 标注类型</h2><p>使用 <code>&lt;script setup&gt;</code><br>在<code>&lt;script setup&gt;</code>中，emit 函数的类型标注也可以使用 运行时声明 或者 基于类型的声明 ：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  // 运行时</span><br><span class="line">  const emit = defineEmits([&#x27;change&#x27;, &#x27;update&#x27;])</span><br><span class="line"></span><br><span class="line">  // 基于类型</span><br><span class="line">  const emit = defineEmits&lt;&#123;</span><br><span class="line">    (e: &#x27;change&#x27;, id: number): void</span><br><span class="line">      (e: &#x27;update&#x27;, value: string): void</span><br><span class="line">  &#125;&gt;()</span><br><span class="line">    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>我们可以看到，基于类型的声明 可以使我们对所触发事件的类型进行更细粒度的控制。<br>非 <code>&lt;script setup&gt;</code><br>若没有使用<code>&lt;script setup&gt;</code>，<code>defineComponent()</code>也可以根据<code>emits</code>选项推导暴露在<code>setup</code>上下文中的<code>emit</code>函数的类型：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; defineComponent &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  export default defineComponent(&#123;</span><br><span class="line">    emits: [&#x27;change&#x27;],</span><br><span class="line">    setup(props, &#123; emit &#125;) &#123;</span><br><span class="line">      emit(&#x27;change&#x27;) // &lt;-- 类型检查 / 自动补全</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
-
-<h2 id="为-ref-标注类型"><a href="#为-ref-标注类型" class="headerlink" title="为 ref() 标注类型"></a>为 ref() 标注类型</h2><p>默认推导类型<br>ref 会根据初始化时的值自动推导其类型：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  // 推导出的类型：Ref&lt;number&gt;</span><br><span class="line">  const year = ref(2020)</span><br><span class="line"></span><br><span class="line">  // =&gt; TS Error: Type &#x27;string&#x27; is not assignable to type &#x27;number&#x27;.</span><br><span class="line">  year.value = &#x27;2020&#x27;</span><br></pre></td></tr></table></figure>
-<p>通过接口指定类型<br>有时我们可能想为 ref 内的值指定一个更复杂的类型，可以通过使用 Ref 这个接口：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line">  import type &#123; Ref &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  const year: Ref&lt;string | number&gt; = ref(&#x27;2020&#x27;)</span><br><span class="line"></span><br><span class="line">  year.value = 2020 // 成功！</span><br></pre></td></tr></table></figure>
-
-<p>通过泛型指定类型<br>或者，在调用 ref() 时传入一个泛型参数，来覆盖默认的推导行为：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 得到的类型：Ref&lt;string | number&gt;</span><br><span class="line">const year = ref&lt;string | number&gt;(&#x27;2020&#x27;)</span><br><span class="line">year.value = 2020 // 成功！</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>如果你指定了一个泛型参数但没有给出初始值，那么最后得到的就将是一个包含 undefined 的联合类型：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 推导得到的类型：Ref&lt;number | undefined&gt;</span><br><span class="line">const n = ref&lt;number&gt;()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="为-reactive-标注类型"><a href="#为-reactive-标注类型" class="headerlink" title="为 reactive() 标注类型"></a>为 reactive() 标注类型</h2><p>默认推导类型<br>reactive() 也会隐式地从它的参数中推导类型：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; reactive &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  // 推导得到的类型：&#123; title: string &#125;</span><br><span class="line">  const book = reactive(&#123; title: &#x27;Vue 3 指引&#x27; &#125;)</span><br></pre></td></tr></table></figure>
-
-<p>通过接口指定类型<br>要显式地指定一个 reactive 变量的类型，我们可以使用接口：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; reactive &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">interface Book &#123;</span><br><span class="line">  title: string</span><br><span class="line">  year?: number</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const book: Book = reactive(&#123; title: &#x27;Vue 3 指引&#x27; &#125;)</span><br></pre></td></tr></table></figure>
-
-<h2 id="为-computed-标注类型"><a href="#为-computed-标注类型" class="headerlink" title="为 computed() 标注类型"></a>为 computed() 标注类型</h2><p>默认推导类型<br>computed() 会自动从其计算函数的返回值上推导出类型：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; ref, computed &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">const count = ref(0)</span><br><span class="line"></span><br><span class="line">// 推导得到的类型：ComputedRef&lt;number&gt;</span><br><span class="line">const double = computed(() =&gt; count.value * 2)</span><br><span class="line"></span><br><span class="line">// =&gt; TS Error: Property &#x27;split&#x27; does not exist on type &#x27;number&#x27;</span><br><span class="line">const result = double.value.split(&#x27;&#x27;)</span><br></pre></td></tr></table></figure>
-
-<p>通过泛型指定类型<br>你还可以通过泛型参数显式指定类型：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const double = computed&lt;number&gt;(() =&gt; &#123;</span><br><span class="line">  // 若返回值不是 number 类型则会报错</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h2 id="为事件处理函数标注类型"><a href="#为事件处理函数标注类型" class="headerlink" title="为事件处理函数标注类型"></a>为事件处理函数标注类型</h2><p>在处理原生 DOM 事件时，应该给事件处理函数的参数正确地标注类型。让我们看一下这个例子：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  function handleChange(event) &#123;</span><br><span class="line">    // `event` 隐式地标注为 `any` 类型</span><br><span class="line">    console.log(event.target.value)</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;input type=&quot;text&quot; @change=&quot;handleChange&quot; /&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
-
-<p>没有类型标注时，这个 event 参数会隐式地标注为 any 类型。这也会在 tsconfig.json 中配置了 “strict”: true 或 “noImplicitAny”: true 时报出一个 TS 错误。因此，建议显式地为事件处理函数的参数标注类型。此外，你可能需要显式地强制转换 event 上的属性：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function handleChange(event: Event) &#123;</span><br><span class="line">  console.log((event.target as HTMLInputElement).value)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="为-provide-inject-标注类型"><a href="#为-provide-inject-标注类型" class="headerlink" title="为 provide &#x2F; inject 标注类型"></a>为 provide &#x2F; inject 标注类型</h2><p>provide 和 inject 通常会在不同的组件中运行。要正确地为注入的值标记类型，Vue 提供了一个 InjectionKey 接口，它是一个继承自 Symbol 的泛型类型，可以用来在提供者和消费者之间同步注入值的类型：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; provide, inject &#125; from &#x27;vue&#x27;</span><br><span class="line">import type &#123; InjectionKey &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">const key = Symbol() as InjectionKey&lt;string&gt;</span><br><span class="line"></span><br><span class="line">provide(key, &#x27;foo&#x27;) // 若提供的是非字符串值会导致错误</span><br><span class="line"></span><br><span class="line">const foo = inject(key) // foo 的类型：string | undefined</span><br></pre></td></tr></table></figure>
-
-<p>建议将注入 key 的类型放在一个单独的文件中，这样它就可以被多个组件导入。<br>当使用字符串注入 key 时，注入值的类型是 unknown，需要通过泛型参数显式声明：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const foo = inject&lt;string&gt;(&#x27;key&#x27;) // 类型：string | undefined</span><br></pre></td></tr></table></figure>
-
-<p>注意注入的值仍然可以是 undefined，因为无法保证提供者一定会在运行时 provide 这个值。当提供了一个默认值后，这个 undefined 类型就可以被移除：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const foo = inject&lt;string&gt;(&#x27;foo&#x27;, &#x27;bar&#x27;) // 类型：string</span><br></pre></td></tr></table></figure>
-
-<p>如果你确定该值将始终被提供，则还可以强制转换该值：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const foo = inject(&#x27;foo&#x27;) as string</span><br></pre></td></tr></table></figure>
-
-<h2 id="为-dom-模板引用标注类型"><a href="#为-dom-模板引用标注类型" class="headerlink" title="为 dom 模板引用标注类型"></a>为 dom 模板引用标注类型</h2><p>模板 ref 需要通过一个显式指定的泛型参数和一个初始值 null 来创建：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  import &#123; ref, onMounted &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  const el = ref&lt;HTMLInputElement | null&gt;(null)</span><br><span class="line"></span><br><span class="line">  onMounted(() =&gt; &#123;</span><br><span class="line">    el.value?.focus()</span><br><span class="line">  &#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;input ref=&quot;el&quot; /&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
-
-<p>注意为了严格的类型安全，有必要在访问 el.value 时使用可选链或类型守卫。这是因为直到组件被挂载前，这个 ref 的值都是初始的 null，并且 v-if 将引用的元素卸载时也会被设置为 null。</p>
-<h2 id="为组件模板引用标注类型"><a href="#为组件模板引用标注类型" class="headerlink" title="为组件模板引用标注类型"></a>为组件模板引用标注类型</h2><p>有时，我们需要为一个子组件添加一个模板 ref，以便调用它公开的方法。比如，我们有一个 MyModal 子组件，它有一个打开模态框的方法：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- MyModal.vue --&gt;</span><br><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  import &#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  const isContentShown = ref(false)</span><br><span class="line">  const open = () =&gt; (isContentShown.value = true)</span><br><span class="line"></span><br><span class="line">  defineExpose(&#123;</span><br><span class="line">    open</span><br><span class="line">  &#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>为了获取 MyModal 的类型，我们首先需要通过 typeof 得到其类型，再使用 TypeScript 内置的 InstanceType 工具类型来获取其实例类型：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- App.vue --&gt;</span><br><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  import MyModal from &#x27;./MyModal.vue&#x27;</span><br><span class="line"></span><br><span class="line">  const modal = ref&lt;InstanceType&lt;typeof MyModal&gt; | null&gt;(null)</span><br><span class="line"></span><br><span class="line">  const openModal = () =&gt; &#123;</span><br><span class="line">    modal.value?.open()</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>Ok，以上就是在 Vue3 组件中使用 TS 类型的基本方法，也是我最近的 Vue3 学习笔记。欢迎在评论区交流讨论，一起学习成长！</p>
-]]></content>
-      <categories>
-        <category>vue3</category>
-      </categories>
-      <tags>
-        <tag>前端</tag>
-        <tag>vue3</tag>
-        <tag>vue</tag>
       </tags>
   </entry>
   <entry>
@@ -1119,6 +1064,87 @@
 <li>使用<code>Suspense</code>包裹组件，并配置好<code>default</code> 与 <code>fallback</code></li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;app&quot;&gt;</span><br><span class="line">    &lt;h3&gt;我是App组件&lt;/h3&gt;</span><br><span class="line">    &lt;Suspense&gt;</span><br><span class="line">      &lt;template v-slot:default&gt;</span><br><span class="line">        &lt;Child /&gt;</span><br><span class="line">      &lt;/template&gt;</span><br><span class="line">      &lt;template v-slot:fallback&gt;</span><br><span class="line">        &lt;h3&gt;加载中.....&lt;/h3&gt;</span><br><span class="line">      &lt;/template&gt;</span><br><span class="line">    &lt;/Suspense&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>vue3</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>vue3</tag>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何为Vue3组件标注TS类型</title>
+    <url>/blog/2023/09/29/vue3/%E5%A6%82%E4%BD%95%E4%B8%BAVue3%E7%BB%84%E4%BB%B6%E6%A0%87%E6%B3%A8TS%E7%B1%BB%E5%9E%8B/</url>
+    <content><![CDATA[<p>要说今年最热门的前端技术，Vue3 和 TS 绝对榜上有名了。据了解，已经有很多公司在使用 Vue3 + TS + Vite 开发新项目了。那么我们也不能落后，今天就给大家分享一下如何在 Vue3 组件中结合 Composition-Api 使用 TS 类型。如果有不会或者不熟的小伙伴，一起学起来吧！</p>
+<h2 id="为-props-标注类型"><a href="#为-props-标注类型" class="headerlink" title="为 props 标注类型"></a>为 props 标注类型</h2><p>使用 <code>&lt;script setup&gt;</code><br>当使用 <code>&lt;script setup&gt;</code> 时，<code>defineProps()</code>宏函数支持从它的参数中推导类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  const props = defineProps(&#123;</span><br><span class="line">    foo: &#123; type: String, required: true &#125;,</span><br><span class="line">    bar: Number</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  props.foo // string</span><br><span class="line">  props.bar // number | undefined</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这被称为 运行时声明 ，因为传递给 defineProps() 的参数会作为运行时的 props 选项使用。<br>第二种方式，通过泛型参数来定义 props 的类型，这种方式更加直接：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  const props = defineProps&lt;&#123;</span><br><span class="line">    foo: string</span><br><span class="line">    bar?: number</span><br><span class="line">  &#125;&gt;()</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">// or</span><br><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  interface Props &#123;</span><br><span class="line">  foo: string</span><br><span class="line">  bar?: number</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const props = defineProps&lt;Props&gt;()</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这被称为 基于类型的声明 ，编译器会尽可能地尝试根据类型参数推导出等价的运行时选项。这种方式的不足之处在于，失去了定义 <code>props</code> 默认值的能力。为了解决这个问题，我们可以使用 withDefaults 编译器宏：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">interface Props &#123;</span><br><span class="line">  msg?: string</span><br><span class="line">    labels?: string[]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">  const props = withDefaults(defineProps&lt;Props&gt;(), &#123;</span><br><span class="line">    msg: &#x27;hello&#x27;,</span><br><span class="line">    labels: () =&gt; [&#x27;one&#x27;, &#x27;two&#x27;]</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>上面代码会被编译为等价的运行时<code>props</code>的<code>default</code>选项。<br>非 <code>&lt;script setup&gt;</code><br>如果没有使用 <code>&lt;script setup&gt;</code>，那么为了开启 props 的类型推导，必须使用<code>defineComponent()</code>。传入 <code>setup()</code> 的 <code>props</code>对象类型是从 props 选项中推导而来。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; defineComponent &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  export default defineComponent(&#123;</span><br><span class="line">    props: &#123;</span><br><span class="line">      message: String</span><br><span class="line">    &#125;,</span><br><span class="line">    setup(props) &#123;</span><br><span class="line">      props.message // &lt;-- 类型：string</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="为-emits-标注类型"><a href="#为-emits-标注类型" class="headerlink" title="为 emits 标注类型"></a>为 emits 标注类型</h2><p>使用 <code>&lt;script setup&gt;</code><br>在<code>&lt;script setup&gt;</code>中，emit 函数的类型标注也可以使用 运行时声明 或者 基于类型的声明 ：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  // 运行时</span><br><span class="line">  const emit = defineEmits([&#x27;change&#x27;, &#x27;update&#x27;])</span><br><span class="line"></span><br><span class="line">  // 基于类型</span><br><span class="line">  const emit = defineEmits&lt;&#123;</span><br><span class="line">    (e: &#x27;change&#x27;, id: number): void</span><br><span class="line">      (e: &#x27;update&#x27;, value: string): void</span><br><span class="line">  &#125;&gt;()</span><br><span class="line">    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以看到，基于类型的声明 可以使我们对所触发事件的类型进行更细粒度的控制。<br>非 <code>&lt;script setup&gt;</code><br>若没有使用<code>&lt;script setup&gt;</code>，<code>defineComponent()</code>也可以根据<code>emits</code>选项推导暴露在<code>setup</code>上下文中的<code>emit</code>函数的类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; defineComponent &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  export default defineComponent(&#123;</span><br><span class="line">    emits: [&#x27;change&#x27;],</span><br><span class="line">    setup(props, &#123; emit &#125;) &#123;</span><br><span class="line">      emit(&#x27;change&#x27;) // &lt;-- 类型检查 / 自动补全</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="为-ref-标注类型"><a href="#为-ref-标注类型" class="headerlink" title="为 ref() 标注类型"></a>为 ref() 标注类型</h2><p>默认推导类型<br>ref 会根据初始化时的值自动推导其类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  // 推导出的类型：Ref&lt;number&gt;</span><br><span class="line">  const year = ref(2020)</span><br><span class="line"></span><br><span class="line">  // =&gt; TS Error: Type &#x27;string&#x27; is not assignable to type &#x27;number&#x27;.</span><br><span class="line">  year.value = &#x27;2020&#x27;</span><br></pre></td></tr></table></figure>
+<p>通过接口指定类型<br>有时我们可能想为 ref 内的值指定一个更复杂的类型，可以通过使用 Ref 这个接口：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line">  import type &#123; Ref &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  const year: Ref&lt;string | number&gt; = ref(&#x27;2020&#x27;)</span><br><span class="line"></span><br><span class="line">  year.value = 2020 // 成功！</span><br></pre></td></tr></table></figure>
+
+<p>通过泛型指定类型<br>或者，在调用 ref() 时传入一个泛型参数，来覆盖默认的推导行为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 得到的类型：Ref&lt;string | number&gt;</span><br><span class="line">const year = ref&lt;string | number&gt;(&#x27;2020&#x27;)</span><br><span class="line">year.value = 2020 // 成功！</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>如果你指定了一个泛型参数但没有给出初始值，那么最后得到的就将是一个包含 undefined 的联合类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 推导得到的类型：Ref&lt;number | undefined&gt;</span><br><span class="line">const n = ref&lt;number&gt;()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="为-reactive-标注类型"><a href="#为-reactive-标注类型" class="headerlink" title="为 reactive() 标注类型"></a>为 reactive() 标注类型</h2><p>默认推导类型<br>reactive() 也会隐式地从它的参数中推导类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; reactive &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  // 推导得到的类型：&#123; title: string &#125;</span><br><span class="line">  const book = reactive(&#123; title: &#x27;Vue 3 指引&#x27; &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>通过接口指定类型<br>要显式地指定一个 reactive 变量的类型，我们可以使用接口：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; reactive &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">interface Book &#123;</span><br><span class="line">  title: string</span><br><span class="line">  year?: number</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const book: Book = reactive(&#123; title: &#x27;Vue 3 指引&#x27; &#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="为-computed-标注类型"><a href="#为-computed-标注类型" class="headerlink" title="为 computed() 标注类型"></a>为 computed() 标注类型</h2><p>默认推导类型<br>computed() 会自动从其计算函数的返回值上推导出类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; ref, computed &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">const count = ref(0)</span><br><span class="line"></span><br><span class="line">// 推导得到的类型：ComputedRef&lt;number&gt;</span><br><span class="line">const double = computed(() =&gt; count.value * 2)</span><br><span class="line"></span><br><span class="line">// =&gt; TS Error: Property &#x27;split&#x27; does not exist on type &#x27;number&#x27;</span><br><span class="line">const result = double.value.split(&#x27;&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>通过泛型指定类型<br>你还可以通过泛型参数显式指定类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const double = computed&lt;number&gt;(() =&gt; &#123;</span><br><span class="line">  // 若返回值不是 number 类型则会报错</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="为事件处理函数标注类型"><a href="#为事件处理函数标注类型" class="headerlink" title="为事件处理函数标注类型"></a>为事件处理函数标注类型</h2><p>在处理原生 DOM 事件时，应该给事件处理函数的参数正确地标注类型。让我们看一下这个例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  function handleChange(event) &#123;</span><br><span class="line">    // `event` 隐式地标注为 `any` 类型</span><br><span class="line">    console.log(event.target.value)</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;input type=&quot;text&quot; @change=&quot;handleChange&quot; /&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>没有类型标注时，这个 event 参数会隐式地标注为 any 类型。这也会在 tsconfig.json 中配置了 “strict”: true 或 “noImplicitAny”: true 时报出一个 TS 错误。因此，建议显式地为事件处理函数的参数标注类型。此外，你可能需要显式地强制转换 event 上的属性：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function handleChange(event: Event) &#123;</span><br><span class="line">  console.log((event.target as HTMLInputElement).value)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="为-provide-inject-标注类型"><a href="#为-provide-inject-标注类型" class="headerlink" title="为 provide &#x2F; inject 标注类型"></a>为 provide &#x2F; inject 标注类型</h2><p>provide 和 inject 通常会在不同的组件中运行。要正确地为注入的值标记类型，Vue 提供了一个 InjectionKey 接口，它是一个继承自 Symbol 的泛型类型，可以用来在提供者和消费者之间同步注入值的类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import &#123; provide, inject &#125; from &#x27;vue&#x27;</span><br><span class="line">import type &#123; InjectionKey &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">const key = Symbol() as InjectionKey&lt;string&gt;</span><br><span class="line"></span><br><span class="line">provide(key, &#x27;foo&#x27;) // 若提供的是非字符串值会导致错误</span><br><span class="line"></span><br><span class="line">const foo = inject(key) // foo 的类型：string | undefined</span><br></pre></td></tr></table></figure>
+
+<p>建议将注入 key 的类型放在一个单独的文件中，这样它就可以被多个组件导入。<br>当使用字符串注入 key 时，注入值的类型是 unknown，需要通过泛型参数显式声明：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const foo = inject&lt;string&gt;(&#x27;key&#x27;) // 类型：string | undefined</span><br></pre></td></tr></table></figure>
+
+<p>注意注入的值仍然可以是 undefined，因为无法保证提供者一定会在运行时 provide 这个值。当提供了一个默认值后，这个 undefined 类型就可以被移除：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const foo = inject&lt;string&gt;(&#x27;foo&#x27;, &#x27;bar&#x27;) // 类型：string</span><br></pre></td></tr></table></figure>
+
+<p>如果你确定该值将始终被提供，则还可以强制转换该值：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const foo = inject(&#x27;foo&#x27;) as string</span><br></pre></td></tr></table></figure>
+
+<h2 id="为-dom-模板引用标注类型"><a href="#为-dom-模板引用标注类型" class="headerlink" title="为 dom 模板引用标注类型"></a>为 dom 模板引用标注类型</h2><p>模板 ref 需要通过一个显式指定的泛型参数和一个初始值 null 来创建：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  import &#123; ref, onMounted &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  const el = ref&lt;HTMLInputElement | null&gt;(null)</span><br><span class="line"></span><br><span class="line">  onMounted(() =&gt; &#123;</span><br><span class="line">    el.value?.focus()</span><br><span class="line">  &#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;input ref=&quot;el&quot; /&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<p>注意为了严格的类型安全，有必要在访问 el.value 时使用可选链或类型守卫。这是因为直到组件被挂载前，这个 ref 的值都是初始的 null，并且 v-if 将引用的元素卸载时也会被设置为 null。</p>
+<h2 id="为组件模板引用标注类型"><a href="#为组件模板引用标注类型" class="headerlink" title="为组件模板引用标注类型"></a>为组件模板引用标注类型</h2><p>有时，我们需要为一个子组件添加一个模板 ref，以便调用它公开的方法。比如，我们有一个 MyModal 子组件，它有一个打开模态框的方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- MyModal.vue --&gt;</span><br><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  import &#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">  const isContentShown = ref(false)</span><br><span class="line">  const open = () =&gt; (isContentShown.value = true)</span><br><span class="line"></span><br><span class="line">  defineExpose(&#123;</span><br><span class="line">    open</span><br><span class="line">  &#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>为了获取 MyModal 的类型，我们首先需要通过 typeof 得到其类型，再使用 TypeScript 内置的 InstanceType 工具类型来获取其实例类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- App.vue --&gt;</span><br><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">  import MyModal from &#x27;./MyModal.vue&#x27;</span><br><span class="line"></span><br><span class="line">  const modal = ref&lt;InstanceType&lt;typeof MyModal&gt; | null&gt;(null)</span><br><span class="line"></span><br><span class="line">  const openModal = () =&gt; &#123;</span><br><span class="line">    modal.value?.open()</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Ok，以上就是在 Vue3 组件中使用 TS 类型的基本方法，也是我最近的 Vue3 学习笔记。欢迎在评论区交流讨论，一起学习成长！</p>
 ]]></content>
       <categories>
         <category>vue3</category>
