@@ -11,53 +11,41 @@
 # ---------------------------------------------------------------------------------------
 base_info:
   # Your blog website title
-  title: 远方的个人博客
+  title: 远方的博客
 
   # Your blog website author name
   author: gml
 
-# ---------------------------------------------------------------------------------------
-# Theme style settings
-# Docs: https://keep-docs.xpoet.cn/tutorial/configuration-guide/style.html
-# ---------------------------------------------------------------------------------------
-style:
-  # Theme primary color
-  primary_color: "#0066cc"
+  primary_color: "#0072cc"
 
-  # Your blog website logo image
-  # You can use local image, image external link or don't fill
+  avatar: /images/avatar.svg
   logo: /images/logo.svg
-
-  # Favicon (You can use local image or image external link)
   favicon: /images/logo.svg
 
-  # Avatar (You can use local image or image external link)
-  avatar: /images/avatar.svg
+# First screen style settings
+first_screen:
+  enable: true  # Option values: true | false
 
-  # First screen style settings
-  first_screen:
-    enable: true  # Option values: true | false
+  # Set transparent background for header
+  header_transparent: true  # Option values: true | false
 
-    # Set transparent background for header
-    header_transparent: true  # Option values: true | false
+  # First screen background image (You can use local image or image external link)
+  background_img: /images/bg.svg
 
-    # First screen background image (You can use local image or image external link)
-    background_img: /images/bg.svg
+  # First screen description
+  # You can use the "||" to begin a newline, maximum is two lines.
+  description: 不忘初心
 
-    # First screen description
-    # You can use the "||" to begin a newline, maximum is two lines.
-    description: 不忘初心
+  # If enable hitokoto, first screen description is different every time when you enter the site
+  hitokoto: true      # Option values: true | false
 
-    # If enable hitokoto, first screen description is different every time when you enter the site
-    hitokoto: false      # Option values: true | false
+# Page scroll style settings
+scroll:
+  # Show progress bar in top when page scroll
+  progress_bar: false  # Option values: true | false
 
-  # Page scroll style settings
-  scroll:
-    # Show progress bar in top when page scroll
-    progress_bar: false  # Option values: true | false
-
-    # Show percent when page scroll
-    percent: true       # Option values: true | false
+  # Show percent when page scroll
+  percent: true       # Option values: true | false
 
 # ---------------------------------------------------------------------------------------
 # Navigation menu
@@ -66,11 +54,11 @@ style:
 # If you want to enable Categories and Tags, you need to create categories and tags pages
 # e.g. `hexo new page categories` or `hexo new page tags`
 menu:
-  Home: /
-  Archives: /archives
-  Tags: /tags
-  Categories: /categories
-  # Links: /links
+  Home: / || fa-solid fa-house
+  Archives: /archives || fa-solid fa-box-archive
+  Tags: /tags || fa-solid fa-tags 
+  Categories: /categories || fa-solid fa-layer-group
+  # Links: /links || fa-solid fa-link  
   # Changelog: /changelog
   # ......
 
