@@ -173,6 +173,27 @@
       </tags>
   </entry>
   <entry>
+    <title>infer 条件类型中的类型推断</title>
+    <url>/blog/2024/04/18/TypeScript/infer%20%E6%9D%A1%E4%BB%B6%E7%B1%BB%E5%9E%8B%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD/</url>
+    <content><![CDATA[<p><code>infer</code> 关键字在条件类型中使用，用于从依赖于泛型参数的类型中推断（提取）泛型参数的类型。这允许您编写更灵活且可重用的类型定义。</p>
+<p>例子一：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">ElementType</span>&lt;T&gt; = T <span class="keyword">extends</span> (infer U)[] ? U : <span class="built_in">never</span>;</span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Numbers</span> = <span class="title class_">ElementType</span>&lt;<span class="built_in">number</span>[]&gt;; <span class="comment">// number</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Strings</span> = <span class="title class_">ElementType</span>&lt;<span class="built_in">string</span>[]&gt;; <span class="comment">// string</span></span><br></pre></td></tr></table></figure>
+
+<p>例子二：获取函数的返回类型</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> returntpye&lt;T&gt; = T <span class="keyword">extends</span> (...<span class="attr">args</span>: <span class="built_in">any</span>) =&gt; infer R ? R : <span class="built_in">any</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> fn = <span class="function">(<span class="params">a: <span class="built_in">number</span>, b: <span class="built_in">number</span></span>) =&gt;</span> <span class="built_in">string</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">pen</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="string">&quot;2&quot;</span> &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> d = returntpye&lt;fn&gt;;</span><br><span class="line"><span class="keyword">type</span> r = returntpye&lt;<span class="keyword">typeof</span> pen&gt;;</span><br></pre></td></tr></table></figure>
+
+<p>例子三：获取函数的第一个参数类型</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> firstArgType&lt;T&gt; = T <span class="keyword">extends</span> (<span class="attr">first</span>: infer R, ...<span class="attr">args</span>: <span class="built_in">any</span>[]) =&gt; <span class="built_in">any</span></span><br><span class="line">  ? R</span><br><span class="line">  : <span class="built_in">any</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> fs = <span class="function">(<span class="params">a: <span class="built_in">string</span>, b: <span class="built_in">number</span></span>) =&gt;</span> <span class="built_in">void</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> fst = firstArgType&lt;fs&gt;; <span class="comment">// string</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>TypeScript</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>TypeScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ts中 interface 和 type 的概念和用法</title>
     <url>/blog/2023/09/28/TypeScript/ts%E4%B8%AD%20interface%20%E5%92%8C%20type%20%E7%9A%84%E6%A6%82%E5%BF%B5%E5%92%8C%E7%94%A8%E6%B3%95/</url>
     <content><![CDATA[<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>type : 类型别名<br>概念：可以给一个或多个数据类型（string、number、…）取一个别名；<br>举例：</p>
@@ -260,109 +281,6 @@
       </tags>
   </entry>
   <entry>
-    <title>commit 规范</title>
-    <url>/blog/2023/09/29/git/commit/</url>
-    <content><![CDATA[<h2 id="什么是约定式提交"><a href="#什么是约定式提交" class="headerlink" title="什么是约定式提交"></a>什么是约定式提交</h2><p>约定式提交（Conventional Commits）是一种用于代码版本控制的规范，旨在通过明确和标准化提交信息来提高代码协作质量和效率。其基本原则是通过规定提交信息的结构和语义来提高代码版本控制的可读性、可维护性和自动化程度。<br>约定式提交规范通常要求提交信息包括一个描述性的”类型”、一个可选的”作用域”、一个用于简洁说明的”主题”，以及可选的”正文”和”尾部”等组成部分。这些组成部分的格式和语义都是根据规范要求进行约定的，比如使用”feat”来表示新功能、”fix”表示修复错误、”docs”表示文档变更等。<br>通过遵循约定式提交规范，开发人员可以更容易地理解和管理代码的变更历史，同时也为自动化工具提供了更多可靠的信息，例如自动生成版本号、发布日志和代码库更新等操作。<br>提交说明的结构如下所示:<br>原文：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;type&gt;[optional scope]: &lt;description&gt;</span><br><span class="line">[optional body]</span><br><span class="line">[optional footer(s)]</span><br></pre></td></tr></table></figure>
-<p>译文：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;类型&gt;[可选 范围]: &lt;描述&gt;</span><br><span class="line">[可选 正文]</span><br><span class="line">[可选 脚注]</span><br></pre></td></tr></table></figure>
-<p>提交说明包含了下面的结构化元素，以向类库使用者表明其意图：</p>
-<ol>
-<li>fix: 类型 为 fix 的提交表示在代码库中修复了一个 bug（这和语义化版本中的 <code>PATCH</code>[1] 相对应）。</li>
-<li>feat: 类型 为 feat 的提交表示在代码库中新增了一个功能（这和语义化版本中的 <code>MINOR</code>[2] 相对应）。</li>
-<li>BREAKING CHANGE: 在脚注中包含 BREAKING CHANGE: 或 &lt;类型&gt;(范围) 后面有一个 ! 的提交，表示引入了破坏性 API 变更（这和语义化版本中的 <code>MAJOR</code>[3] 相对应）。破坏性变更可以是任意 类型 提交的一部分。</li>
-<li>除 fix: 和 feat: 之外，也可以使用其它提交 类型 ，例如 @commitlint&#x2F;config-conventional[4]（基于 Angular 约定[5]）中推荐的 build:、chore:、 ci:、docs:、style:、refactor:、perf:、test:，等等。</li>
-<li>脚注中除了 BREAKING CHANGE: <description> ，其它条目应该采用类似 git trailer format[6] 这样的惯例。</li>
-</ol>
-<p>其它提交类型在约定式提交规范中并没有强制限制，并且在语义化版本中没有隐式影响（除非它们包含 BREAKING CHANGE）。可以为提交类型添加一个围在圆括号内的范围，以为其提供额外的上下文信息。例如 feat(parser): adds ability to parse arrays.。</p>
-<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>包含了描述并且脚注中有破坏性变更的提交说明</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">feat: allow provided config object to extend other configs</span><br><span class="line">BREAKING CHANGE: `extends` key in config file is now used for extending other config files</span><br></pre></td></tr></table></figure>
-
-<p>包含了 ! 字符以提醒注意破坏性变更的提交说明</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">feat!: send an email to the customer when a product is shipped</span><br></pre></td></tr></table></figure>
-
-<p>包含了范围和破坏性变更 ! 的提交说明</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">feat(api)!: send an email to the customer when a product is shipped</span><br></pre></td></tr></table></figure>
-
-<p>包含了 ! 和 BREAKING CHANGE 脚注的提交说明</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chore!: drop support for Node 6</span><br><span class="line">BREAKING CHANGE: use JavaScript features not available in Node 6.</span><br></pre></td></tr></table></figure>
-
-<p>不包含正文的提交说明</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docs: correct spelling of CHANGELOG</span><br></pre></td></tr></table></figure>
-
-<p>包含范围的提交说明</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">feat(lang): add polish language</span><br></pre></td></tr></table></figure>
-
-<p>包含多行正文和多行脚注的提交说明</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fix: prevent racing of requests</span><br><span class="line">Introduce a request id and a reference to latest request. Dismissincoming responses other than from latest request.</span><br><span class="line">Remove timeouts which were used to mitigate the racing issue but areobsolete now.</span><br><span class="line">Reviewed-by: ZRefs: #123</span><br></pre></td></tr></table></figure>
-<h3 id="type-类型概览"><a href="#type-类型概览" class="headerlink" title="type 类型概览"></a>type 类型概览</h3><table>
-<thead>
-<tr>
-<th>值</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>feat</td>
-<td>新增一个功能</td>
-</tr>
-<tr>
-<td>fix</td>
-<td>修复一个Bug</td>
-</tr>
-<tr>
-<td>docs</td>
-<td>文档变更</td>
-</tr>
-<tr>
-<td>style</td>
-<td>代码格式（不影响功能，例如空格、分号等格式修正）</td>
-</tr>
-<tr>
-<td>refactor</td>
-<td>代码重构</td>
-</tr>
-<tr>
-<td>perf</td>
-<td>改善性能</td>
-</tr>
-<tr>
-<td>test</td>
-<td>测试</td>
-</tr>
-<tr>
-<td>build</td>
-<td>变更项目构建或外部依赖（例如scopes: webpack、gulp、npm等）</td>
-</tr>
-<tr>
-<td>ci</td>
-<td>更改持续集成软件的配置文件和package中的scripts命令，例如scopes: Travis, Circle等</td>
-</tr>
-<tr>
-<td>chore</td>
-<td>变更构建流程或辅助工具</td>
-</tr>
-<tr>
-<td>revert</td>
-<td>代码回退</td>
-</tr>
-</tbody></table>
-<h2 id="为什么需要约定式提交？"><a href="#为什么需要约定式提交？" class="headerlink" title="为什么需要约定式提交？"></a>为什么需要约定式提交？</h2><p>Git提交信息需要遵循Angular约定是为了使提交信息格式清晰、易于阅读和理解，从而提高代码协作的效率。Angular约定包括以下三个部分：</p>
-<ol>
-<li>标题（header）：用一行简短的描述来总结更改内容，并使用特殊关键字指定更改类型和影响范围。</li>
-<li>正文（body）：提供更详细的更改描述，包括更改原因、影响和解决方案等信息。</li>
-<li>页脚（footer）：提供一些附加信息，如相关链接、关联的BUG编号等。</li>
-</ol>
-<p>通过遵循Angular约定，可以使提交信息更加规范化和易于管理，从而方便其他团队成员阅读和理解更改的含义，从而提高团队协作效率。此外，遵循Angular约定的提交信息还可以更好地与许多自动化工具进行集成，如自动化版本控制、代码审查工具等。</p>
-<h2 id="如何遵守约定式提交？"><a href="#如何遵守约定式提交？" class="headerlink" title="如何遵守约定式提交？"></a>如何遵守约定式提交？</h2>]]></content>
-      <categories>
-        <category>git</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>什么是Git</title>
     <url>/blog/2023/09/29/git/git/</url>
     <content><![CDATA[<h2 id="SVN与Git的最主要的区别"><a href="#SVN与Git的最主要的区别" class="headerlink" title="SVN与Git的最主要的区别?"></a>SVN与Git的最主要的区别?</h2><p>SVN的存储需要依赖一个服务器，而git所有的东西是放在线上的。节约成本，省时省力。<br>git 是分布式的，svn 是集中式。<br>git 按照源数据的方式存储内容，svn 是按照文件的形式存储<br>git 和 svn 中的分支不同。<br>git 没有全局版本号，svn 有。<br>git 内容的完整性优于 svn。</p>
@@ -379,7 +297,7 @@
 </tr>
 <tr>
 <td>设置邮箱</td>
-<td>git config –global user.email “<a class="link"   href="mailto:&#x31;&#56;&#x34;&#53;&#x31;&#52;&#x38;&#55;&#x36;&#x37;&#50;&#x40;&#x71;&#113;&#x2e;&#99;&#x6f;&#109;" >&#x31;&#56;&#x34;&#53;&#x31;&#52;&#x38;&#55;&#x36;&#x37;&#50;&#x40;&#x71;&#113;&#x2e;&#99;&#x6f;&#109;<i class="fas fa-external-link-alt"></i></a>“</td>
+<td>git config –global user.email “<a class="link"   href="mailto:&#49;&#56;&#x34;&#53;&#49;&#52;&#x38;&#x37;&#x36;&#x37;&#50;&#64;&#113;&#x71;&#x2e;&#x63;&#111;&#x6d;" >&#49;&#56;&#x34;&#53;&#49;&#52;&#x38;&#x37;&#x36;&#x37;&#50;&#64;&#113;&#x71;&#x2e;&#x63;&#111;&#x6d;<i class="fas fa-external-link-alt"></i></a>“</td>
 </tr>
 <tr>
 <td>创建项目</td>
@@ -498,6 +416,109 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 删除指定储藏</span><br><span class="line">git stash drop [储藏名]</span><br><span class="line"></span><br><span class="line"># 删除全部储藏</span><br><span class="line">git stash clear</span><br></pre></td></tr></table></figure>
 <h6 id="显示与当前工作区的差异"><a href="#显示与当前工作区的差异" class="headerlink" title="显示与当前工作区的差异"></a>显示与当前工作区的差异</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 显示差异</span><br><span class="line">git stash show [储藏名]</span><br></pre></td></tr></table></figure>
 ]]></content>
+      <categories>
+        <category>git</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>commit 规范</title>
+    <url>/blog/2023/09/29/git/commit/</url>
+    <content><![CDATA[<h2 id="什么是约定式提交"><a href="#什么是约定式提交" class="headerlink" title="什么是约定式提交"></a>什么是约定式提交</h2><p>约定式提交（Conventional Commits）是一种用于代码版本控制的规范，旨在通过明确和标准化提交信息来提高代码协作质量和效率。其基本原则是通过规定提交信息的结构和语义来提高代码版本控制的可读性、可维护性和自动化程度。<br>约定式提交规范通常要求提交信息包括一个描述性的”类型”、一个可选的”作用域”、一个用于简洁说明的”主题”，以及可选的”正文”和”尾部”等组成部分。这些组成部分的格式和语义都是根据规范要求进行约定的，比如使用”feat”来表示新功能、”fix”表示修复错误、”docs”表示文档变更等。<br>通过遵循约定式提交规范，开发人员可以更容易地理解和管理代码的变更历史，同时也为自动化工具提供了更多可靠的信息，例如自动生成版本号、发布日志和代码库更新等操作。<br>提交说明的结构如下所示:<br>原文：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;type&gt;[optional scope]: &lt;description&gt;</span><br><span class="line">[optional body]</span><br><span class="line">[optional footer(s)]</span><br></pre></td></tr></table></figure>
+<p>译文：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;类型&gt;[可选 范围]: &lt;描述&gt;</span><br><span class="line">[可选 正文]</span><br><span class="line">[可选 脚注]</span><br></pre></td></tr></table></figure>
+<p>提交说明包含了下面的结构化元素，以向类库使用者表明其意图：</p>
+<ol>
+<li>fix: 类型 为 fix 的提交表示在代码库中修复了一个 bug（这和语义化版本中的 <code>PATCH</code>[1] 相对应）。</li>
+<li>feat: 类型 为 feat 的提交表示在代码库中新增了一个功能（这和语义化版本中的 <code>MINOR</code>[2] 相对应）。</li>
+<li>BREAKING CHANGE: 在脚注中包含 BREAKING CHANGE: 或 &lt;类型&gt;(范围) 后面有一个 ! 的提交，表示引入了破坏性 API 变更（这和语义化版本中的 <code>MAJOR</code>[3] 相对应）。破坏性变更可以是任意 类型 提交的一部分。</li>
+<li>除 fix: 和 feat: 之外，也可以使用其它提交 类型 ，例如 @commitlint&#x2F;config-conventional[4]（基于 Angular 约定[5]）中推荐的 build:、chore:、 ci:、docs:、style:、refactor:、perf:、test:，等等。</li>
+<li>脚注中除了 BREAKING CHANGE: <description> ，其它条目应该采用类似 git trailer format[6] 这样的惯例。</li>
+</ol>
+<p>其它提交类型在约定式提交规范中并没有强制限制，并且在语义化版本中没有隐式影响（除非它们包含 BREAKING CHANGE）。可以为提交类型添加一个围在圆括号内的范围，以为其提供额外的上下文信息。例如 feat(parser): adds ability to parse arrays.。</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>包含了描述并且脚注中有破坏性变更的提交说明</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">feat: allow provided config object to extend other configs</span><br><span class="line">BREAKING CHANGE: `extends` key in config file is now used for extending other config files</span><br></pre></td></tr></table></figure>
+
+<p>包含了 ! 字符以提醒注意破坏性变更的提交说明</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">feat!: send an email to the customer when a product is shipped</span><br></pre></td></tr></table></figure>
+
+<p>包含了范围和破坏性变更 ! 的提交说明</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">feat(api)!: send an email to the customer when a product is shipped</span><br></pre></td></tr></table></figure>
+
+<p>包含了 ! 和 BREAKING CHANGE 脚注的提交说明</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chore!: drop support for Node 6</span><br><span class="line">BREAKING CHANGE: use JavaScript features not available in Node 6.</span><br></pre></td></tr></table></figure>
+
+<p>不包含正文的提交说明</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docs: correct spelling of CHANGELOG</span><br></pre></td></tr></table></figure>
+
+<p>包含范围的提交说明</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">feat(lang): add polish language</span><br></pre></td></tr></table></figure>
+
+<p>包含多行正文和多行脚注的提交说明</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fix: prevent racing of requests</span><br><span class="line">Introduce a request id and a reference to latest request. Dismissincoming responses other than from latest request.</span><br><span class="line">Remove timeouts which were used to mitigate the racing issue but areobsolete now.</span><br><span class="line">Reviewed-by: ZRefs: #123</span><br></pre></td></tr></table></figure>
+<h3 id="type-类型概览"><a href="#type-类型概览" class="headerlink" title="type 类型概览"></a>type 类型概览</h3><table>
+<thead>
+<tr>
+<th>值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>feat</td>
+<td>新增一个功能</td>
+</tr>
+<tr>
+<td>fix</td>
+<td>修复一个Bug</td>
+</tr>
+<tr>
+<td>docs</td>
+<td>文档变更</td>
+</tr>
+<tr>
+<td>style</td>
+<td>代码格式（不影响功能，例如空格、分号等格式修正）</td>
+</tr>
+<tr>
+<td>refactor</td>
+<td>代码重构</td>
+</tr>
+<tr>
+<td>perf</td>
+<td>改善性能</td>
+</tr>
+<tr>
+<td>test</td>
+<td>测试</td>
+</tr>
+<tr>
+<td>build</td>
+<td>变更项目构建或外部依赖（例如scopes: webpack、gulp、npm等）</td>
+</tr>
+<tr>
+<td>ci</td>
+<td>更改持续集成软件的配置文件和package中的scripts命令，例如scopes: Travis, Circle等</td>
+</tr>
+<tr>
+<td>chore</td>
+<td>变更构建流程或辅助工具</td>
+</tr>
+<tr>
+<td>revert</td>
+<td>代码回退</td>
+</tr>
+</tbody></table>
+<h2 id="为什么需要约定式提交？"><a href="#为什么需要约定式提交？" class="headerlink" title="为什么需要约定式提交？"></a>为什么需要约定式提交？</h2><p>Git提交信息需要遵循Angular约定是为了使提交信息格式清晰、易于阅读和理解，从而提高代码协作的效率。Angular约定包括以下三个部分：</p>
+<ol>
+<li>标题（header）：用一行简短的描述来总结更改内容，并使用特殊关键字指定更改类型和影响范围。</li>
+<li>正文（body）：提供更详细的更改描述，包括更改原因、影响和解决方案等信息。</li>
+<li>页脚（footer）：提供一些附加信息，如相关链接、关联的BUG编号等。</li>
+</ol>
+<p>通过遵循Angular约定，可以使提交信息更加规范化和易于管理，从而方便其他团队成员阅读和理解更改的含义，从而提高团队协作效率。此外，遵循Angular约定的提交信息还可以更好地与许多自动化工具进行集成，如自动化版本控制、代码审查工具等。</p>
+<h2 id="如何遵守约定式提交？"><a href="#如何遵守约定式提交？" class="headerlink" title="如何遵守约定式提交？"></a>如何遵守约定式提交？</h2>]]></content>
       <categories>
         <category>git</category>
       </categories>
