@@ -30,6 +30,32 @@
       </tags>
   </entry>
   <entry>
+    <title>在不使用js在情况下只用css实现瀑布流效果</title>
+    <url>/blog/2024/06/13/%E5%9C%A8%E4%B8%8D%E4%BD%BF%E7%94%A8js%E5%9C%A8%E6%83%85%E5%86%B5%E4%B8%8B%E5%8F%AA%E7%94%A8css%E5%AE%9E%E7%8E%B0%E7%80%91%E5%B8%83%E6%B5%81%E6%95%88%E6%9E%9C/</url>
+    <content><![CDATA[<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/blog/images/2024-06-13164325.png"
+                        alt="Untitled"
+                 ></p>
+<p>使用到的是<code>grid</code> 布局，需要注意的是<code>grid-template-rows: masonry;</code> 目前只有<code>Firefox</code> 浏览器支持这个效果，而且还是一个实验性属性需要在设置里面开发实验性选项才行。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/blog/images/2024-06-13165006.png"
+                        alt="Untitled"
+                 ></p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-id">#img</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">display</span>: grid;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">grid-template-columns</span>: <span class="built_in">repeat</span>(<span class="number">4</span>, <span class="number">1</span>fr);</span></span><br><span class="line"><span class="language-css">            <span class="attribute">grid-gap</span>: <span class="number">10px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">grid-template-rows</span>: masonry;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css">        <span class="selector-id">#img</span> <span class="selector-tag">img</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">width</span>: <span class="number">200px</span>;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;img&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">const</span> img =  <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;img&#x27;</span>)</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">let</span> ele = <span class="string">&#x27;&#x27;</span></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">14</span>; i++) &#123;</span></span><br><span class="line"><span class="language-javascript">            ele += <span class="string">`&lt;img   src=&quot;/blog./images/img (<span class="subst">$&#123;i+<span class="number">1</span>&#125;</span>).jpg&quot;  &gt;`</span></span></span><br><span class="line"><span class="language-javascript">            </span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">        img.<span class="property">innerHTML</span> = ele</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>javascipt</category>
+      </categories>
+      <tags>
+        <tag>js库</tag>
+        <tag>前端</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>禁用浏览器的缩放功能</title>
     <url>/blog/2024/04/16/%E7%A6%81%E7%94%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E7%BC%A9%E6%94%BE%E5%8A%9F%E8%83%BD/</url>
     <content><![CDATA[<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>在<code>html</code> 文件中的<code>head</code> 里面加上<code>meta</code> 标签</p>
@@ -53,38 +79,6 @@
       <tags>
         <tag>js库</tag>
         <tag>前端</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>TypeScript 实用工具类型之 Omit 类型</title>
-    <url>/blog/2023/09/28/TypeScript/TypeScript%20%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E4%B9%8B%20Omit%20%E7%B1%BB%E5%9E%8B/</url>
-    <content><![CDATA[<p>在本文中，我们将讨论 TypeScript 中使用<code>Omit&lt;&gt;</code>的对象类型转换。这是 TypeScript 实用工具类型系列的第二部分。<br>在上一篇文章（<a class="link"   href="https://www.yuque.com/geminglu/web/tub1ueqfotbudiub" >TypeScript 实用工具类型之 Pick 类型<i class="fas fa-external-link-alt"></i></a>）中，我们介绍了一个例子，在这个例子中，我们通过 <code>Pick&lt;&gt;</code>从基本类型<code>SuperbUser</code>中选择一些属性来派生一个<code>GuestUser</code>类型。之后暗示过，如果要选择的属性数量大于被丢弃的属性数量，那么选择就会变得不那么方便。在这种情况下，我们应该使用<code>Omit&lt;&gt;</code>。<br>在这篇文章中，我们将通过为<code>Subscriber</code>实体创建一个类型来考虑一个<code>Omit&lt;&gt;</code>的例子。</p>
-<h2 id="1-示例"><a href="#1-示例" class="headerlink" title="1.示例"></a>1.示例</h2><p>像<code>Pick&lt;&gt;</code>一样，<code>Omit&lt;&gt;</code>接受基类型作为第一个参数，接受要省略的键的联合类型作为第二个参数，并返回排除这些属性的派生类型。<br>回过头来看 ERD，<code>Subscriber</code>实体具有与<code>SuperbUser</code>相同的所有属性——除了 <code>roles</code>：<br><img  
-                       lazyload
-                       alt="image"
-                       data-src="/blog/images/df060b0f2d93412b3f9fb9363b565243.png"
-                       
-                 ><br>从<code>SuperbUser</code>派生<code>Subscriber</code>类型显然需要我们只忽略<code>roles</code>属性，而不是选择其他所有属性：</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">SuperbUser</span> = &#123;</span><br><span class="line">  <span class="attr">userId</span>: <span class="built_in">number</span>,</span><br><span class="line">  <span class="attr">macAddress</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">username</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">email</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">password</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">firstName</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">lastName</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">roles</span>: (<span class="string">&#x27;Admin&#x27;</span> | <span class="string">&#x27;Editor&#x27;</span> | <span class="string">&#x27;Author&#x27;</span>)[]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Subscriber</span> = <span class="title class_">Omit</span>&lt;<span class="title class_">SuperbUser</span>, <span class="string">&#x27;roles&#x27;</span>&gt;;</span><br></pre></td></tr></table></figure>
-<p>因此，在本例中，TypeScript 的<code>Omit&lt;&gt;</code>比<code>Pick&lt;&gt;</code>更方便。我们现在可以创建一个<code>subscriber</code>对象，它的字段中删除了<code>roles</code>属性:</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="attr">subscriber</span>: <span class="title class_">Subscriber</span> = &#123;</span><br><span class="line">  <span class="attr">userId</span>: <span class="number">4</span>,</span><br><span class="line">  <span class="attr">macAddress</span>: <span class="string">&#x27;132546&#x27;</span>,</span><br><span class="line">  <span class="attr">username</span>: <span class="string">&#x27;xiaan&#x27;</span>,</span><br><span class="line">  <span class="attr">email</span>: <span class="string">&#x27;xiaan@163.com&#x27;</span>,</span><br><span class="line">  <span class="attr">password</span>: <span class="string">&#x27;12345678&#x27;</span>,</span><br><span class="line">  <span class="attr">firstName</span>: <span class="string">&#x27;an&#x27;</span>,</span><br><span class="line">  <span class="attr">lastName</span>: <span class="string">&#x27;xia&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(subscriber);</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">  &quot;userId&quot;: 4,</span></span><br><span class="line"><span class="comment">  &quot;macAddress&quot;: &quot;132546&quot;,</span></span><br><span class="line"><span class="comment">  &quot;username&quot;: &quot;xiaan&quot;,</span></span><br><span class="line"><span class="comment">  &quot;email&quot;: &quot;xiaan@163.com&quot;,</span></span><br><span class="line"><span class="comment">  &quot;password&quot;: &quot;12345678&quot;,</span></span><br><span class="line"><span class="comment">  &quot;firstName&quot;: &quot;an&quot;,</span></span><br><span class="line"><span class="comment">  &quot;lastName&quot;: &quot;xia&quot;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(subscriber.<span class="property">roles</span>); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
-<p>现在，让我们试着向 subscriber 添加 roles属性：</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">subscriber.<span class="property">roles</span> = [<span class="string">&#x27;Reader&#x27;</span>, <span class="string">&#x27;Commenter&#x27;</span>]; <span class="comment">// Property &#x27;roles&#x27; does not exist on type &#x27;Subscriber&#x27;.</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(subscriber.<span class="property">roles</span>); <span class="comment">// [&quot;Reader&quot;, &quot;Commenter&quot;]</span></span><br></pre></td></tr></table></figure>
-<p>TypeScript 抛出一个错误：</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Property &#x27;roles&#x27; does not exist on type &#x27;Subscriber&#x27;.</span></span><br></pre></td></tr></table></figure>
-<h2 id="2-应用于-Interface"><a href="#2-应用于-Interface" class="headerlink" title="2. 应用于 Interface"></a>2. 应用于 Interface</h2><p>就像在<code>Pick&lt;&gt;</code>中一样，我们可以使用<code>SuperbUser</code>的接口，结果是一样的：</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">SuperbUser</span> &#123;</span><br><span class="line">  <span class="attr">userId</span>: <span class="built_in">number</span>;</span><br><span class="line">  <span class="attr">macAddress</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">username</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">email</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">password</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">firstName</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">lastName</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">roles</span>: (<span class="string">&#x27;Admin&#x27;</span> | <span class="string">&#x27;Editor&#x27;</span> | <span class="string">&#x27;Author&#x27;</span>)[]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Subscriber</span> = <span class="title class_">Omit</span>&lt;<span class="title class_">SuperbUser</span>, <span class="string">&#x27;roles&#x27;</span>&gt;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">subscriber</span>: <span class="title class_">Subscriber</span> = &#123;</span><br><span class="line">  <span class="attr">userId</span>: <span class="number">4</span>,</span><br><span class="line">  <span class="attr">macAddress</span>: <span class="string">&#x27;132546&#x27;</span>,</span><br><span class="line">  <span class="attr">username</span>: <span class="string">&#x27;xiaan&#x27;</span>,</span><br><span class="line">  <span class="attr">email</span>: <span class="string">&#x27;xiaan@163.com&#x27;</span>,</span><br><span class="line">  <span class="attr">password</span>: <span class="string">&#x27;12345678&#x27;</span>,</span><br><span class="line">  <span class="attr">firstName</span>: <span class="string">&#x27;an&#x27;</span>,</span><br><span class="line">  <span class="attr">lastName</span>: <span class="string">&#x27;xia&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(subscriber);</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">  &quot;userId&quot;: 4,</span></span><br><span class="line"><span class="comment">  &quot;macAddress&quot;: &quot;132546&quot;,</span></span><br><span class="line"><span class="comment">  &quot;username&quot;: &quot;xiaan&quot;,</span></span><br><span class="line"><span class="comment">  &quot;email&quot;: &quot;xiaan@163.com&quot;,</span></span><br><span class="line"><span class="comment">  &quot;password&quot;: &quot;12345678&quot;,</span></span><br><span class="line"><span class="comment">  &quot;firstName&quot;: &quot;an&quot;,</span></span><br><span class="line"><span class="comment">  &quot;lastName&quot;: &quot;xia&quot;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(subscriber.<span class="property">roles</span>); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
-<h2 id="3-谨慎使用"><a href="#3-谨慎使用" class="headerlink" title="3. 谨慎使用"></a>3. 谨慎使用</h2><p>与 Pick&lt;&gt; 一样，Typescript Omit 的第二个参数也接受键的并集。因此，如果需要省略任何其他属性，可以使用操作符 | 将它们添加到第二个参数中：</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Subscriber</span> = <span class="title class_">Omit</span>&lt;<span class="title class_">SuperbUser</span>, <span class="string">&#x27;roles&#x27;</span> | <span class="string">&#x27;firstName&#x27;</span> | ...&gt;;</span><br></pre></td></tr></table></figure>
-<p>当需要省略的属性多于需要选取的属性时，应该避免使用<code>Omit&lt;&gt;</code>，而使用<code>Pick&lt;&gt;</code>。</p>
-<h2 id="4-小结"><a href="#4-小结" class="headerlink" title="4.小结"></a>4.小结</h2><p>在本文中，我们通过一个示例深入研究了<code>Omit&lt;&gt;</code>，该示例通过从基本类型<code>SuperbUser</code>中省略一个属性来为 Subscriber 实体派生一个类型。我们看到，<code>Omit&lt;&gt;</code> 与<code>Pick&lt;&gt;</code>相反，当我们想从基类型中选取更多属性并较少省略时，<code>Omit&lt;&gt;</code>更加方便。<br>在下一篇文章中，我们将介绍使用<code>Partial</code>的对象类型转换。</p>
-]]></content>
-      <categories>
-        <category>TypeScript</category>
-      </categories>
-      <tags>
-        <tag>前端</tag>
-        <tag>TypeScript</tag>
       </tags>
   </entry>
   <entry>
@@ -115,6 +109,38 @@
 <p>我们还可以将<code>Omit&lt;&gt;</code>的返回类型重构为中介类型<code>StrictSubscriber</code>，并将其作为 TypeScript Partial 的参数传递：</p>
 <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">StrictSubscriber</span> = <span class="title class_">Omit</span>&lt;<span class="title class_">SuperbUser</span>, <span class="string">&#x27;roles&#x27;</span>&gt;;</span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Subscriber</span> = <span class="title class_">Partial</span>;</span><br></pre></td></tr></table></figure>
 <h2 id="4-小结"><a href="#4-小结" class="headerlink" title="4. 小结"></a>4. 小结</h2><p>在这篇文章中，我们介绍了使用实用转换器 partial 的使用，不过手动将类型的某些属性设置为可选更可取，特别是在处理从 API 返回的类型时。</p>
+]]></content>
+      <categories>
+        <category>TypeScript</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>TypeScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>TypeScript 实用工具类型之 Omit 类型</title>
+    <url>/blog/2023/09/28/TypeScript/TypeScript%20%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E4%B9%8B%20Omit%20%E7%B1%BB%E5%9E%8B/</url>
+    <content><![CDATA[<p>在本文中，我们将讨论 TypeScript 中使用<code>Omit&lt;&gt;</code>的对象类型转换。这是 TypeScript 实用工具类型系列的第二部分。<br>在上一篇文章（<a class="link"   href="https://www.yuque.com/geminglu/web/tub1ueqfotbudiub" >TypeScript 实用工具类型之 Pick 类型<i class="fas fa-external-link-alt"></i></a>）中，我们介绍了一个例子，在这个例子中，我们通过 <code>Pick&lt;&gt;</code>从基本类型<code>SuperbUser</code>中选择一些属性来派生一个<code>GuestUser</code>类型。之后暗示过，如果要选择的属性数量大于被丢弃的属性数量，那么选择就会变得不那么方便。在这种情况下，我们应该使用<code>Omit&lt;&gt;</code>。<br>在这篇文章中，我们将通过为<code>Subscriber</code>实体创建一个类型来考虑一个<code>Omit&lt;&gt;</code>的例子。</p>
+<h2 id="1-示例"><a href="#1-示例" class="headerlink" title="1.示例"></a>1.示例</h2><p>像<code>Pick&lt;&gt;</code>一样，<code>Omit&lt;&gt;</code>接受基类型作为第一个参数，接受要省略的键的联合类型作为第二个参数，并返回排除这些属性的派生类型。<br>回过头来看 ERD，<code>Subscriber</code>实体具有与<code>SuperbUser</code>相同的所有属性——除了 <code>roles</code>：<br><img  
+                       lazyload
+                       alt="image"
+                       data-src="/blog/images/df060b0f2d93412b3f9fb9363b565243.png"
+                       
+                 ><br>从<code>SuperbUser</code>派生<code>Subscriber</code>类型显然需要我们只忽略<code>roles</code>属性，而不是选择其他所有属性：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">SuperbUser</span> = &#123;</span><br><span class="line">  <span class="attr">userId</span>: <span class="built_in">number</span>,</span><br><span class="line">  <span class="attr">macAddress</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">username</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">email</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">password</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">firstName</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">lastName</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">roles</span>: (<span class="string">&#x27;Admin&#x27;</span> | <span class="string">&#x27;Editor&#x27;</span> | <span class="string">&#x27;Author&#x27;</span>)[]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Subscriber</span> = <span class="title class_">Omit</span>&lt;<span class="title class_">SuperbUser</span>, <span class="string">&#x27;roles&#x27;</span>&gt;;</span><br></pre></td></tr></table></figure>
+<p>因此，在本例中，TypeScript 的<code>Omit&lt;&gt;</code>比<code>Pick&lt;&gt;</code>更方便。我们现在可以创建一个<code>subscriber</code>对象，它的字段中删除了<code>roles</code>属性:</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="attr">subscriber</span>: <span class="title class_">Subscriber</span> = &#123;</span><br><span class="line">  <span class="attr">userId</span>: <span class="number">4</span>,</span><br><span class="line">  <span class="attr">macAddress</span>: <span class="string">&#x27;132546&#x27;</span>,</span><br><span class="line">  <span class="attr">username</span>: <span class="string">&#x27;xiaan&#x27;</span>,</span><br><span class="line">  <span class="attr">email</span>: <span class="string">&#x27;xiaan@163.com&#x27;</span>,</span><br><span class="line">  <span class="attr">password</span>: <span class="string">&#x27;12345678&#x27;</span>,</span><br><span class="line">  <span class="attr">firstName</span>: <span class="string">&#x27;an&#x27;</span>,</span><br><span class="line">  <span class="attr">lastName</span>: <span class="string">&#x27;xia&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(subscriber);</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">  &quot;userId&quot;: 4,</span></span><br><span class="line"><span class="comment">  &quot;macAddress&quot;: &quot;132546&quot;,</span></span><br><span class="line"><span class="comment">  &quot;username&quot;: &quot;xiaan&quot;,</span></span><br><span class="line"><span class="comment">  &quot;email&quot;: &quot;xiaan@163.com&quot;,</span></span><br><span class="line"><span class="comment">  &quot;password&quot;: &quot;12345678&quot;,</span></span><br><span class="line"><span class="comment">  &quot;firstName&quot;: &quot;an&quot;,</span></span><br><span class="line"><span class="comment">  &quot;lastName&quot;: &quot;xia&quot;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(subscriber.<span class="property">roles</span>); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<p>现在，让我们试着向 subscriber 添加 roles属性：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">subscriber.<span class="property">roles</span> = [<span class="string">&#x27;Reader&#x27;</span>, <span class="string">&#x27;Commenter&#x27;</span>]; <span class="comment">// Property &#x27;roles&#x27; does not exist on type &#x27;Subscriber&#x27;.</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(subscriber.<span class="property">roles</span>); <span class="comment">// [&quot;Reader&quot;, &quot;Commenter&quot;]</span></span><br></pre></td></tr></table></figure>
+<p>TypeScript 抛出一个错误：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Property &#x27;roles&#x27; does not exist on type &#x27;Subscriber&#x27;.</span></span><br></pre></td></tr></table></figure>
+<h2 id="2-应用于-Interface"><a href="#2-应用于-Interface" class="headerlink" title="2. 应用于 Interface"></a>2. 应用于 Interface</h2><p>就像在<code>Pick&lt;&gt;</code>中一样，我们可以使用<code>SuperbUser</code>的接口，结果是一样的：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">SuperbUser</span> &#123;</span><br><span class="line">  <span class="attr">userId</span>: <span class="built_in">number</span>;</span><br><span class="line">  <span class="attr">macAddress</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">username</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">email</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">password</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">firstName</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">lastName</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">roles</span>: (<span class="string">&#x27;Admin&#x27;</span> | <span class="string">&#x27;Editor&#x27;</span> | <span class="string">&#x27;Author&#x27;</span>)[]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Subscriber</span> = <span class="title class_">Omit</span>&lt;<span class="title class_">SuperbUser</span>, <span class="string">&#x27;roles&#x27;</span>&gt;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">subscriber</span>: <span class="title class_">Subscriber</span> = &#123;</span><br><span class="line">  <span class="attr">userId</span>: <span class="number">4</span>,</span><br><span class="line">  <span class="attr">macAddress</span>: <span class="string">&#x27;132546&#x27;</span>,</span><br><span class="line">  <span class="attr">username</span>: <span class="string">&#x27;xiaan&#x27;</span>,</span><br><span class="line">  <span class="attr">email</span>: <span class="string">&#x27;xiaan@163.com&#x27;</span>,</span><br><span class="line">  <span class="attr">password</span>: <span class="string">&#x27;12345678&#x27;</span>,</span><br><span class="line">  <span class="attr">firstName</span>: <span class="string">&#x27;an&#x27;</span>,</span><br><span class="line">  <span class="attr">lastName</span>: <span class="string">&#x27;xia&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(subscriber);</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">  &quot;userId&quot;: 4,</span></span><br><span class="line"><span class="comment">  &quot;macAddress&quot;: &quot;132546&quot;,</span></span><br><span class="line"><span class="comment">  &quot;username&quot;: &quot;xiaan&quot;,</span></span><br><span class="line"><span class="comment">  &quot;email&quot;: &quot;xiaan@163.com&quot;,</span></span><br><span class="line"><span class="comment">  &quot;password&quot;: &quot;12345678&quot;,</span></span><br><span class="line"><span class="comment">  &quot;firstName&quot;: &quot;an&quot;,</span></span><br><span class="line"><span class="comment">  &quot;lastName&quot;: &quot;xia&quot;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(subscriber.<span class="property">roles</span>); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<h2 id="3-谨慎使用"><a href="#3-谨慎使用" class="headerlink" title="3. 谨慎使用"></a>3. 谨慎使用</h2><p>与 Pick&lt;&gt; 一样，Typescript Omit 的第二个参数也接受键的并集。因此，如果需要省略任何其他属性，可以使用操作符 | 将它们添加到第二个参数中：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Subscriber</span> = <span class="title class_">Omit</span>&lt;<span class="title class_">SuperbUser</span>, <span class="string">&#x27;roles&#x27;</span> | <span class="string">&#x27;firstName&#x27;</span> | ...&gt;;</span><br></pre></td></tr></table></figure>
+<p>当需要省略的属性多于需要选取的属性时，应该避免使用<code>Omit&lt;&gt;</code>，而使用<code>Pick&lt;&gt;</code>。</p>
+<h2 id="4-小结"><a href="#4-小结" class="headerlink" title="4.小结"></a>4.小结</h2><p>在本文中，我们通过一个示例深入研究了<code>Omit&lt;&gt;</code>，该示例通过从基本类型<code>SuperbUser</code>中省略一个属性来为 Subscriber 实体派生一个类型。我们看到，<code>Omit&lt;&gt;</code> 与<code>Pick&lt;&gt;</code>相反，当我们想从基类型中选取更多属性并较少省略时，<code>Omit&lt;&gt;</code>更加方便。<br>在下一篇文章中，我们将介绍使用<code>Partial</code>的对象类型转换。</p>
 ]]></content>
       <categories>
         <category>TypeScript</category>
@@ -160,19 +186,6 @@
       </tags>
   </entry>
   <entry>
-    <title>TypeScript</title>
-    <url>/blog/2023/09/28/TypeScript/TypeScript/</url>
-    <content><![CDATA[<p>使用npm安装<br>npm install -g typescript<br>编译<br>tsc helloworld.ts<br>生成配置文件(tsconfig.json)<br>tsc –init</p>
-]]></content>
-      <categories>
-        <category>TypeScript</category>
-      </categories>
-      <tags>
-        <tag>前端</tag>
-        <tag>TypeScript</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>infer 条件类型中的类型推断</title>
     <url>/blog/2024/04/18/TypeScript/infer%20%E6%9D%A1%E4%BB%B6%E7%B1%BB%E5%9E%8B%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD/</url>
     <content><![CDATA[<p><code>infer</code> 关键字在条件类型中使用，用于从依赖于泛型参数的类型中推断（提取）泛型参数的类型。这允许您编写更灵活且可重用的类型定义。</p>
@@ -184,6 +197,19 @@
 
 <p>例子三：获取函数的第一个参数类型</p>
 <figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> firstArgType&lt;T&gt; = T <span class="keyword">extends</span> (<span class="attr">first</span>: infer R, ...<span class="attr">args</span>: <span class="built_in">any</span>[]) =&gt; <span class="built_in">any</span></span><br><span class="line">  ? R</span><br><span class="line">  : <span class="built_in">any</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> fs = <span class="function">(<span class="params">a: <span class="built_in">string</span>, b: <span class="built_in">number</span></span>) =&gt;</span> <span class="built_in">void</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> fst = firstArgType&lt;fs&gt;; <span class="comment">// string</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>TypeScript</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>TypeScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>TypeScript</title>
+    <url>/blog/2023/09/28/TypeScript/TypeScript/</url>
+    <content><![CDATA[<p>使用npm安装<br>npm install -g typescript<br>编译<br>tsc helloworld.ts<br>生成配置文件(tsconfig.json)<br>tsc –init</p>
 ]]></content>
       <categories>
         <category>TypeScript</category>
@@ -281,6 +307,109 @@
       </tags>
   </entry>
   <entry>
+    <title>commit 规范</title>
+    <url>/blog/2023/09/29/git/commit/</url>
+    <content><![CDATA[<h2 id="什么是约定式提交"><a href="#什么是约定式提交" class="headerlink" title="什么是约定式提交"></a>什么是约定式提交</h2><p>约定式提交（Conventional Commits）是一种用于代码版本控制的规范，旨在通过明确和标准化提交信息来提高代码协作质量和效率。其基本原则是通过规定提交信息的结构和语义来提高代码版本控制的可读性、可维护性和自动化程度。<br>约定式提交规范通常要求提交信息包括一个描述性的”类型”、一个可选的”作用域”、一个用于简洁说明的”主题”，以及可选的”正文”和”尾部”等组成部分。这些组成部分的格式和语义都是根据规范要求进行约定的，比如使用”feat”来表示新功能、”fix”表示修复错误、”docs”表示文档变更等。<br>通过遵循约定式提交规范，开发人员可以更容易地理解和管理代码的变更历史，同时也为自动化工具提供了更多可靠的信息，例如自动生成版本号、发布日志和代码库更新等操作。<br>提交说明的结构如下所示:<br>原文：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;type&gt;[optional scope]: &lt;description&gt;</span><br><span class="line">[optional body]</span><br><span class="line">[optional footer(s)]</span><br></pre></td></tr></table></figure>
+<p>译文：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;类型&gt;[可选 范围]: &lt;描述&gt;</span><br><span class="line">[可选 正文]</span><br><span class="line">[可选 脚注]</span><br></pre></td></tr></table></figure>
+<p>提交说明包含了下面的结构化元素，以向类库使用者表明其意图：</p>
+<ol>
+<li>fix: 类型 为 fix 的提交表示在代码库中修复了一个 bug（这和语义化版本中的 <code>PATCH</code>[1] 相对应）。</li>
+<li>feat: 类型 为 feat 的提交表示在代码库中新增了一个功能（这和语义化版本中的 <code>MINOR</code>[2] 相对应）。</li>
+<li>BREAKING CHANGE: 在脚注中包含 BREAKING CHANGE: 或 &lt;类型&gt;(范围) 后面有一个 ! 的提交，表示引入了破坏性 API 变更（这和语义化版本中的 <code>MAJOR</code>[3] 相对应）。破坏性变更可以是任意 类型 提交的一部分。</li>
+<li>除 fix: 和 feat: 之外，也可以使用其它提交 类型 ，例如 @commitlint&#x2F;config-conventional[4]（基于 Angular 约定[5]）中推荐的 build:、chore:、 ci:、docs:、style:、refactor:、perf:、test:，等等。</li>
+<li>脚注中除了 BREAKING CHANGE: <description> ，其它条目应该采用类似 git trailer format[6] 这样的惯例。</li>
+</ol>
+<p>其它提交类型在约定式提交规范中并没有强制限制，并且在语义化版本中没有隐式影响（除非它们包含 BREAKING CHANGE）。可以为提交类型添加一个围在圆括号内的范围，以为其提供额外的上下文信息。例如 feat(parser): adds ability to parse arrays.。</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>包含了描述并且脚注中有破坏性变更的提交说明</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">feat: allow provided config object to extend other configs</span><br><span class="line">BREAKING CHANGE: `extends` key in config file is now used for extending other config files</span><br></pre></td></tr></table></figure>
+
+<p>包含了 ! 字符以提醒注意破坏性变更的提交说明</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">feat!: send an email to the customer when a product is shipped</span><br></pre></td></tr></table></figure>
+
+<p>包含了范围和破坏性变更 ! 的提交说明</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">feat(api)!: send an email to the customer when a product is shipped</span><br></pre></td></tr></table></figure>
+
+<p>包含了 ! 和 BREAKING CHANGE 脚注的提交说明</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chore!: drop support for Node 6</span><br><span class="line">BREAKING CHANGE: use JavaScript features not available in Node 6.</span><br></pre></td></tr></table></figure>
+
+<p>不包含正文的提交说明</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docs: correct spelling of CHANGELOG</span><br></pre></td></tr></table></figure>
+
+<p>包含范围的提交说明</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">feat(lang): add polish language</span><br></pre></td></tr></table></figure>
+
+<p>包含多行正文和多行脚注的提交说明</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fix: prevent racing of requests</span><br><span class="line">Introduce a request id and a reference to latest request. Dismissincoming responses other than from latest request.</span><br><span class="line">Remove timeouts which were used to mitigate the racing issue but areobsolete now.</span><br><span class="line">Reviewed-by: ZRefs: #123</span><br></pre></td></tr></table></figure>
+<h3 id="type-类型概览"><a href="#type-类型概览" class="headerlink" title="type 类型概览"></a>type 类型概览</h3><table>
+<thead>
+<tr>
+<th>值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>feat</td>
+<td>新增一个功能</td>
+</tr>
+<tr>
+<td>fix</td>
+<td>修复一个Bug</td>
+</tr>
+<tr>
+<td>docs</td>
+<td>文档变更</td>
+</tr>
+<tr>
+<td>style</td>
+<td>代码格式（不影响功能，例如空格、分号等格式修正）</td>
+</tr>
+<tr>
+<td>refactor</td>
+<td>代码重构</td>
+</tr>
+<tr>
+<td>perf</td>
+<td>改善性能</td>
+</tr>
+<tr>
+<td>test</td>
+<td>测试</td>
+</tr>
+<tr>
+<td>build</td>
+<td>变更项目构建或外部依赖（例如scopes: webpack、gulp、npm等）</td>
+</tr>
+<tr>
+<td>ci</td>
+<td>更改持续集成软件的配置文件和package中的scripts命令，例如scopes: Travis, Circle等</td>
+</tr>
+<tr>
+<td>chore</td>
+<td>变更构建流程或辅助工具</td>
+</tr>
+<tr>
+<td>revert</td>
+<td>代码回退</td>
+</tr>
+</tbody></table>
+<h2 id="为什么需要约定式提交？"><a href="#为什么需要约定式提交？" class="headerlink" title="为什么需要约定式提交？"></a>为什么需要约定式提交？</h2><p>Git提交信息需要遵循Angular约定是为了使提交信息格式清晰、易于阅读和理解，从而提高代码协作的效率。Angular约定包括以下三个部分：</p>
+<ol>
+<li>标题（header）：用一行简短的描述来总结更改内容，并使用特殊关键字指定更改类型和影响范围。</li>
+<li>正文（body）：提供更详细的更改描述，包括更改原因、影响和解决方案等信息。</li>
+<li>页脚（footer）：提供一些附加信息，如相关链接、关联的BUG编号等。</li>
+</ol>
+<p>通过遵循Angular约定，可以使提交信息更加规范化和易于管理，从而方便其他团队成员阅读和理解更改的含义，从而提高团队协作效率。此外，遵循Angular约定的提交信息还可以更好地与许多自动化工具进行集成，如自动化版本控制、代码审查工具等。</p>
+<h2 id="如何遵守约定式提交？"><a href="#如何遵守约定式提交？" class="headerlink" title="如何遵守约定式提交？"></a>如何遵守约定式提交？</h2>]]></content>
+      <categories>
+        <category>git</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>什么是Git</title>
     <url>/blog/2023/09/29/git/git/</url>
     <content><![CDATA[<h2 id="SVN与Git的最主要的区别"><a href="#SVN与Git的最主要的区别" class="headerlink" title="SVN与Git的最主要的区别?"></a>SVN与Git的最主要的区别?</h2><p>SVN的存储需要依赖一个服务器，而git所有的东西是放在线上的。节约成本，省时省力。<br>git 是分布式的，svn 是集中式。<br>git 按照源数据的方式存储内容，svn 是按照文件的形式存储<br>git 和 svn 中的分支不同。<br>git 没有全局版本号，svn 有。<br>git 内容的完整性优于 svn。</p>
@@ -297,7 +426,7 @@
 </tr>
 <tr>
 <td>设置邮箱</td>
-<td>git config –global user.email “<a class="link"   href="mailto:&#49;&#56;&#x34;&#53;&#49;&#52;&#x38;&#x37;&#x36;&#x37;&#50;&#64;&#113;&#x71;&#x2e;&#x63;&#111;&#x6d;" >&#49;&#56;&#x34;&#53;&#49;&#52;&#x38;&#x37;&#x36;&#x37;&#50;&#64;&#113;&#x71;&#x2e;&#x63;&#111;&#x6d;<i class="fas fa-external-link-alt"></i></a>“</td>
+<td>git config –global user.email “<a class="link"   href="mailto:&#x31;&#x38;&#x34;&#x35;&#49;&#x34;&#x38;&#55;&#x36;&#x37;&#x32;&#64;&#x71;&#x71;&#x2e;&#99;&#x6f;&#x6d;" >&#x31;&#x38;&#x34;&#x35;&#49;&#x34;&#x38;&#55;&#x36;&#x37;&#x32;&#64;&#x71;&#x71;&#x2e;&#99;&#x6f;&#x6d;<i class="fas fa-external-link-alt"></i></a>“</td>
 </tr>
 <tr>
 <td>创建项目</td>
@@ -416,109 +545,6 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 删除指定储藏</span><br><span class="line">git stash drop [储藏名]</span><br><span class="line"></span><br><span class="line"># 删除全部储藏</span><br><span class="line">git stash clear</span><br></pre></td></tr></table></figure>
 <h6 id="显示与当前工作区的差异"><a href="#显示与当前工作区的差异" class="headerlink" title="显示与当前工作区的差异"></a>显示与当前工作区的差异</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 显示差异</span><br><span class="line">git stash show [储藏名]</span><br></pre></td></tr></table></figure>
 ]]></content>
-      <categories>
-        <category>git</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>commit 规范</title>
-    <url>/blog/2023/09/29/git/commit/</url>
-    <content><![CDATA[<h2 id="什么是约定式提交"><a href="#什么是约定式提交" class="headerlink" title="什么是约定式提交"></a>什么是约定式提交</h2><p>约定式提交（Conventional Commits）是一种用于代码版本控制的规范，旨在通过明确和标准化提交信息来提高代码协作质量和效率。其基本原则是通过规定提交信息的结构和语义来提高代码版本控制的可读性、可维护性和自动化程度。<br>约定式提交规范通常要求提交信息包括一个描述性的”类型”、一个可选的”作用域”、一个用于简洁说明的”主题”，以及可选的”正文”和”尾部”等组成部分。这些组成部分的格式和语义都是根据规范要求进行约定的，比如使用”feat”来表示新功能、”fix”表示修复错误、”docs”表示文档变更等。<br>通过遵循约定式提交规范，开发人员可以更容易地理解和管理代码的变更历史，同时也为自动化工具提供了更多可靠的信息，例如自动生成版本号、发布日志和代码库更新等操作。<br>提交说明的结构如下所示:<br>原文：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;type&gt;[optional scope]: &lt;description&gt;</span><br><span class="line">[optional body]</span><br><span class="line">[optional footer(s)]</span><br></pre></td></tr></table></figure>
-<p>译文：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;类型&gt;[可选 范围]: &lt;描述&gt;</span><br><span class="line">[可选 正文]</span><br><span class="line">[可选 脚注]</span><br></pre></td></tr></table></figure>
-<p>提交说明包含了下面的结构化元素，以向类库使用者表明其意图：</p>
-<ol>
-<li>fix: 类型 为 fix 的提交表示在代码库中修复了一个 bug（这和语义化版本中的 <code>PATCH</code>[1] 相对应）。</li>
-<li>feat: 类型 为 feat 的提交表示在代码库中新增了一个功能（这和语义化版本中的 <code>MINOR</code>[2] 相对应）。</li>
-<li>BREAKING CHANGE: 在脚注中包含 BREAKING CHANGE: 或 &lt;类型&gt;(范围) 后面有一个 ! 的提交，表示引入了破坏性 API 变更（这和语义化版本中的 <code>MAJOR</code>[3] 相对应）。破坏性变更可以是任意 类型 提交的一部分。</li>
-<li>除 fix: 和 feat: 之外，也可以使用其它提交 类型 ，例如 @commitlint&#x2F;config-conventional[4]（基于 Angular 约定[5]）中推荐的 build:、chore:、 ci:、docs:、style:、refactor:、perf:、test:，等等。</li>
-<li>脚注中除了 BREAKING CHANGE: <description> ，其它条目应该采用类似 git trailer format[6] 这样的惯例。</li>
-</ol>
-<p>其它提交类型在约定式提交规范中并没有强制限制，并且在语义化版本中没有隐式影响（除非它们包含 BREAKING CHANGE）。可以为提交类型添加一个围在圆括号内的范围，以为其提供额外的上下文信息。例如 feat(parser): adds ability to parse arrays.。</p>
-<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>包含了描述并且脚注中有破坏性变更的提交说明</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">feat: allow provided config object to extend other configs</span><br><span class="line">BREAKING CHANGE: `extends` key in config file is now used for extending other config files</span><br></pre></td></tr></table></figure>
-
-<p>包含了 ! 字符以提醒注意破坏性变更的提交说明</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">feat!: send an email to the customer when a product is shipped</span><br></pre></td></tr></table></figure>
-
-<p>包含了范围和破坏性变更 ! 的提交说明</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">feat(api)!: send an email to the customer when a product is shipped</span><br></pre></td></tr></table></figure>
-
-<p>包含了 ! 和 BREAKING CHANGE 脚注的提交说明</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chore!: drop support for Node 6</span><br><span class="line">BREAKING CHANGE: use JavaScript features not available in Node 6.</span><br></pre></td></tr></table></figure>
-
-<p>不包含正文的提交说明</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docs: correct spelling of CHANGELOG</span><br></pre></td></tr></table></figure>
-
-<p>包含范围的提交说明</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">feat(lang): add polish language</span><br></pre></td></tr></table></figure>
-
-<p>包含多行正文和多行脚注的提交说明</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fix: prevent racing of requests</span><br><span class="line">Introduce a request id and a reference to latest request. Dismissincoming responses other than from latest request.</span><br><span class="line">Remove timeouts which were used to mitigate the racing issue but areobsolete now.</span><br><span class="line">Reviewed-by: ZRefs: #123</span><br></pre></td></tr></table></figure>
-<h3 id="type-类型概览"><a href="#type-类型概览" class="headerlink" title="type 类型概览"></a>type 类型概览</h3><table>
-<thead>
-<tr>
-<th>值</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>feat</td>
-<td>新增一个功能</td>
-</tr>
-<tr>
-<td>fix</td>
-<td>修复一个Bug</td>
-</tr>
-<tr>
-<td>docs</td>
-<td>文档变更</td>
-</tr>
-<tr>
-<td>style</td>
-<td>代码格式（不影响功能，例如空格、分号等格式修正）</td>
-</tr>
-<tr>
-<td>refactor</td>
-<td>代码重构</td>
-</tr>
-<tr>
-<td>perf</td>
-<td>改善性能</td>
-</tr>
-<tr>
-<td>test</td>
-<td>测试</td>
-</tr>
-<tr>
-<td>build</td>
-<td>变更项目构建或外部依赖（例如scopes: webpack、gulp、npm等）</td>
-</tr>
-<tr>
-<td>ci</td>
-<td>更改持续集成软件的配置文件和package中的scripts命令，例如scopes: Travis, Circle等</td>
-</tr>
-<tr>
-<td>chore</td>
-<td>变更构建流程或辅助工具</td>
-</tr>
-<tr>
-<td>revert</td>
-<td>代码回退</td>
-</tr>
-</tbody></table>
-<h2 id="为什么需要约定式提交？"><a href="#为什么需要约定式提交？" class="headerlink" title="为什么需要约定式提交？"></a>为什么需要约定式提交？</h2><p>Git提交信息需要遵循Angular约定是为了使提交信息格式清晰、易于阅读和理解，从而提高代码协作的效率。Angular约定包括以下三个部分：</p>
-<ol>
-<li>标题（header）：用一行简短的描述来总结更改内容，并使用特殊关键字指定更改类型和影响范围。</li>
-<li>正文（body）：提供更详细的更改描述，包括更改原因、影响和解决方案等信息。</li>
-<li>页脚（footer）：提供一些附加信息，如相关链接、关联的BUG编号等。</li>
-</ol>
-<p>通过遵循Angular约定，可以使提交信息更加规范化和易于管理，从而方便其他团队成员阅读和理解更改的含义，从而提高团队协作效率。此外，遵循Angular约定的提交信息还可以更好地与许多自动化工具进行集成，如自动化版本控制、代码审查工具等。</p>
-<h2 id="如何遵守约定式提交？"><a href="#如何遵守约定式提交？" class="headerlink" title="如何遵守约定式提交？"></a>如何遵守约定式提交？</h2>]]></content>
       <categories>
         <category>git</category>
       </categories>
