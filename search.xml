@@ -294,6 +294,19 @@
       </tags>
   </entry>
   <entry>
+    <title>数据类型</title>
+    <url>/blog/2023/09/28/TypeScript/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</url>
+    <content><![CDATA[<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 布尔类型（boolean）</span></span><br><span class="line"><span class="comment">// 数字类型（number）</span></span><br><span class="line"><span class="comment">// 数组类型（array）</span></span><br><span class="line"><span class="comment">// 元素类型（enum）</span></span><br><span class="line"><span class="comment">// 任意类型（any）</span></span><br><span class="line"><span class="comment">// null和undefined</span></span><br><span class="line"><span class="comment">// void类型</span></span><br><span class="line"><span class="comment">// never类型</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//  在ts中定义变量必须指定类型</span></span><br><span class="line"><span class="comment">// var flag:boolean = 123;     ❎</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">flagf</span>:boolean = <span class="literal">true</span>;    <span class="comment">//✅</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">num</span>:number = <span class="number">123</span>;</span><br><span class="line"><span class="keyword">var</span> <span class="attr">str</span>:string = <span class="string">&quot;123&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义数组ts也可以跟ES5一样的方式来定义数组</span></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">12</span>];</span><br><span class="line"><span class="comment">// ts里时这样定义的</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">arr1</span>:number[] = [<span class="number">1</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">3</span>,<span class="number">5</span>] <span class="comment">//✅</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">arr2</span>:string[] = [<span class="string">&#x27;2&#x27;</span>,<span class="string">&#x27;43&#x27;</span>,<span class="string">&#x27;2&#x27;</span>,<span class="string">&#x27;43&#x27;</span>]</span><br><span class="line"><span class="comment">// var arr1:number[] = [1,4,&quot;6&quot;,3,5]   // 数组里必须都是字符串不然会保存❎</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 元组类型（tuple）是数组的一种</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">arr3</span>:[number,string] = [<span class="number">123</span>,<span class="string">&#x27;typescript&#x27;</span>]</span><br><span class="line"><span class="comment">// var arr3:[number,string] = [&#x27;typescript&#x27;,123]   // ❎ 必须按照定义的顺序来</span></span><br><span class="line"><span class="comment">// var arr3:[number,string] = [&#x27;typescript&#x27;,&quot;123&quot;]   // ❎</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 枚举类型</span></span><br><span class="line">enum <span class="title class_">Flag</span> &#123;succ=<span class="number">1</span>,error=<span class="number">2</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> <span class="attr">f</span>:<span class="title class_">Flag</span> = <span class="title class_">Flag</span>.<span class="property">succ</span>;</span><br><span class="line"><span class="comment">// var f:Flag = Flag.error;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(f)  </span><br><span class="line">enum <span class="title class_">Color</span> &#123;blue,red,<span class="string">&#x27;orange&#x27;</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> <span class="attr">c</span>:<span class="title class_">Color</span> = <span class="title class_">Color</span>.<span class="property">red</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(c)  <span class="comment">// 1    如果标识符没有赋值他的值就是他在集合中的下标，如果把第一个标识符的值改成了2那么第二个标识符的值就是3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// any任意类型，和ES5中没有指定类型是一样的</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">a1</span>:any = <span class="number">123</span>;</span><br><span class="line"><span class="keyword">var</span> <span class="attr">a1</span>:any = <span class="string">&quot;123&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> <span class="attr">a1</span>:any = <span class="literal">true</span>;</span><br><span class="line"><span class="comment">// null和undefined</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">b1</span>:number;</span><br><span class="line"><span class="comment">// console.log(b1);    // 如果一个变量定义了没有赋值就使用了在ts中就会报错</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">b2</span>:<span class="literal">null</span> | <span class="literal">undefined</span>;    <span class="comment">// 可以给他定义一个null | undefined，那他就不会报错</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b2) <span class="comment">// null</span></span><br><span class="line"><span class="comment">// void类型,表示方法没有返回任何类型</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">run</span>(<span class="params"></span>):<span class="keyword">void</span>&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;run&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">run</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// never类型（包括null和undefined）</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>TypeScript</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>TypeScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>commit 规范</title>
     <url>/blog/2023/09/29/git/commit/</url>
     <content><![CDATA[<h2 id="什么是约定式提交"><a href="#什么是约定式提交" class="headerlink" title="什么是约定式提交"></a>什么是约定式提交</h2><p>约定式提交（Conventional Commits）是一种用于代码版本控制的规范，旨在通过明确和标准化提交信息来提高代码协作质量和效率。其基本原则是通过规定提交信息的结构和语义来提高代码版本控制的可读性、可维护性和自动化程度。<br>约定式提交规范通常要求提交信息包括一个描述性的”类型”、一个可选的”作用域”、一个用于简洁说明的”主题”，以及可选的”正文”和”尾部”等组成部分。这些组成部分的格式和语义都是根据规范要求进行约定的，比如使用”feat”来表示新功能、”fix”表示修复错误、”docs”表示文档变更等。<br>通过遵循约定式提交规范，开发人员可以更容易地理解和管理代码的变更历史，同时也为自动化工具提供了更多可靠的信息，例如自动生成版本号、发布日志和代码库更新等操作。<br>提交说明的结构如下所示:<br>原文：</p>
@@ -413,7 +426,7 @@
 </tr>
 <tr>
 <td>设置邮箱</td>
-<td>git config –global user.email “<a class="link"   href="mailto:&#49;&#x38;&#x34;&#x35;&#49;&#x34;&#56;&#x37;&#54;&#x37;&#x32;&#64;&#113;&#x71;&#x2e;&#99;&#111;&#x6d;" >&#49;&#x38;&#x34;&#x35;&#49;&#x34;&#56;&#x37;&#54;&#x37;&#x32;&#64;&#113;&#x71;&#x2e;&#99;&#111;&#x6d;<i class="fas fa-external-link-alt"></i></a>“</td>
+<td>git config –global user.email “<a class="link"   href="mailto:&#49;&#x38;&#x34;&#x35;&#x31;&#x34;&#56;&#x37;&#x36;&#55;&#50;&#64;&#113;&#x71;&#46;&#99;&#111;&#x6d;" >&#49;&#x38;&#x34;&#x35;&#x31;&#x34;&#56;&#x37;&#x36;&#55;&#50;&#64;&#113;&#x71;&#46;&#99;&#111;&#x6d;<i class="fas fa-external-link-alt"></i></a>“</td>
 </tr>
 <tr>
 <td>创建项目</td>
@@ -537,19 +550,6 @@
       </categories>
       <tags>
         <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数据类型</title>
-    <url>/blog/2023/09/28/TypeScript/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</url>
-    <content><![CDATA[<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 布尔类型（boolean）</span></span><br><span class="line"><span class="comment">// 数字类型（number）</span></span><br><span class="line"><span class="comment">// 数组类型（array）</span></span><br><span class="line"><span class="comment">// 元素类型（enum）</span></span><br><span class="line"><span class="comment">// 任意类型（any）</span></span><br><span class="line"><span class="comment">// null和undefined</span></span><br><span class="line"><span class="comment">// void类型</span></span><br><span class="line"><span class="comment">// never类型</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//  在ts中定义变量必须指定类型</span></span><br><span class="line"><span class="comment">// var flag:boolean = 123;     ❎</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">flagf</span>:boolean = <span class="literal">true</span>;    <span class="comment">//✅</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">num</span>:number = <span class="number">123</span>;</span><br><span class="line"><span class="keyword">var</span> <span class="attr">str</span>:string = <span class="string">&quot;123&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义数组ts也可以跟ES5一样的方式来定义数组</span></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">12</span>];</span><br><span class="line"><span class="comment">// ts里时这样定义的</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">arr1</span>:number[] = [<span class="number">1</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">3</span>,<span class="number">5</span>] <span class="comment">//✅</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">arr2</span>:string[] = [<span class="string">&#x27;2&#x27;</span>,<span class="string">&#x27;43&#x27;</span>,<span class="string">&#x27;2&#x27;</span>,<span class="string">&#x27;43&#x27;</span>]</span><br><span class="line"><span class="comment">// var arr1:number[] = [1,4,&quot;6&quot;,3,5]   // 数组里必须都是字符串不然会保存❎</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 元组类型（tuple）是数组的一种</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">arr3</span>:[number,string] = [<span class="number">123</span>,<span class="string">&#x27;typescript&#x27;</span>]</span><br><span class="line"><span class="comment">// var arr3:[number,string] = [&#x27;typescript&#x27;,123]   // ❎ 必须按照定义的顺序来</span></span><br><span class="line"><span class="comment">// var arr3:[number,string] = [&#x27;typescript&#x27;,&quot;123&quot;]   // ❎</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 枚举类型</span></span><br><span class="line">enum <span class="title class_">Flag</span> &#123;succ=<span class="number">1</span>,error=<span class="number">2</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> <span class="attr">f</span>:<span class="title class_">Flag</span> = <span class="title class_">Flag</span>.<span class="property">succ</span>;</span><br><span class="line"><span class="comment">// var f:Flag = Flag.error;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(f)  </span><br><span class="line">enum <span class="title class_">Color</span> &#123;blue,red,<span class="string">&#x27;orange&#x27;</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> <span class="attr">c</span>:<span class="title class_">Color</span> = <span class="title class_">Color</span>.<span class="property">red</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(c)  <span class="comment">// 1    如果标识符没有赋值他的值就是他在集合中的下标，如果把第一个标识符的值改成了2那么第二个标识符的值就是3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// any任意类型，和ES5中没有指定类型是一样的</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">a1</span>:any = <span class="number">123</span>;</span><br><span class="line"><span class="keyword">var</span> <span class="attr">a1</span>:any = <span class="string">&quot;123&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> <span class="attr">a1</span>:any = <span class="literal">true</span>;</span><br><span class="line"><span class="comment">// null和undefined</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">b1</span>:number;</span><br><span class="line"><span class="comment">// console.log(b1);    // 如果一个变量定义了没有赋值就使用了在ts中就会报错</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">b2</span>:<span class="literal">null</span> | <span class="literal">undefined</span>;    <span class="comment">// 可以给他定义一个null | undefined，那他就不会报错</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b2) <span class="comment">// null</span></span><br><span class="line"><span class="comment">// void类型,表示方法没有返回任何类型</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">run</span>(<span class="params"></span>):<span class="keyword">void</span>&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;run&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">run</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// never类型（包括null和undefined）</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>TypeScript</category>
-      </categories>
-      <tags>
-        <tag>前端</tag>
-        <tag>TypeScript</tag>
       </tags>
   </entry>
   <entry>
@@ -1221,7 +1221,7 @@
       </tags>
   </entry>
   <entry>
-    <title></title>
+    <title>home Assistant 安装HACS</title>
     <url>/blog/2024/07/01/Linux/homeAssistant/%E5%AE%89%E8%A3%85HACS/</url>
     <content><![CDATA[<h2 id="手动安装HACS"><a href="#手动安装HACS" class="headerlink" title="手动安装HACS"></a>手动安装HACS</h2><p>下载HACS压缩包</p>
 <p>下载地址：<a class="link"   href="https://github.com/hacs/integration/releases" >Releases · hacs&#x2F;integration · GitHub<i class="fas fa-external-link-alt"></i></a></p>
@@ -1302,9 +1302,16 @@
                         alt="image-20240701151504365"
                  ></p>
 ]]></content>
+      <categories>
+        <category>javascipt</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>home Assistant</tag>
+      </tags>
   </entry>
   <entry>
-    <title></title>
+    <title>虚拟机安装openWRT作为旁路由</title>
     <url>/blog/2024/07/01/Linux/homeAssistant/%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85openWRT%E4%BD%9C%E4%B8%BA%E6%97%81%E8%B7%AF%E7%94%B1/</url>
     <content><![CDATA[<p>虚拟机安装openWRT可以作为旁路由使用，在open WRT上安装科学上网插件可以实现局域网下的所有设备使用魔法。</p>
 <h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>打开这个地址<a class="link"   href="https://mirror-03.infra.openwrt.org/" >https://mirror-03.infra.openwrt.org/<i class="fas fa-external-link-alt"></i></a></p>
@@ -1545,5 +1552,12 @@
                  ></p>
 <p>如果想要将openWRT作为旁路由使用的话需要关闭主路由的DHCP服务不然会和旁路由DHCP冲突，旁路由（openWRT）连接主路由的接口要设置成静态IP网关是主路由的地址，旁路由需要开启DHCP服务。这样就设置好了主路由下连接设备的ip都是由旁路由分配的所有的数据都会经过旁路由，这时就可以在旁路由上安装一些科学上网的插件或者是广告过滤插件等。</p>
 ]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>openWRT</tag>
+      </tags>
   </entry>
 </search>
