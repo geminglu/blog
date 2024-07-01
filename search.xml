@@ -82,6 +82,38 @@
       </tags>
   </entry>
   <entry>
+    <title>TypeScript 实用工具类型之 Omit 类型</title>
+    <url>/blog/2023/09/28/TypeScript/TypeScript%20%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E4%B9%8B%20Omit%20%E7%B1%BB%E5%9E%8B/</url>
+    <content><![CDATA[<p>在本文中，我们将讨论 TypeScript 中使用<code>Omit&lt;&gt;</code>的对象类型转换。这是 TypeScript 实用工具类型系列的第二部分。<br>在上一篇文章（<a class="link"   href="https://www.yuque.com/geminglu/web/tub1ueqfotbudiub" >TypeScript 实用工具类型之 Pick 类型<i class="fas fa-external-link-alt"></i></a>）中，我们介绍了一个例子，在这个例子中，我们通过 <code>Pick&lt;&gt;</code>从基本类型<code>SuperbUser</code>中选择一些属性来派生一个<code>GuestUser</code>类型。之后暗示过，如果要选择的属性数量大于被丢弃的属性数量，那么选择就会变得不那么方便。在这种情况下，我们应该使用<code>Omit&lt;&gt;</code>。<br>在这篇文章中，我们将通过为<code>Subscriber</code>实体创建一个类型来考虑一个<code>Omit&lt;&gt;</code>的例子。</p>
+<h2 id="1-示例"><a href="#1-示例" class="headerlink" title="1.示例"></a>1.示例</h2><p>像<code>Pick&lt;&gt;</code>一样，<code>Omit&lt;&gt;</code>接受基类型作为第一个参数，接受要省略的键的联合类型作为第二个参数，并返回排除这些属性的派生类型。<br>回过头来看 ERD，<code>Subscriber</code>实体具有与<code>SuperbUser</code>相同的所有属性——除了 <code>roles</code>：<br><img  
+                       lazyload
+                       alt="image"
+                       data-src="/blog/images/df060b0f2d93412b3f9fb9363b565243.png"
+                       
+                 ><br>从<code>SuperbUser</code>派生<code>Subscriber</code>类型显然需要我们只忽略<code>roles</code>属性，而不是选择其他所有属性：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">SuperbUser</span> = &#123;</span><br><span class="line">  <span class="attr">userId</span>: <span class="built_in">number</span>,</span><br><span class="line">  <span class="attr">macAddress</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">username</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">email</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">password</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">firstName</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">lastName</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">roles</span>: (<span class="string">&#x27;Admin&#x27;</span> | <span class="string">&#x27;Editor&#x27;</span> | <span class="string">&#x27;Author&#x27;</span>)[]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Subscriber</span> = <span class="title class_">Omit</span>&lt;<span class="title class_">SuperbUser</span>, <span class="string">&#x27;roles&#x27;</span>&gt;;</span><br></pre></td></tr></table></figure>
+<p>因此，在本例中，TypeScript 的<code>Omit&lt;&gt;</code>比<code>Pick&lt;&gt;</code>更方便。我们现在可以创建一个<code>subscriber</code>对象，它的字段中删除了<code>roles</code>属性:</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="attr">subscriber</span>: <span class="title class_">Subscriber</span> = &#123;</span><br><span class="line">  <span class="attr">userId</span>: <span class="number">4</span>,</span><br><span class="line">  <span class="attr">macAddress</span>: <span class="string">&#x27;132546&#x27;</span>,</span><br><span class="line">  <span class="attr">username</span>: <span class="string">&#x27;xiaan&#x27;</span>,</span><br><span class="line">  <span class="attr">email</span>: <span class="string">&#x27;xiaan@163.com&#x27;</span>,</span><br><span class="line">  <span class="attr">password</span>: <span class="string">&#x27;12345678&#x27;</span>,</span><br><span class="line">  <span class="attr">firstName</span>: <span class="string">&#x27;an&#x27;</span>,</span><br><span class="line">  <span class="attr">lastName</span>: <span class="string">&#x27;xia&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(subscriber);</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">  &quot;userId&quot;: 4,</span></span><br><span class="line"><span class="comment">  &quot;macAddress&quot;: &quot;132546&quot;,</span></span><br><span class="line"><span class="comment">  &quot;username&quot;: &quot;xiaan&quot;,</span></span><br><span class="line"><span class="comment">  &quot;email&quot;: &quot;xiaan@163.com&quot;,</span></span><br><span class="line"><span class="comment">  &quot;password&quot;: &quot;12345678&quot;,</span></span><br><span class="line"><span class="comment">  &quot;firstName&quot;: &quot;an&quot;,</span></span><br><span class="line"><span class="comment">  &quot;lastName&quot;: &quot;xia&quot;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(subscriber.<span class="property">roles</span>); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<p>现在，让我们试着向 subscriber 添加 roles属性：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">subscriber.<span class="property">roles</span> = [<span class="string">&#x27;Reader&#x27;</span>, <span class="string">&#x27;Commenter&#x27;</span>]; <span class="comment">// Property &#x27;roles&#x27; does not exist on type &#x27;Subscriber&#x27;.</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(subscriber.<span class="property">roles</span>); <span class="comment">// [&quot;Reader&quot;, &quot;Commenter&quot;]</span></span><br></pre></td></tr></table></figure>
+<p>TypeScript 抛出一个错误：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Property &#x27;roles&#x27; does not exist on type &#x27;Subscriber&#x27;.</span></span><br></pre></td></tr></table></figure>
+<h2 id="2-应用于-Interface"><a href="#2-应用于-Interface" class="headerlink" title="2. 应用于 Interface"></a>2. 应用于 Interface</h2><p>就像在<code>Pick&lt;&gt;</code>中一样，我们可以使用<code>SuperbUser</code>的接口，结果是一样的：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">SuperbUser</span> &#123;</span><br><span class="line">  <span class="attr">userId</span>: <span class="built_in">number</span>;</span><br><span class="line">  <span class="attr">macAddress</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">username</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">email</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">password</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">firstName</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">lastName</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">roles</span>: (<span class="string">&#x27;Admin&#x27;</span> | <span class="string">&#x27;Editor&#x27;</span> | <span class="string">&#x27;Author&#x27;</span>)[]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Subscriber</span> = <span class="title class_">Omit</span>&lt;<span class="title class_">SuperbUser</span>, <span class="string">&#x27;roles&#x27;</span>&gt;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">subscriber</span>: <span class="title class_">Subscriber</span> = &#123;</span><br><span class="line">  <span class="attr">userId</span>: <span class="number">4</span>,</span><br><span class="line">  <span class="attr">macAddress</span>: <span class="string">&#x27;132546&#x27;</span>,</span><br><span class="line">  <span class="attr">username</span>: <span class="string">&#x27;xiaan&#x27;</span>,</span><br><span class="line">  <span class="attr">email</span>: <span class="string">&#x27;xiaan@163.com&#x27;</span>,</span><br><span class="line">  <span class="attr">password</span>: <span class="string">&#x27;12345678&#x27;</span>,</span><br><span class="line">  <span class="attr">firstName</span>: <span class="string">&#x27;an&#x27;</span>,</span><br><span class="line">  <span class="attr">lastName</span>: <span class="string">&#x27;xia&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(subscriber);</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">  &quot;userId&quot;: 4,</span></span><br><span class="line"><span class="comment">  &quot;macAddress&quot;: &quot;132546&quot;,</span></span><br><span class="line"><span class="comment">  &quot;username&quot;: &quot;xiaan&quot;,</span></span><br><span class="line"><span class="comment">  &quot;email&quot;: &quot;xiaan@163.com&quot;,</span></span><br><span class="line"><span class="comment">  &quot;password&quot;: &quot;12345678&quot;,</span></span><br><span class="line"><span class="comment">  &quot;firstName&quot;: &quot;an&quot;,</span></span><br><span class="line"><span class="comment">  &quot;lastName&quot;: &quot;xia&quot;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(subscriber.<span class="property">roles</span>); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<h2 id="3-谨慎使用"><a href="#3-谨慎使用" class="headerlink" title="3. 谨慎使用"></a>3. 谨慎使用</h2><p>与 Pick&lt;&gt; 一样，Typescript Omit 的第二个参数也接受键的并集。因此，如果需要省略任何其他属性，可以使用操作符 | 将它们添加到第二个参数中：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Subscriber</span> = <span class="title class_">Omit</span>&lt;<span class="title class_">SuperbUser</span>, <span class="string">&#x27;roles&#x27;</span> | <span class="string">&#x27;firstName&#x27;</span> | ...&gt;;</span><br></pre></td></tr></table></figure>
+<p>当需要省略的属性多于需要选取的属性时，应该避免使用<code>Omit&lt;&gt;</code>，而使用<code>Pick&lt;&gt;</code>。</p>
+<h2 id="4-小结"><a href="#4-小结" class="headerlink" title="4.小结"></a>4.小结</h2><p>在本文中，我们通过一个示例深入研究了<code>Omit&lt;&gt;</code>，该示例通过从基本类型<code>SuperbUser</code>中省略一个属性来为 Subscriber 实体派生一个类型。我们看到，<code>Omit&lt;&gt;</code> 与<code>Pick&lt;&gt;</code>相反，当我们想从基类型中选取更多属性并较少省略时，<code>Omit&lt;&gt;</code>更加方便。<br>在下一篇文章中，我们将介绍使用<code>Partial</code>的对象类型转换。</p>
+]]></content>
+      <categories>
+        <category>TypeScript</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>TypeScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>TypeScript 实用工具类型之 Partial 类型</title>
     <url>/blog/2023/09/28/TypeScript/TypeScript%20%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E4%B9%8B%20Partial%20%E7%B1%BB%E5%9E%8B/</url>
     <content><![CDATA[<p>在本文中，我们将使用<code>Partial&lt;&gt;</code>来讨论 TypeScript 中的对象类型转换。这是 TypeScript 实用工具类型系列的第三部分。<br>在上一篇文章（<a class="link"   href="https://www.yuque.com/geminglu/web/ykexs5ltnnr5d2tg" >TypeScript 实用工具类型Omit类型<i class="fas fa-external-link-alt"></i></a>），我们介绍了一个示例，在该示例中，我们通过省略基本类型<code>SuperbUser</code>的一个属性（使用<code>Omit&lt;&gt;</code>）来派生<code>Subscriber</code>类型。<br>在这篇文章中，我们将考虑一个 TypeScript Partial&lt;&gt; 的例子，通过修改我们的<code>Subscriber</code>类型来假设一个更现实的场景。</p>
@@ -109,38 +141,6 @@
 <p>我们还可以将<code>Omit&lt;&gt;</code>的返回类型重构为中介类型<code>StrictSubscriber</code>，并将其作为 TypeScript Partial 的参数传递：</p>
 <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">StrictSubscriber</span> = <span class="title class_">Omit</span>&lt;<span class="title class_">SuperbUser</span>, <span class="string">&#x27;roles&#x27;</span>&gt;;</span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Subscriber</span> = <span class="title class_">Partial</span>;</span><br></pre></td></tr></table></figure>
 <h2 id="4-小结"><a href="#4-小结" class="headerlink" title="4. 小结"></a>4. 小结</h2><p>在这篇文章中，我们介绍了使用实用转换器 partial 的使用，不过手动将类型的某些属性设置为可选更可取，特别是在处理从 API 返回的类型时。</p>
-]]></content>
-      <categories>
-        <category>TypeScript</category>
-      </categories>
-      <tags>
-        <tag>前端</tag>
-        <tag>TypeScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>TypeScript 实用工具类型之 Omit 类型</title>
-    <url>/blog/2023/09/28/TypeScript/TypeScript%20%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E4%B9%8B%20Omit%20%E7%B1%BB%E5%9E%8B/</url>
-    <content><![CDATA[<p>在本文中，我们将讨论 TypeScript 中使用<code>Omit&lt;&gt;</code>的对象类型转换。这是 TypeScript 实用工具类型系列的第二部分。<br>在上一篇文章（<a class="link"   href="https://www.yuque.com/geminglu/web/tub1ueqfotbudiub" >TypeScript 实用工具类型之 Pick 类型<i class="fas fa-external-link-alt"></i></a>）中，我们介绍了一个例子，在这个例子中，我们通过 <code>Pick&lt;&gt;</code>从基本类型<code>SuperbUser</code>中选择一些属性来派生一个<code>GuestUser</code>类型。之后暗示过，如果要选择的属性数量大于被丢弃的属性数量，那么选择就会变得不那么方便。在这种情况下，我们应该使用<code>Omit&lt;&gt;</code>。<br>在这篇文章中，我们将通过为<code>Subscriber</code>实体创建一个类型来考虑一个<code>Omit&lt;&gt;</code>的例子。</p>
-<h2 id="1-示例"><a href="#1-示例" class="headerlink" title="1.示例"></a>1.示例</h2><p>像<code>Pick&lt;&gt;</code>一样，<code>Omit&lt;&gt;</code>接受基类型作为第一个参数，接受要省略的键的联合类型作为第二个参数，并返回排除这些属性的派生类型。<br>回过头来看 ERD，<code>Subscriber</code>实体具有与<code>SuperbUser</code>相同的所有属性——除了 <code>roles</code>：<br><img  
-                       lazyload
-                       alt="image"
-                       data-src="/blog/images/df060b0f2d93412b3f9fb9363b565243.png"
-                       
-                 ><br>从<code>SuperbUser</code>派生<code>Subscriber</code>类型显然需要我们只忽略<code>roles</code>属性，而不是选择其他所有属性：</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">SuperbUser</span> = &#123;</span><br><span class="line">  <span class="attr">userId</span>: <span class="built_in">number</span>,</span><br><span class="line">  <span class="attr">macAddress</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">username</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">email</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">password</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">firstName</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">lastName</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">roles</span>: (<span class="string">&#x27;Admin&#x27;</span> | <span class="string">&#x27;Editor&#x27;</span> | <span class="string">&#x27;Author&#x27;</span>)[]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Subscriber</span> = <span class="title class_">Omit</span>&lt;<span class="title class_">SuperbUser</span>, <span class="string">&#x27;roles&#x27;</span>&gt;;</span><br></pre></td></tr></table></figure>
-<p>因此，在本例中，TypeScript 的<code>Omit&lt;&gt;</code>比<code>Pick&lt;&gt;</code>更方便。我们现在可以创建一个<code>subscriber</code>对象，它的字段中删除了<code>roles</code>属性:</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="attr">subscriber</span>: <span class="title class_">Subscriber</span> = &#123;</span><br><span class="line">  <span class="attr">userId</span>: <span class="number">4</span>,</span><br><span class="line">  <span class="attr">macAddress</span>: <span class="string">&#x27;132546&#x27;</span>,</span><br><span class="line">  <span class="attr">username</span>: <span class="string">&#x27;xiaan&#x27;</span>,</span><br><span class="line">  <span class="attr">email</span>: <span class="string">&#x27;xiaan@163.com&#x27;</span>,</span><br><span class="line">  <span class="attr">password</span>: <span class="string">&#x27;12345678&#x27;</span>,</span><br><span class="line">  <span class="attr">firstName</span>: <span class="string">&#x27;an&#x27;</span>,</span><br><span class="line">  <span class="attr">lastName</span>: <span class="string">&#x27;xia&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(subscriber);</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">  &quot;userId&quot;: 4,</span></span><br><span class="line"><span class="comment">  &quot;macAddress&quot;: &quot;132546&quot;,</span></span><br><span class="line"><span class="comment">  &quot;username&quot;: &quot;xiaan&quot;,</span></span><br><span class="line"><span class="comment">  &quot;email&quot;: &quot;xiaan@163.com&quot;,</span></span><br><span class="line"><span class="comment">  &quot;password&quot;: &quot;12345678&quot;,</span></span><br><span class="line"><span class="comment">  &quot;firstName&quot;: &quot;an&quot;,</span></span><br><span class="line"><span class="comment">  &quot;lastName&quot;: &quot;xia&quot;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(subscriber.<span class="property">roles</span>); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
-<p>现在，让我们试着向 subscriber 添加 roles属性：</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">subscriber.<span class="property">roles</span> = [<span class="string">&#x27;Reader&#x27;</span>, <span class="string">&#x27;Commenter&#x27;</span>]; <span class="comment">// Property &#x27;roles&#x27; does not exist on type &#x27;Subscriber&#x27;.</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(subscriber.<span class="property">roles</span>); <span class="comment">// [&quot;Reader&quot;, &quot;Commenter&quot;]</span></span><br></pre></td></tr></table></figure>
-<p>TypeScript 抛出一个错误：</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Property &#x27;roles&#x27; does not exist on type &#x27;Subscriber&#x27;.</span></span><br></pre></td></tr></table></figure>
-<h2 id="2-应用于-Interface"><a href="#2-应用于-Interface" class="headerlink" title="2. 应用于 Interface"></a>2. 应用于 Interface</h2><p>就像在<code>Pick&lt;&gt;</code>中一样，我们可以使用<code>SuperbUser</code>的接口，结果是一样的：</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">SuperbUser</span> &#123;</span><br><span class="line">  <span class="attr">userId</span>: <span class="built_in">number</span>;</span><br><span class="line">  <span class="attr">macAddress</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">username</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">email</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">password</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">firstName</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">lastName</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">roles</span>: (<span class="string">&#x27;Admin&#x27;</span> | <span class="string">&#x27;Editor&#x27;</span> | <span class="string">&#x27;Author&#x27;</span>)[]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Subscriber</span> = <span class="title class_">Omit</span>&lt;<span class="title class_">SuperbUser</span>, <span class="string">&#x27;roles&#x27;</span>&gt;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">subscriber</span>: <span class="title class_">Subscriber</span> = &#123;</span><br><span class="line">  <span class="attr">userId</span>: <span class="number">4</span>,</span><br><span class="line">  <span class="attr">macAddress</span>: <span class="string">&#x27;132546&#x27;</span>,</span><br><span class="line">  <span class="attr">username</span>: <span class="string">&#x27;xiaan&#x27;</span>,</span><br><span class="line">  <span class="attr">email</span>: <span class="string">&#x27;xiaan@163.com&#x27;</span>,</span><br><span class="line">  <span class="attr">password</span>: <span class="string">&#x27;12345678&#x27;</span>,</span><br><span class="line">  <span class="attr">firstName</span>: <span class="string">&#x27;an&#x27;</span>,</span><br><span class="line">  <span class="attr">lastName</span>: <span class="string">&#x27;xia&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(subscriber);</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">  &quot;userId&quot;: 4,</span></span><br><span class="line"><span class="comment">  &quot;macAddress&quot;: &quot;132546&quot;,</span></span><br><span class="line"><span class="comment">  &quot;username&quot;: &quot;xiaan&quot;,</span></span><br><span class="line"><span class="comment">  &quot;email&quot;: &quot;xiaan@163.com&quot;,</span></span><br><span class="line"><span class="comment">  &quot;password&quot;: &quot;12345678&quot;,</span></span><br><span class="line"><span class="comment">  &quot;firstName&quot;: &quot;an&quot;,</span></span><br><span class="line"><span class="comment">  &quot;lastName&quot;: &quot;xia&quot;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(subscriber.<span class="property">roles</span>); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
-<h2 id="3-谨慎使用"><a href="#3-谨慎使用" class="headerlink" title="3. 谨慎使用"></a>3. 谨慎使用</h2><p>与 Pick&lt;&gt; 一样，Typescript Omit 的第二个参数也接受键的并集。因此，如果需要省略任何其他属性，可以使用操作符 | 将它们添加到第二个参数中：</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Subscriber</span> = <span class="title class_">Omit</span>&lt;<span class="title class_">SuperbUser</span>, <span class="string">&#x27;roles&#x27;</span> | <span class="string">&#x27;firstName&#x27;</span> | ...&gt;;</span><br></pre></td></tr></table></figure>
-<p>当需要省略的属性多于需要选取的属性时，应该避免使用<code>Omit&lt;&gt;</code>，而使用<code>Pick&lt;&gt;</code>。</p>
-<h2 id="4-小结"><a href="#4-小结" class="headerlink" title="4.小结"></a>4.小结</h2><p>在本文中，我们通过一个示例深入研究了<code>Omit&lt;&gt;</code>，该示例通过从基本类型<code>SuperbUser</code>中省略一个属性来为 Subscriber 实体派生一个类型。我们看到，<code>Omit&lt;&gt;</code> 与<code>Pick&lt;&gt;</code>相反，当我们想从基类型中选取更多属性并较少省略时，<code>Omit&lt;&gt;</code>更加方便。<br>在下一篇文章中，我们将介绍使用<code>Partial</code>的对象类型转换。</p>
 ]]></content>
       <categories>
         <category>TypeScript</category>
@@ -186,6 +186,19 @@
       </tags>
   </entry>
   <entry>
+    <title>TypeScript</title>
+    <url>/blog/2023/09/28/TypeScript/TypeScript/</url>
+    <content><![CDATA[<p>使用npm安装<br>npm install -g typescript<br>编译<br>tsc helloworld.ts<br>生成配置文件(tsconfig.json)<br>tsc –init</p>
+]]></content>
+      <categories>
+        <category>TypeScript</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>TypeScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>infer 条件类型中的类型推断</title>
     <url>/blog/2024/04/18/TypeScript/infer%20%E6%9D%A1%E4%BB%B6%E7%B1%BB%E5%9E%8B%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD/</url>
     <content><![CDATA[<p><code>infer</code> 关键字在条件类型中使用，用于从依赖于泛型参数的类型中推断（提取）泛型参数的类型。这允许您编写更灵活且可重用的类型定义。</p>
@@ -197,19 +210,6 @@
 
 <p>例子三：获取函数的第一个参数类型</p>
 <figure class="highlight ts"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> firstArgType&lt;T&gt; = T <span class="keyword">extends</span> (<span class="attr">first</span>: infer R, ...<span class="attr">args</span>: <span class="built_in">any</span>[]) =&gt; <span class="built_in">any</span></span><br><span class="line">  ? R</span><br><span class="line">  : <span class="built_in">any</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> fs = <span class="function">(<span class="params">a: <span class="built_in">string</span>, b: <span class="built_in">number</span></span>) =&gt;</span> <span class="built_in">void</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> fst = firstArgType&lt;fs&gt;; <span class="comment">// string</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>TypeScript</category>
-      </categories>
-      <tags>
-        <tag>前端</tag>
-        <tag>TypeScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>TypeScript</title>
-    <url>/blog/2023/09/28/TypeScript/TypeScript/</url>
-    <content><![CDATA[<p>使用npm安装<br>npm install -g typescript<br>编译<br>tsc helloworld.ts<br>生成配置文件(tsconfig.json)<br>tsc –init</p>
 ]]></content>
       <categories>
         <category>TypeScript</category>
@@ -284,19 +284,6 @@
 <h3 id="接口的继承"><a href="#接口的继承" class="headerlink" title="接口的继承"></a>接口的继承</h3><p>TS中的继承与ES6中的class继承类似，子接口可以继承父接口使用父接口定义的规则</p>
 <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">interface</span> dom &#123;</span><br><span class="line">  <span class="title function_">move</span>(): <span class="built_in">void</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Human</span> <span class="keyword">extends</span> dom &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">age</span>: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// let jack: Human = &#123; // 错误写法，因为Human接口继承了dom接口所以move不可以缺少</span></span><br><span class="line"><span class="comment">//     // age: 18,</span></span><br><span class="line"><span class="comment">//     name: &#x27;Jack&#x27;,</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="keyword">let</span> <span class="attr">jack</span>: <span class="title class_">Human</span> = &#123;</span><br><span class="line">  <span class="attr">age</span>: <span class="number">18</span>,</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;Jack&#x27;</span>,</span><br><span class="line">  <span class="title function_">move</span>(<span class="params"></span>) &#123; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;move&#x27;</span>) &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 正确的写法</span></span><br></pre></td></tr></table></figure>
 
-]]></content>
-      <categories>
-        <category>TypeScript</category>
-      </categories>
-      <tags>
-        <tag>前端</tag>
-        <tag>TypeScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数据类型</title>
-    <url>/blog/2023/09/28/TypeScript/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</url>
-    <content><![CDATA[<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 布尔类型（boolean）</span></span><br><span class="line"><span class="comment">// 数字类型（number）</span></span><br><span class="line"><span class="comment">// 数组类型（array）</span></span><br><span class="line"><span class="comment">// 元素类型（enum）</span></span><br><span class="line"><span class="comment">// 任意类型（any）</span></span><br><span class="line"><span class="comment">// null和undefined</span></span><br><span class="line"><span class="comment">// void类型</span></span><br><span class="line"><span class="comment">// never类型</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//  在ts中定义变量必须指定类型</span></span><br><span class="line"><span class="comment">// var flag:boolean = 123;     ❎</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">flagf</span>:boolean = <span class="literal">true</span>;    <span class="comment">//✅</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">num</span>:number = <span class="number">123</span>;</span><br><span class="line"><span class="keyword">var</span> <span class="attr">str</span>:string = <span class="string">&quot;123&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义数组ts也可以跟ES5一样的方式来定义数组</span></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">12</span>];</span><br><span class="line"><span class="comment">// ts里时这样定义的</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">arr1</span>:number[] = [<span class="number">1</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">3</span>,<span class="number">5</span>] <span class="comment">//✅</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">arr2</span>:string[] = [<span class="string">&#x27;2&#x27;</span>,<span class="string">&#x27;43&#x27;</span>,<span class="string">&#x27;2&#x27;</span>,<span class="string">&#x27;43&#x27;</span>]</span><br><span class="line"><span class="comment">// var arr1:number[] = [1,4,&quot;6&quot;,3,5]   // 数组里必须都是字符串不然会保存❎</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 元组类型（tuple）是数组的一种</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">arr3</span>:[number,string] = [<span class="number">123</span>,<span class="string">&#x27;typescript&#x27;</span>]</span><br><span class="line"><span class="comment">// var arr3:[number,string] = [&#x27;typescript&#x27;,123]   // ❎ 必须按照定义的顺序来</span></span><br><span class="line"><span class="comment">// var arr3:[number,string] = [&#x27;typescript&#x27;,&quot;123&quot;]   // ❎</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 枚举类型</span></span><br><span class="line">enum <span class="title class_">Flag</span> &#123;succ=<span class="number">1</span>,error=<span class="number">2</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> <span class="attr">f</span>:<span class="title class_">Flag</span> = <span class="title class_">Flag</span>.<span class="property">succ</span>;</span><br><span class="line"><span class="comment">// var f:Flag = Flag.error;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(f)  </span><br><span class="line">enum <span class="title class_">Color</span> &#123;blue,red,<span class="string">&#x27;orange&#x27;</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> <span class="attr">c</span>:<span class="title class_">Color</span> = <span class="title class_">Color</span>.<span class="property">red</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(c)  <span class="comment">// 1    如果标识符没有赋值他的值就是他在集合中的下标，如果把第一个标识符的值改成了2那么第二个标识符的值就是3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// any任意类型，和ES5中没有指定类型是一样的</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">a1</span>:any = <span class="number">123</span>;</span><br><span class="line"><span class="keyword">var</span> <span class="attr">a1</span>:any = <span class="string">&quot;123&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> <span class="attr">a1</span>:any = <span class="literal">true</span>;</span><br><span class="line"><span class="comment">// null和undefined</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">b1</span>:number;</span><br><span class="line"><span class="comment">// console.log(b1);    // 如果一个变量定义了没有赋值就使用了在ts中就会报错</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">b2</span>:<span class="literal">null</span> | <span class="literal">undefined</span>;    <span class="comment">// 可以给他定义一个null | undefined，那他就不会报错</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b2) <span class="comment">// null</span></span><br><span class="line"><span class="comment">// void类型,表示方法没有返回任何类型</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">run</span>(<span class="params"></span>):<span class="keyword">void</span>&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;run&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">run</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// never类型（包括null和undefined）</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>TypeScript</category>
@@ -426,7 +413,7 @@
 </tr>
 <tr>
 <td>设置邮箱</td>
-<td>git config –global user.email “<a class="link"   href="mailto:&#x31;&#x38;&#x34;&#x35;&#49;&#x34;&#x38;&#55;&#x36;&#x37;&#x32;&#64;&#x71;&#x71;&#x2e;&#99;&#x6f;&#x6d;" >&#x31;&#x38;&#x34;&#x35;&#49;&#x34;&#x38;&#55;&#x36;&#x37;&#x32;&#64;&#x71;&#x71;&#x2e;&#99;&#x6f;&#x6d;<i class="fas fa-external-link-alt"></i></a>“</td>
+<td>git config –global user.email “<a class="link"   href="mailto:&#49;&#x38;&#x34;&#x35;&#49;&#x34;&#56;&#x37;&#54;&#x37;&#x32;&#64;&#113;&#x71;&#x2e;&#99;&#111;&#x6d;" >&#49;&#x38;&#x34;&#x35;&#49;&#x34;&#56;&#x37;&#54;&#x37;&#x32;&#64;&#113;&#x71;&#x2e;&#99;&#111;&#x6d;<i class="fas fa-external-link-alt"></i></a>“</td>
 </tr>
 <tr>
 <td>创建项目</td>
@@ -550,6 +537,19 @@
       </categories>
       <tags>
         <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据类型</title>
+    <url>/blog/2023/09/28/TypeScript/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</url>
+    <content><![CDATA[<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 布尔类型（boolean）</span></span><br><span class="line"><span class="comment">// 数字类型（number）</span></span><br><span class="line"><span class="comment">// 数组类型（array）</span></span><br><span class="line"><span class="comment">// 元素类型（enum）</span></span><br><span class="line"><span class="comment">// 任意类型（any）</span></span><br><span class="line"><span class="comment">// null和undefined</span></span><br><span class="line"><span class="comment">// void类型</span></span><br><span class="line"><span class="comment">// never类型</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//  在ts中定义变量必须指定类型</span></span><br><span class="line"><span class="comment">// var flag:boolean = 123;     ❎</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">flagf</span>:boolean = <span class="literal">true</span>;    <span class="comment">//✅</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">num</span>:number = <span class="number">123</span>;</span><br><span class="line"><span class="keyword">var</span> <span class="attr">str</span>:string = <span class="string">&quot;123&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义数组ts也可以跟ES5一样的方式来定义数组</span></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">12</span>];</span><br><span class="line"><span class="comment">// ts里时这样定义的</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">arr1</span>:number[] = [<span class="number">1</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">3</span>,<span class="number">5</span>] <span class="comment">//✅</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">arr2</span>:string[] = [<span class="string">&#x27;2&#x27;</span>,<span class="string">&#x27;43&#x27;</span>,<span class="string">&#x27;2&#x27;</span>,<span class="string">&#x27;43&#x27;</span>]</span><br><span class="line"><span class="comment">// var arr1:number[] = [1,4,&quot;6&quot;,3,5]   // 数组里必须都是字符串不然会保存❎</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 元组类型（tuple）是数组的一种</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">arr3</span>:[number,string] = [<span class="number">123</span>,<span class="string">&#x27;typescript&#x27;</span>]</span><br><span class="line"><span class="comment">// var arr3:[number,string] = [&#x27;typescript&#x27;,123]   // ❎ 必须按照定义的顺序来</span></span><br><span class="line"><span class="comment">// var arr3:[number,string] = [&#x27;typescript&#x27;,&quot;123&quot;]   // ❎</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 枚举类型</span></span><br><span class="line">enum <span class="title class_">Flag</span> &#123;succ=<span class="number">1</span>,error=<span class="number">2</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> <span class="attr">f</span>:<span class="title class_">Flag</span> = <span class="title class_">Flag</span>.<span class="property">succ</span>;</span><br><span class="line"><span class="comment">// var f:Flag = Flag.error;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(f)  </span><br><span class="line">enum <span class="title class_">Color</span> &#123;blue,red,<span class="string">&#x27;orange&#x27;</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> <span class="attr">c</span>:<span class="title class_">Color</span> = <span class="title class_">Color</span>.<span class="property">red</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(c)  <span class="comment">// 1    如果标识符没有赋值他的值就是他在集合中的下标，如果把第一个标识符的值改成了2那么第二个标识符的值就是3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// any任意类型，和ES5中没有指定类型是一样的</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">a1</span>:any = <span class="number">123</span>;</span><br><span class="line"><span class="keyword">var</span> <span class="attr">a1</span>:any = <span class="string">&quot;123&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> <span class="attr">a1</span>:any = <span class="literal">true</span>;</span><br><span class="line"><span class="comment">// null和undefined</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">b1</span>:number;</span><br><span class="line"><span class="comment">// console.log(b1);    // 如果一个变量定义了没有赋值就使用了在ts中就会报错</span></span><br><span class="line"><span class="keyword">var</span> <span class="attr">b2</span>:<span class="literal">null</span> | <span class="literal">undefined</span>;    <span class="comment">// 可以给他定义一个null | undefined，那他就不会报错</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b2) <span class="comment">// null</span></span><br><span class="line"><span class="comment">// void类型,表示方法没有返回任何类型</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">run</span>(<span class="params"></span>):<span class="keyword">void</span>&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;run&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">run</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// never类型（包括null和undefined）</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>TypeScript</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>TypeScript</tag>
       </tags>
   </entry>
   <entry>
@@ -1219,5 +1219,331 @@
         <tag>vue3</tag>
         <tag>vue</tag>
       </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/blog/2024/07/01/Linux/homeAssistant/%E5%AE%89%E8%A3%85HACS/</url>
+    <content><![CDATA[<h2 id="手动安装HACS"><a href="#手动安装HACS" class="headerlink" title="手动安装HACS"></a>手动安装HACS</h2><p>下载HACS压缩包</p>
+<p>下载地址：<a class="link"   href="https://github.com/hacs/integration/releases" >Releases · hacs&#x2F;integration · GitHub<i class="fas fa-external-link-alt"></i></a></p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011509521.png"
+                        alt="image-20240701150906463"
+                 ></p>
+<p>打开samba，方便上传下载的HACS包。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011510561.png"
+                        alt="image-20240701151014448"
+                 ></p>
+<p>搜索 samba</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011510244.png"
+                        alt="image-20240701151038148"
+                 ></p>
+<blockquote>
+<p>下载samba需要科学上网</p>
+</blockquote>
+<p>简单安装配置之后，启动，过程简单不再展示</p>
+<ol>
+<li>上传HACS压缩包 Win11，在文件管理器打开：\<a class="link"   href="http://xxx.xxx.xxx.xxx/" >xxx.xxx.xxx.xxx<i class="fas fa-external-link-alt"></i></a>（HomeAssistant的IP）</li>
+</ol>
+<p>进入config文件夹，建立 custom_components 和 www 文件夹</p>
+<p>进入custom_components文件夹，建立hacs文件夹，把下载的HACS.zip压缩包所有文件解压到里面。</p>
+<p>然后从配置中，进入系统、右上角电源标志、重启</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011511334.png"
+                        alt="image-20240701151152255"
+                 ></p>
+<p>从配置里添加集成，搜索HACS即可添加安装。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011512537.png"
+                        alt="image-20240701151247431"
+                 ></p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011513612.png"
+                        alt="image-20240701151302511"
+                 ></p>
+<p>绑定设备,复制下面的code并打开github链接</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011514211.png"
+                        alt="image-20240701151424134"
+                 ></p>
+<p>点击上面github链接，输入上面出现的key</p>
+<p>左侧自动出现HACS，安装全部完成。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011514488.png"
+                        alt="image-20240701151440407"
+                 ></p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011514877.png"
+                        alt="image-20240701151455769"
+                 ></p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011515430.png"
+                        alt="image-20240701151504365"
+                 ></p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/blog/2024/07/01/Linux/homeAssistant/%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85openWRT%E4%BD%9C%E4%B8%BA%E6%97%81%E8%B7%AF%E7%94%B1/</url>
+    <content><![CDATA[<p>虚拟机安装openWRT可以作为旁路由使用，在open WRT上安装科学上网插件可以实现局域网下的所有设备使用魔法。</p>
+<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>打开这个地址<a class="link"   href="https://mirror-03.infra.openwrt.org/" >https://mirror-03.infra.openwrt.org/<i class="fas fa-external-link-alt"></i></a></p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011525367.png"
+                        alt="屏幕截图 2024-06-29 143010"
+                 ></p>
+<p>下载完成后解压会得到一个<code>openwrt-23.05.3-x86-64-generic-ext4-combined-efi.img</code> 文件，然后需要使用<code>StarWind V2V Converter</code> 将img文件转为vmdk文件</p>
+<p>下载<a class="link"   href="https://www.starwindsoftware.com/starwind-v2v-converter#download" >StarWind V2V Converter<i class="fas fa-external-link-alt"></i></a>，</p>
+<p>打开<code>StarWind V2V Converter</code> 选择<code>Local file</code></p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011526150.png"
+                        alt="image-20240701152624023"
+                 ></p>
+<p>选择刚才的<code>openwrt-23.05.3-x86-64-generic-ext4-combined-efi.img</code></p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011526483.png"
+                        alt="image-20240701152641370"
+                 ></p>
+<p>选择转换后的目标文件位置</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011526842.png"
+                        alt="image-20240701152656726"
+                 ></p>
+<p>选择目标镜像的格式</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011527803.png"
+                        alt="image-20240701152710690"
+                 ></p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011527708.png"
+                        alt="image-20240701152722589"
+                 ></p>
+<p>可以修改文件的输出目录</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011527311.png"
+                        alt="image-20240701152736202"
+                 ></p>
+<h2 id="新建虚拟机"><a href="#新建虚拟机" class="headerlink" title="新建虚拟机"></a>新建虚拟机</h2><p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011527194.png"
+                        alt="image-20240701152754087"
+                 ></p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011528350.png"
+                        alt="image-20240701152802254"
+                 ></p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011528202.png"
+                        alt="image-20240701152811105"
+                 ></p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011528084.png"
+                        alt="image-20240701152818989"
+                 ></p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011528049.png"
+                        alt="image-20240701152827951"
+                 ></p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011528519.png"
+                        alt="image-20240701152836410"
+                 ></p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011528876.png"
+                        alt="image-20240701152844767"
+                 ></p>
+<h2 id="设置网络"><a href="#设置网络" class="headerlink" title="设置网络"></a>设置网络</h2><p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011529890.png"
+                        alt="image-20240701152900765"
+                 ></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim /etc/config/network</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011529958.png"
+                        alt="image-20240701152921867"
+                 ></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">reboot</span><br></pre></td></tr></table></figure>
+
+<h2 id="添加新的硬盘"><a href="#添加新的硬盘" class="headerlink" title="添加新的硬盘"></a>添加新的硬盘</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">opkg update</span><br><span class="line">opkg install block-mount kmod-fs-ext4 kmod-usb-storage kmod-usb-ohci kmod-usb-uhci e2fsprogs fdisk</span><br><span class="line">reboot</span><br><span class="line">fdisk -l</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011530424.png"
+                        alt="image-20240701153008336"
+                 ></p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011530008.png"
+                        alt="image-20240701153021903"
+                 ></p>
+<p>格式化<code>/dev/sdb</code>分区</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkfs.ext4 /dev/sdb</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011530466.png"
+                        alt="image-20240701153045367"
+                 ></p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011531644.png"
+                        alt="image-20240701153100568"
+                 ></p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011531834.png"
+                        alt="image-20240701153114753"
+                 ></p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011531758.png"
+                        alt="image-20240701153126690"
+                 ></p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011531891.png"
+                        alt="image-20240701153135828"
+                 ></p>
+<h2 id="安装中文包"><a href="#安装中文包" class="headerlink" title="安装中文包"></a>安装中文包</h2><p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011531629.png"
+                        alt="image-20240701153151572"
+                 ></p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011531023.png"
+                        alt="image-20240701153158962"
+                 ></p>
+<p>刷新浏览器</p>
+<h2 id="安装SFTP"><a href="#安装SFTP" class="headerlink" title="安装SFTP"></a>安装SFTP</h2><p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011532303.png"
+                        alt="image-20240701153210218"
+                 ></p>
+<h2 id="安装iStore"><a href="#安装iStore" class="headerlink" title="安装iStore"></a>安装iStore</h2><p>iStore 是一个开源且标准的 OpenWRT 软件中心实现，是属于易有云团队的固件 <a href="https://github.com/istoreos"><strong>iStoreOS</strong></a> 的一部分。详情请跳转至<a class="link"   href="https://github.com/linkease/istore" >这里<i class="fas fa-external-link-alt"></i></a></p>
+<p>iStore 的设计目标：</p>
+<ol>
+<li>方便用户安装插件</li>
+<li>每个插件都有教程，方便初学者入门使用插件</li>
+<li>适配所有的 OpenWRT 皮肤，以及移动端</li>
+<li>全部基于 OpenWRT 的标准接口开发，不用以前 KoolShare LEDE 的特有的插件风格的软件中心</li>
+</ol>
+<p>iStore 的无法弥补的缺陷：</p>
+<ol>
+<li>因为 OpenWRT 版本特别多，导致不同平台的插件依赖不一样。所以即使你的系统能安装 iStore，iStore 里面的插件不一定能安装</li>
+<li>我们需要固件开发者自主集成 iStore，并解决 iStore 里面的各种插件的依赖</li>
+</ol>
+<p>简单来说，iStore比较适合新手或者不想特别折腾的同学，里面集成了各种应用，根据自身需求，直接点击安装即可，直接跳过下载安装依赖以及安装软件包等繁琐步骤。</p>
+<blockquote>
+<p>21版本的固件安装 iStore 需要依赖 <code>luci-compat</code></p>
+</blockquote>
+<p>使用opkg安装</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">opkg install luci-compat</span><br></pre></td></tr></table></figure>
+
+<p>如果安装失败就到<a class="link"   href="https://dl.openwrt.ai/packages-23.05/x86_64/luci/" >dl.openwrt.ai<i class="fas fa-external-link-alt"></i></a>下载，注意版本。</p>
+<p>访问iSotre软件包地址<a class="link"   href="https://istore.linkease.com/repo/all/store/" >**<i class="fas fa-external-link-alt"></i></a><a class="link"   href="https://istore.linkease.com/repo/all/store/" >https://istore.linkease.com/repo/all/store/<i class="fas fa-external-link-alt"></i></a>**</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011534485.png"
+                        alt="image-20240701153432419"
+                 ></p>
+<p>下载上述的几个文件。</p>
+<p>打开“系统”&gt;”<strong>Software</strong>” 选怎<code>Upload Package…</code> 依次安装刚才下载的一个<code>ipk</code>包，如果安装<code>luci-app-openclash</code> 报错可以才试一次。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011534217.png"
+                        alt="image-20240701153442140"
+                 ></p>
+<h2 id="安装v2rayA"><a href="#安装v2rayA" class="headerlink" title="安装v2rayA"></a>安装v2rayA</h2><p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011535922.png"
+                        alt="image-20240701153514829"
+                 ></p>
+<p>在“服务”菜单下选择“V2rarA”开启服务并进入web界面</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011535774.png"
+                        alt="image-20240701153529644"
+                 ></p>
+<p>进入web管理页面后点击“import”添加订阅链接</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011535042.png"
+                        alt="image-20240701153558940"
+                 ></p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://cdn.jsdelivr.net/gh/geminglu/drawingBoard@main/img/202407011536035.png"
+                        alt="image-20240701153610944"
+                 ></p>
+<p>如果想要将openWRT作为旁路由使用的话需要关闭主路由的DHCP服务不然会和旁路由DHCP冲突，旁路由（openWRT）连接主路由的接口要设置成静态IP网关是主路由的地址，旁路由需要开启DHCP服务。这样就设置好了主路由下连接设备的ip都是由旁路由分配的所有的数据都会经过旁路由，这时就可以在旁路由上安装一些科学上网的插件或者是广告过滤插件等。</p>
+]]></content>
   </entry>
 </search>
