@@ -75,7 +75,6 @@ social_contact:
     # e.g. [ weixin: img | https://x.com/images/wechat.png ] or [ weixin: img | ./images/wechat.png ]
     github: https://github.com/geminglu
     weixin: img | /images/IMG_2778.JPG
-    zhihu: https://www.zhihu.com/people/ge-ming-lu
     twitter:         # Twitter
     facebook: https://www.facebook.com/ge.minglu.1996/
     email: geminglu199698@outlook.com
